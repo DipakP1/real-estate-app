@@ -1,54 +1,80 @@
 import React from 'react';
-import { Select, MenuItem } from '@mui/material';
+import { Card, Typography, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '../shared/DashboardCard';
 import dynamic from "next/dynamic";
+import Image from 'next/image';
+
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+const WeatherCard = () => (
+    <Card
+        sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            backgroundColor: "#E93B77",
+            color: "#fff",
+            padding: 2,
+            marginTop: "-140px", // Removed negative margin
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            position: "relative", // Ensure it’s not affected by other elements
+        }}
+    >
+        <Box>
+            <Typography variant="subtitle1" sx={{ fontSize: "12px", color: "#C7CCD0", fontWeight: 600 }}>
+                Weather Today
+            </Typography>
+            <Typography variant="h4" sx={{ fontWeight: 700, fontSize: "14px", ml: 2 }}>
+                New Delhi - 29°C
+            </Typography>
+        </Box>
+
+        <Box>
+            <Typography>
+                <Image src="/images/logos/weater.png" alt="wheater" height={40} width={50} />
+            </Typography>
+            <Typography variant="subtitle2" sx={{ color: "#fff", fontSize: "14px", fontWeight: 500, }}>
+                Sunny
+            </Typography>
+        </Box>
+
+    </Card>
+);
 
 const SalesOverview = () => {
 
-    // select
-    const [month, setMonth] = React.useState('1');
-
-    const handleChange = (event: any) => {
-        setMonth(event.target.value);
-    };
-
     // chart color
     const theme = useTheme();
-    const primary = theme.palette.primary.main;
-    const secondary = theme.palette.secondary.main;
 
-    // chart
+    // chart options
     const optionscolumnchart: any = {
         chart: {
             type: 'bar',
             fontFamily: "'Plus Jakarta Sans', sans-serif;",
-            foreColor: '#adb0bb',
+            foreColor: 'lightgrey',
             toolbar: {
-                show: true,
+                show: false,
             },
-            height: 370,
+            height: 270,
         },
-        colors: [primary, secondary],
+        colors: "black",
         plotOptions: {
             bar: {
                 horizontal: false,
-                barHeight: '60%',
-                columnWidth: '42%',
-                borderRadius: [6],
+                barHeight: '50%',
+                columnWidth: '20%',
+                borderRadius: [1],
                 borderRadiusApplication: 'end',
                 borderRadiusWhenStacked: 'all',
             },
         },
-
         stroke: {
             show: true,
-            width: 5,
+            width: 4,
             lineCap: "butt",
-            colors: ["transparent"],
-          },
+            colors: ["black"],
+        },
         dataLabels: {
             enabled: false,
         },
@@ -56,7 +82,7 @@ const SalesOverview = () => {
             show: false,
         },
         grid: {
-            borderColor: 'rgba(0,0,0,0.1)',
+            borderColor: 'grey',
             strokeDashArray: 3,
             xaxis: {
                 lines: {
@@ -65,10 +91,10 @@ const SalesOverview = () => {
             },
         },
         yaxis: {
-            tickAmount: 4,
+            tickAmount: 8,
         },
         xaxis: {
-            categories: ['16/08', '17/08', '18/08', '19/08', '20/08', '21/08', '22/08', '23/08'],
+            categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
             axisBorder: {
                 show: false,
             },
@@ -80,37 +106,28 @@ const SalesOverview = () => {
     };
     const seriescolumnchart: any = [
         {
-            name: 'Eanings this month',
-            data: [355, 390, 300, 350, 390, 180, 355, 390],
-        },
-        {
-            name: 'Expense this month',
-            data: [280, 250, 325, 215, 250, 310, 280, 250],
+            name: 'Watts',
+            data: [25, 30, 22, 32, 30, 26, 28],
         },
     ];
 
     return (
-
-        <DashboardCard title="Sales Overview" action={
-            <Select
-                labelId="month-dd"
-                id="month-dd"
-                value={month}
-                size="small"
-                onChange={handleChange}
-            >
-                <MenuItem value={1}>March 2023</MenuItem>
-                <MenuItem value={2}>April 2023</MenuItem>
-                <MenuItem value={3}>May 2023</MenuItem>
-            </Select>
-        }>
-            <Chart
-                options={optionscolumnchart}
-                series={seriescolumnchart}
-                type="bar"
-                height={370} width={"100%"}
-            />
-        </DashboardCard>
+        <>
+            <DashboardCard sx={{ position: 'relative', paddingTop: '70px', }}>
+                <>
+                    <WeatherCard />
+                    <Box sx={{ marginTop: '40px' }}>
+                        <Chart
+                            options={optionscolumnchart}
+                            series={seriescolumnchart}
+                            type="bar"
+                            height={250}
+                            width={"100%"}
+                        />
+                    </Box>
+                </>
+            </DashboardCard>
+        </>
     );
 };
 

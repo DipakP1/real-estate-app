@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardContent, Typography, Stack, Box } from "@mui/material";
+import { Card, CardContent, Typography, Stack, Box, SxProps } from "@mui/material";
 
 type Props = {
   title?: string;
@@ -11,6 +11,7 @@ type Props = {
   headsubtitle?: string | JSX.Element;
   children?: JSX.Element;
   middlecontent?: string | JSX.Element;
+  sx?: SxProps; // Accepts the sx prop
 };
 
 const DashboardCard = ({
@@ -23,9 +24,10 @@ const DashboardCard = ({
   headtitle,
   headsubtitle,
   middlecontent,
+  sx, // Add this here to accept sx
 }: Props) => {
   return (
-    <Card sx={{ padding: 0 }} elevation={8} variant={undefined}>
+    <Card sx={{ padding: 0, overflow:"revert !important", ...sx }} elevation={8}> 
       {cardheading ? (
         <CardContent>
           <Typography variant="h5">{headtitle}</Typography>

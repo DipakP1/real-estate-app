@@ -3,6 +3,8 @@
 import { useMediaQuery, Box, Drawer, Typography, useTheme } from "@mui/material";
 import SidebarItems from "./SidebarItems";
 import { Sidebar, Logo } from 'react-mui-sidebar';
+import LogoImg from "../../../../../public/images/logos/Vector.png"
+import Image from "next/image";
 
 interface ItemType {
   isMobileSidebarOpen: boolean;
@@ -22,6 +24,8 @@ const Sidebarr = ({
   // Custom CSS for short scrollbar
   const scrollbarStyles = {
     backgroundColor: "#66A5AE",
+    height:"90vh",
+
     '&::-webkit-scrollbar': {
       width: '270px',
     },
@@ -55,7 +59,7 @@ const Sidebarr = ({
         >
           <Box
             sx={{
-              height: "100%",
+              // height: "100%",
             }}
           >
 
@@ -67,7 +71,9 @@ const Sidebarr = ({
               themeSecondaryColor="#49beff"
               showProfile={false}
             >
-              <Box sx={{ margin: "20px 20px", paddingBottom: "10px", fontSize: "16px", color: "white", fontWeight: "bold", borderBottom: "2px solid #fff" }} >Real Estate Portal</Box>
+              <Box sx={{ display:"flex",alignItems:"center",gap:"1em", margin: "20px 20px", paddingBottom: "10px", fontSize: "14px", color: "white", fontWeight: "bold", borderBottom: "2px solid #fff" }} >
+                <Image src={LogoImg} alt="LOGO" width={20} height={20} />
+                Real Estate Portal</Box>
               <Box
                 sx={{
                   height: "100%",
@@ -96,6 +102,7 @@ const Sidebarr = ({
         },
       }}
     >
+
       <Typography
         sx={{
           color: "#000",

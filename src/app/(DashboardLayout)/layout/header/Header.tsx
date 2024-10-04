@@ -16,7 +16,10 @@ import PropTypes from "prop-types";
 
 // components
 import Profile from "./Profile";
-import { IconBellRinging, IconMenu, IconHome, IconUser } from "@tabler/icons-react";
+import { IconBellRinging, IconMenu, IconHome, IconUser, IconSettingsFilled } from "@tabler/icons-react";
+import Image from "next/image";
+
+import LogoImg from "../../../../../public/images/logos/Vector.png"
 
 interface ItemType {
   toggleMobileSidebar: (event: React.MouseEvent<HTMLElement>) => void;
@@ -31,8 +34,8 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
     background: "#D4F6FB",
     justifyContent: 'center',
     backdropFilter: 'blur(4px)',
-    borderBottom: "2px solid #f5f5f5",
-    maxWidth: "100%",
+    // borderBottom: "2px solid #f5f5f5",
+    width: "80%",
     [theme.breakpoints.up('lg')]: {
       minHeight: '70px',
     },
@@ -65,10 +68,7 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
             justifyContent: "left",
           }}
         >
-          <Box sx={{ paddingRight: "10px" }}>
-
-          </Box>
-          <Box>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
             <Typography
               sx={{
                 color: "#ffffff",
@@ -77,8 +77,14 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
                 cursor: "pointer",
                 letterSpacing: "-0.8px",
                 fontFamily: "Nunito, sans-serif",
+                mr: 2
               }}
             >
+              {/* <Image src={LogoImg} alt="LOGO" width={20} height={20} /> */}
+
+            </Typography>
+
+            <Typography>
             </Typography>
 
             <Typography
@@ -95,36 +101,32 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
                 },
               }}
             >
+
               Real Estate Portal
             </Typography>
           </Box>
         </Box>
 
-
-        <IconButton
-          size="large"
-          aria-label="show 11 new notifications"
-          color="inherit"
-          aria-controls="msgs-menu"
-          aria-haspopup="true"
-        ></IconButton>
-
         <Box flexGrow={1} sx={{
           textAlign: "center",
-          pr: 80
+
+          // pr: 80
         }} alignItems="center">
           <Typography
             variant="body2"
             sx={{
-              color: "#0003",
-              fontWeight: "700",
+              color: "#7B809A",
+              display: "flex",
+              // width:"50%"
+              alignItems: "center",
+              gap: "6px",
               fontSize: "14px",
               cursor: "pointer",
               letterSpacing: "-0.8px",
               fontFamily: "Nunito, sans-serif",
             }}
           >
-            <IconHome width="20" height="20" />
+            <IconHome width="15" height="15" /> / Pages /
           </Typography>
         </Box>
 
@@ -134,7 +136,15 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
         <Stack spacing={1} direction="row" alignItems="center">
           <Profile />
         </Stack>
-
+        <Stack>
+          <IconButton
+            size="large"
+            color="inherit"
+            aria-controls="msgs-menu"
+          >
+            <IconSettingsFilled size="21" stroke="1.5" />
+          </IconButton>
+        </Stack>
         <Stack>
           <IconButton
             size="large"
@@ -149,6 +159,8 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
 
           </IconButton>
         </Stack>
+
+
       </ToolbarStyled>
     </AppBarStyled>
   );
