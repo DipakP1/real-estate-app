@@ -1,0 +1,15 @@
+@media print{
+  .MuiDataGrid-toolbarContainer{
+      display:none !important;
+  }
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mainwrapper{
+  background-color: #D4F6FB !important;
+}
