@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Typography, Box } from '@mui/material';
+import { Card, Typography, Box, CardContent } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import DashboardCard from '../shared/DashboardCard';
 import dynamic from "next/dynamic";
@@ -16,7 +16,7 @@ const WeatherCard = () => (
             backgroundColor: "#E93B77",
             color: "#fff",
             padding: 2,
-            marginTop: "-140px", // Removed negative margin
+            marginTop: "-130px", // Removed negative margin
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             position: "relative", // Ensure it’s not affected by other elements
         }}
@@ -112,22 +112,22 @@ const SalesOverview = () => {
     ];
 
     return (
-        <>
-            <DashboardCard sx={{ position: 'relative', paddingTop: '70px', }}>
-                <>
+        // <Box mt={5} >
+            <Card  sx={{ boxShadow: 3, mt:5, borderRadius: 2, position: 'relative', paddingTop: '70px', overflow: 'revert', height:"100%" }} elevation={9}>
+                <CardContent>
                     <WeatherCard />
-                    <Box sx={{ marginTop: '40px' }}>
+                    <Box height={"100%"}>
                         <Chart
                             options={optionscolumnchart}
                             series={seriescolumnchart}
                             type="bar"
-                            height={250}
+                            height={"auto"}
                             width={"100%"}
                         />
                     </Box>
-                </>
-            </DashboardCard>
-        </>
+                </CardContent>
+            </Card>
+        // </Box>
     );
 };
 

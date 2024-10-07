@@ -23,13 +23,13 @@ interface Data {
 const rows = [
   { id: 1, name: 'Item 1', price: 50 },
   { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
-  { id: 2, name: 'Item 2', price: 30 },
+  { id: 3, name: 'Item 2', price: 30 },
+  { id: 4, name: 'Item 2', price: 30 },
+  { id: 5, name: 'Item 2', price: 30 },
+  { id: 6, name: 'Item 2', price: 30 },
+  { id: 7, name: 'Item 2', price: 30 },
+  { id: 8, name: 'Item 2', price: 30 },
+  { id: 9, name: 'Item 2', price: 30 },
 
   // More rows...
 ];

@@ -35,7 +35,8 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
     justifyContent: 'center',
     backdropFilter: 'blur(4px)',
     // borderBottom: "2px solid #f5f5f5",
-    width: "80%",
+    width: "100%",
+     height: '70px',
     [theme.breakpoints.up('lg')]: {
       minHeight: '70px',
     },
@@ -107,6 +108,8 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
           </Box>
         </Box>
 
+        <Box width="280px"></Box>
+
         <Box flexGrow={1} sx={{
           textAlign: "center",
 
@@ -120,13 +123,13 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
               // width:"50%"
               alignItems: "center",
               gap: "6px",
-              fontSize: "14px",
+              fontSize: "16px",
               cursor: "pointer",
               letterSpacing: "-0.8px",
               fontFamily: "Nunito, sans-serif",
             }}
           >
-            <IconHome width="15" height="15" /> / Pages /
+            <IconHome width="17" height="17" /> / Pages /
           </Typography>
         </Box>
 

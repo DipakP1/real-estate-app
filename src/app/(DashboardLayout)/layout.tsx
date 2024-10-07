@@ -27,18 +27,18 @@ const ContentWrapper = styled("div")(() => ({
 
 const PageWrapper = styled("div")(() => ({
   flexGrow: 1,
-  paddingBottom: "60px",
   flexDirection: "column",
   zIndex: 1,
   backgroundColor: "transparent",
   width: '100%',
+  padding:"80px 30px"
 }));
 
 const FooterWrapper = styled("div")(() => ({
   width: "100%",  // Full width for footer
   position: "relative", // Make sure the footer is relative to its parent container
   // bottom: 0,
-  backgroundColor:"#D4F6FB"
+  backgroundColor: "#D4F6FB"
 }));
 
 export default function RootLayout({
@@ -80,20 +80,22 @@ export default function RootLayout({
                 isMobileSidebarOpen={isMobileSidebarOpen}
                 onSidebarClose={() => setMobileSidebarOpen(false)}
               />
-              
+
               {/* Main Content */}
               <PageWrapper className="page-wrapper">
-                <Container
+                {/* <Container
                   sx={{
-                    paddingTop: "100px",
-                    width: "100%",
                     flexGrow: 1,
+                    ".css-17qm3xv-MuiContainer-root": {
+                      maxWidth: "10%"
+
+                    }
                   }}
-                >
+                > */}
                   <Box sx={{ minHeight: "calc(100vh - 170px)" }}>
                     {children}
                   </Box>
-                </Container>
+                {/* </Container> */}
               </PageWrapper>
             </ContentWrapper>
           </MainWrapper>
