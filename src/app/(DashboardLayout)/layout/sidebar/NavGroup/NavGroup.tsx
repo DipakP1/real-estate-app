@@ -9,23 +9,26 @@ type NavGroup = {
 
 interface ItemType {
   item: NavGroup;
+  key: Number
 }
 
-const NavGroup = ({ item }: ItemType) => {
+const NavGroup = ({ item, key }: ItemType) => {
   const ListSubheaderStyle = styled((props: Theme | any) => <ListSubheader disableSticky {...props} />)(
     ({ theme }) => ({
       ...theme.typography.overline,
-      fontWeight: '700',
+      fontWeight: '500',
+      fontSize:"14px",
       marginTop: theme.spacing(3),
       marginBottom: theme.spacing(0),
-      color:"#fff",
+      marginLeft:"10px",
+      color: "#fff",
       lineHeight: '26px',
       padding: '3px 12px',
     }),
   );
   return (
-    <ListSubheaderStyle>{item.subheader}</ListSubheaderStyle>
-    );
+    <ListSubheaderStyle key={key}>{item.subheader}</ListSubheaderStyle>
+  );
 };
 
 NavGroup.propTypes = {

@@ -48,10 +48,10 @@ export const OverviewTasksProgress = (props) => {
           </Avatar>
         </Stack>
         <Box sx={{ mt: 3 }}>
-          <LinearProgress
+          {/* <LinearProgress
             value={value}
             variant="determinate"
-          />
+          /> */}
         </Box>
       </CardContent>
     </Card>

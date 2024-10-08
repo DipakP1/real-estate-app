@@ -8,23 +8,38 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { baselightTheme } from "@/utils/theme/DefaultColors";
 import { SnackbarProvider } from 'notistack';
+import Footer from "./components/Footer/Footer";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
-  minHeight: "100vh",
+  minHeight: "100vh",  // Ensure that the wrapper takes full viewport height
   width: "100%",
-  backgroundColor: "#D4F6FB"
+  flexDirection: "column",  // Arrange content in column so footer can be positioned at bottom
+  backgroundColor: "#ffffff",
+  borderRadius:"100px",
+}));
+
+const ContentWrapper = styled("div")(() => ({
+  flexGrow: 1,  // Allows content area to grow and push footer to bottom when needed
+  display: "flex",
+  flexDirection: "row",  // Ensure that sidebar and main content are side-by-side
+  width: "100%",
 }));
 
 const PageWrapper = styled("div")(() => ({
-  display: "flex",
   flexGrow: 1,
-  paddingBottom: "60px",
   flexDirection: "column",
   zIndex: 1,
   backgroundColor: "transparent",
-  // border:'2px solid gray',
-  width: '100%'
+  width: '100%',
+  padding:"80px 30px"
+}));
+
+const FooterWrapper = styled("div")(() => ({
+  width: "100%",  // Full width for footer
+  position: "relative", // Make sure the footer is relative to its parent container
+  // bottom: 0,
+  backgroundColor: "#D4F6FB"
 }));
 
 export default function RootLayout({
@@ -38,11 +53,9 @@ export default function RootLayout({
 
   return (
     <>
-
       {path === "/" || path === "/register" ? (
         <Box
           sx={{
-            // minHeight: "calc(100vh - 170px)",
             width: "auto",
             height: "100vh",
           }}
@@ -51,40 +64,49 @@ export default function RootLayout({
             <CssBaseline />
             {children}
           </ThemeProvider>
-
         </Box>
       ) : (
-        <>
-          <ThemeProvider theme={baselightTheme}>
-            <CssBaseline />
+        <ThemeProvider theme={baselightTheme}>
+          <CssBaseline />
 
-            <MainWrapper className="mainwrapper">
+          <MainWrapper className="mainwrapper">
+            {/* Sidebar & Header */}
+            <Header
+              toggleMobileSidebar={() => setMobileSidebarOpen(true)}
+              sx={{ display: "none" }}
+            />
+            <ContentWrapper>
               <Sidebar
                 isSidebarOpen={isSidebarOpen}
                 isMobileSidebarOpen={isMobileSidebarOpen}
                 onSidebarClose={() => setMobileSidebarOpen(false)}
               />
-              <Header
-                toggleMobileSidebar={() => setMobileSidebarOpen(true)}
-                sx={{ display: "none" }}
-              />
+
+              {/* Main Content */}
               <PageWrapper className="page-wrapper">
-                <Container
+                {/* <Container
                   sx={{
-                    paddingTop: "100px",
-                    width: "100%",
+                    flexGrow: 1,
+                    ".css-17qm3xv-MuiContainer-root": {
+                      maxWidth: "10%"
+
+                    }
                   }}
-                >
-
-                  <Box sx={{ minHeight: "calc(100vh - 170px)" }}>{children}</Box>
-                </Container>
+                > */}
+                  <Box sx={{ minHeight: "calc(100vh - 170px)" }}>
+                    {children}
+                  </Box>
+                {/* </Container> */}
               </PageWrapper>
-            </MainWrapper>
-          </ThemeProvider>
-        </>
+            </ContentWrapper>
+          </MainWrapper>
+
+          {/* Footer */}
+          <FooterWrapper>
+            <Footer />
+          </FooterWrapper>
+        </ThemeProvider>
       )}
-
-
     </>
   );
 }
