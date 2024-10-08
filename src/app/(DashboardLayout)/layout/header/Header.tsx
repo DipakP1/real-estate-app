@@ -31,12 +31,12 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
 
   const AppBarStyled = styled(AppBar)(({ theme }) => ({
     boxShadow: 'none',
-    background: "#D4F6FB",
+    background: "#ffffff",
     justifyContent: 'center',
     backdropFilter: 'blur(4px)',
-    // borderBottom: "2px solid #f5f5f5",
+    borderBottom: "2px solid #ececec",
     width: "100%",
-     height: '70px',
+    height: '70px',
     [theme.breakpoints.up('lg')]: {
       minHeight: '70px',
     },
@@ -91,8 +91,8 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
             <Typography
               sx={{
                 color: "#000",
-                fontWeight: "700",
-                fontSize: "16px",
+                fontWeight: "500",
+                fontSize: "18px",
                 cursor: "pointer",
                 letterSpacing: "-0.8px",
                 fontFamily: "Nunito, sans-serif",
@@ -118,23 +118,23 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
           <Typography
             variant="body2"
             sx={{
-              color: "#7B809A",
+              color: "#000",
               display: "flex",
-              // width:"50%"
               alignItems: "center",
               gap: "6px",
-              fontSize: "16px",
+              fontWeight: "bold",
+              fontSize: "18px",
               cursor: "pointer",
-              letterSpacing: "-0.8px",
+              // letterSpacing: "-0.8px",
               fontFamily: "Nunito, sans-serif",
             }}
           >
-            <IconHome width="17" height="17" /> / Pages /
+            Super Admin
           </Typography>
         </Box>
 
         <Stack>
-          <TextField size="small" placeholder="Search here..." />
+          <TextField sx={{ borderRadius: "10px" }} size="small" placeholder="Search here..." />
         </Stack>
         <Stack spacing={1} direction="row" alignItems="center">
           <Profile />

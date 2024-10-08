@@ -47,7 +47,7 @@ const MonthlyEarnings = () => {
   const seriescolumnchart = [
     {
       name: '',
-      color: secondary,
+      color: "#acdd33",
       data: [25, 66, 20, 40, 12, 58, 20],
     },
   ];
@@ -55,13 +55,14 @@ const MonthlyEarnings = () => {
   return (
     <DashboardCard
       title="Monthly Earnings"
+      sx={{border:"1px solid #ededed", marginBottom:"15px"}}
       action={
-        <Fab color="secondary" size="medium" sx={{color: '#ffffff'}}>
+        <Fab color="secondary" size="medium" sx={{color: '#022213', backgroundColor:"#acdd33"}}>
           <IconCurrencyDollar width={24} />
         </Fab>
       }
       footer={
-        <Chart options={optionscolumnchart} series={seriescolumnchart} type="area" height={60} width={"100%"} />
+        <Chart options={optionscolumnchart} series={seriescolumnchart} type="area" height={70} width={"100%"} />
       }
     >
       <>

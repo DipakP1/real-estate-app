@@ -12,6 +12,7 @@ import {
   ListItemButton,
 } from "@mui/material";
 import Link from "next/link";
+import Badge, { BadgeProps } from "@mui/material/Badge";
 
 type NavGroup = {
   [x: string]: any;
@@ -32,6 +33,15 @@ interface ItemType {
   pathDirect: string;
   level?: number | any;
 }
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -20,
+    top: 13,
+    padding: "0 9px",
+    backgroundColor: "#adde34",
+    color:"#022213",
+  },
+}));
 
 const NavItem = ({ item, level, key, pathDirect, onClick }: ItemType) => {
   const Icon = item.icon;
@@ -39,25 +49,32 @@ const NavItem = ({ item, level, key, pathDirect, onClick }: ItemType) => {
   const itemIcon = <Icon stroke={1.5} size="1.3rem" />;
 
   const ListItemStyled = styled(ListItem)(() => ({
-    padding: 0,
+    padding: "0",
     ".MuiButtonBase-root": {
       whiteSpace: "nowrap",
       marginBottom: "2px",
-      padding: "8px",
-      borderRadius: "4px",
+      // padding: "8px",
+      // borderRadius: "4px",
       backgroundColor: level > 1 ? "transparent !important" : "inherit",
-      color: '#fff',
+      color: "grey",
       marginTop: "5px",
-      paddingLeft: "10px",
+      fontWeight: "200",
+
       "&:hover": {
-        backgroundColor: theme.palette.primary.light,
-        color: 'black',
+        backgroundColor: "#022213",
+        // color: 'black',
+        fontWeight: "700",
       },
       "&.Mui-selected": {
-        color: "white",
-        backgroundColor: "#E91F63",
+        // color: "white",
+        backgroundColor: "#022213",
+        borderLeft: "5px solid #acdd33",
+        bordarRadius: "0 10px 10px 0",
+        color: "#ffff",
+        fontWeight: "700",
+
         "&:hover": {
-          backgroundColor: "#E91F63",
+          backgroundColor: "#022213",
           color: "white",
         },
       },
@@ -79,14 +96,20 @@ const NavItem = ({ item, level, key, pathDirect, onClick }: ItemType) => {
             sx={{
               minWidth: "36px",
               p: "5px 0",
-              color: "inherit",
+              pl: pathDirect !== item.href ? 1 : 0,
+              color: pathDirect === item.href ? "#acdd33" : "white",
+              fontSize: "18px",
             }}
           >
             {itemIcon}
           </ListItemIcon>
-          <ListItemText>
-            <>{item.title}</>
-          </ListItemText>
+          {item.badge ? (
+            <StyledBadge badgeContent={14}>
+              <ListItemText>{item.title}</ListItemText>
+            </StyledBadge>
+          ) : (
+            <ListItemText>{item.title}</ListItemText>
+          )}
         </ListItemButton>
       </ListItemStyled>
     </List>

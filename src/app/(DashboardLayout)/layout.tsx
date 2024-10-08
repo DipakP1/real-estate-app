@@ -15,7 +15,8 @@ const MainWrapper = styled("div")(() => ({
   minHeight: "100vh",  // Ensure that the wrapper takes full viewport height
   width: "100%",
   flexDirection: "column",  // Arrange content in column so footer can be positioned at bottom
-  backgroundColor: "#D4F6FB"
+  backgroundColor: "#ffffff",
+  borderRadius:"100px",
 }));
 
 const ContentWrapper = styled("div")(() => ({

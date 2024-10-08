@@ -46,7 +46,7 @@ const DashboardCard = ({
               mb={3}
             >
               <Box>
-                {title ? <Typography color="#05CAED" variant="h5">{title}</Typography> : ""}
+                {title ? <Typography color="#" variant="h5">{title}</Typography> : ""}
 
                 {subtitle ? (
                   <Typography variant="subtitle2" color="#7B809A">

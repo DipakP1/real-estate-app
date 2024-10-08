@@ -1,134 +1,119 @@
-import React from 'react';
-import { Card, Typography, Box, CardContent } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import DashboardCard from '../shared/DashboardCard';
+import React from "react";
+import { Select, MenuItem } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import DashboardCard from "@/app/(DashboardLayout)/components/shared/DashboardCard";
 import dynamic from "next/dynamic";
-import Image from 'next/image';
-
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-const WeatherCard = () => (
-    <Card
-        sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#E93B77",
-            color: "#fff",
-            padding: 2,
-            marginTop: "-130px", // Removed negative margin
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            position: "relative", // Ensure it’s not affected by other elements
-        }}
-    >
-        <Box>
-            <Typography variant="subtitle1" sx={{ fontSize: "12px", color: "#C7CCD0", fontWeight: 600 }}>
-                Weather Today
-            </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 700, fontSize: "14px", ml: 2 }}>
-                New Delhi - 29°C
-            </Typography>
-        </Box>
-
-        <Box>
-            <Typography>
-                <Image src="/images/logos/weater.png" alt="wheater" height={40} width={50} />
-            </Typography>
-            <Typography variant="subtitle2" sx={{ color: "#fff", fontSize: "14px", fontWeight: 500, }}>
-                Sunny
-            </Typography>
-        </Box>
-
-    </Card>
-);
-
 const SalesOverview = () => {
+  // select
+  const [month, setMonth] = React.useState("1");
 
-    // chart color
-    const theme = useTheme();
+  const handleChange = (event: any) => {
+    setMonth(event.target.value);
+  };
 
-    // chart options
-    const optionscolumnchart: any = {
-        chart: {
-            type: 'bar',
-            fontFamily: "'Plus Jakarta Sans', sans-serif;",
-            foreColor: 'lightgrey',
-            toolbar: {
-                show: false,
-            },
-            height: 270,
-        },
-        colors: "black",
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                barHeight: '50%',
-                columnWidth: '20%',
-                borderRadius: [1],
-                borderRadiusApplication: 'end',
-                borderRadiusWhenStacked: 'all',
-            },
-        },
-        stroke: {
-            show: true,
-            width: 4,
-            lineCap: "butt",
-            colors: ["black"],
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        legend: {
-            show: false,
-        },
-        grid: {
-            borderColor: 'grey',
-            strokeDashArray: 3,
-            xaxis: {
-                lines: {
-                    show: false,
-                },
-            },
-        },
-        yaxis: {
-            tickAmount: 8,
-        },
-        xaxis: {
-            categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            axisBorder: {
-                show: false,
-            },
-        },
-        tooltip: {
-            theme: 'dark',
-            fillSeriesColor: false,
-        },
-    };
-    const seriescolumnchart: any = [
-        {
-            name: 'Watts',
-            data: [25, 30, 22, 32, 30, 26, 28],
-        },
-    ];
+  // chart color
+  const theme = useTheme();
+  const primary = theme.palette.primary.main;
+  const secondary = theme.palette.secondary.main;
 
-    return (
-        // <Box mt={5} >
-            <Card  sx={{ boxShadow: 3, mt:5, borderRadius: 2, position: 'relative', paddingTop: '70px', overflow: 'revert', height:"100%" }} elevation={9}>
-                <CardContent>
-                    <WeatherCard />
-                    <Box height={"100%"}>
-                        <Chart
-                            options={optionscolumnchart}
-                            series={seriescolumnchart}
-                            type="bar"
-                            height={"auto"}
-                            width={"100%"}
-                        />
-                    </Box>
-                </CardContent>
-            </Card>
-        // </Box>
-    );
+  // chart
+  const optionscolumnchart: any = {
+    chart: {
+      type: "bar",
+      fontFamily: "'Plus Jakarta Sans', sans-serif;",
+      foreColor: "#adb0bb",
+      toolbar: {
+        show: true,
+      },
+      height: 300,
+    },
+    colors: ["#acdd33", "#022213"],
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        barHeight: "60%",
+        columnWidth: "92%",
+        borderRadius: [6],
+        borderRadiusApplication: "end",
+        borderRadiusWhenStacked: "all",
+      },
+    },
+
+    stroke: {
+      show: true,
+      width: 1,
+      lineCap: "butt",
+      colors: ["transparent"],
+    },
+    dataLabels: {
+      enabled: false,
+    },
+    legend: {
+      show: true,
+    },
+    grid: {
+      borderColor: "rgba(0,0,0,0.1)",
+      strokeDashArray: 3,
+      xaxis: {
+        lines: {
+          show: false,
+        },
+      },
+    },
+    yaxis: {
+      tickAmount: 4,
+    },
+    xaxis: {
+      // categories: ['16/08', '17/08', '18/08', '19/08', '20/08', '21/08', '22/08', '23/08'],
+      axisBorder: {
+        show: false,
+      },
+    },
+    tooltip: {
+      theme: "light",
+      fillSeriesColor: false,
+    },
+  };
+  const seriescolumnchart: any = [
+    {
+      name: "Eanings this month",
+      data: [355, 390, 300, 350, 390, 180, 355, 390],
+    },
+    {
+      name: "Expense this month",
+      data: [280, 250, 325, 215, 250, 310, 280, 250],
+    },
+  ];
+
+  return (
+    <DashboardCard
+      title="Sales Overview"
+      sx={{ border: "1px solid #ededed" }}
+      action={
+        <Select
+          labelId="month-dd"
+          id="month-dd"
+          value={month}
+          size="small"
+          onChange={handleChange}
+        >
+          <MenuItem value={1}>March 2023</MenuItem>
+          <MenuItem value={2}>April 2023</MenuItem>
+          <MenuItem value={3}>May 2023</MenuItem>
+        </Select>
+      }
+    >
+      <Chart
+        options={optionscolumnchart}
+        series={seriescolumnchart}
+        type="bar"
+        height={"200"}
+        width={"100%"}
+      />
+    </DashboardCard>
+  );
 };
 
 export default SalesOverview;

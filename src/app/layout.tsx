@@ -5,11 +5,11 @@ import ClientWrapper from "./(DashboardLayout)/components/clientWrapper/ClientWr
 import { Chicle } from "next/font/google";
 
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+// const geistSans = localFont({
+//   src: "./fonts/GeistVF.woff",
+//   variable: "--font-geist-sans",
+//   weight: "100 900",
+// });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
@@ -64,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head />
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <ClientWrapper>
           {children}
         </ClientWrapper>

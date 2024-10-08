@@ -53,7 +53,7 @@ const products = [
 const ProductPerformance = () => {
     return (
 
-        <DashboardCard title="Product Performance">
+        <DashboardCard title="Transaction">
             <Box sx={{ overflow: 'auto', width: { xs: '280px', sm: 'auto' } }}>
                 <Table
                     aria-label="simple table"
@@ -69,16 +69,16 @@ const ProductPerformance = () => {
                                     Id
                                 </Typography>
                             </TableCell>
-                            <TableCell>
+                            <TableCell >
                                 <Typography variant="subtitle2" fontWeight={600}>
                                     Assigned
                                 </Typography>
                             </TableCell>
-                            <TableCell>
+                            {/* <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
                                     Name
                                 </Typography>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell>
                                 <Typography variant="subtitle2" fontWeight={600}>
                                     Priority
@@ -126,11 +126,11 @@ const ProductPerformance = () => {
                                         </Box>
                                     </Box>
                                 </TableCell>
-                                <TableCell>
+                                {/* <TableCell>
                                     <Typography color="textSecondary" variant="subtitle2" fontWeight={400}>
                                         {product.pname}
                                     </Typography>
-                                </TableCell>
+                                </TableCell> */}
                                 <TableCell>
                                     <Chip
                                         sx={{

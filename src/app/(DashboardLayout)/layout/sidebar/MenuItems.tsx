@@ -1,56 +1,113 @@
 "use client";
 
 import {
-  IconLayoutDashboard
+  IconSettings2,
+  IconShieldLock,
+  IconLayoutDashboard,
+  IconReport,
+  IconBrandMastercard,
+  IconKey,IconMail,IconUserCheck
 } from "@tabler/icons-react";
 import { uniqueId } from "lodash";
 
-const Menuitems =[
-// auth.user.role==="Employee"?[
+const Menuitems = [
+  // auth.user.role==="Employee"?[
 
-// ]:
+  // ]:
 
+  {
+    navlabel: true,
+    subheader: "Menu",
+    present: "yes"
+  },
   {
     id: uniqueId(),
     title: "Dashboard",
     icon: IconLayoutDashboard,
     href: "/home",
-    present:"yes"
+    present: "yes",
+    badge:false,
+
   },
   {
     navlabel: true,
     subheader: "Pages",
-    present:"yes"
+    present: "yes"
   },
   {
     id: uniqueId(),
     title: "Reports",
-    icon: IconLayoutDashboard,
+    icon: IconReport,
     href: "/admin/reports",
-    present:"yes"
-
+    present: "yes",
+    badge:false,
+  },
+  {
+    id: uniqueId(),
+    title: "Lead Managment",
+    icon: IconUserCheck,
+    href: "/admin/lead-managment",
+    present: "yes",
+    badge:false,
   },
   {
     id: uniqueId(),
     title: "Masters",
-    icon: IconLayoutDashboard,
+    icon: IconBrandMastercard,
     href: "/admin/masters",
-    present:"yes"
+    present: "yes",
+    badge:false,
+
   },
+  {
+    id: uniqueId(),
+    title: "Message",
+    icon: IconMail,
+    badge:true,
+    href: "/",
+    present: "yes"
+  },
+
+
   {
     navlabel: true,
     subheader: "Authentication",
-    present:"yes"
+    present: "yes"
   },
   {
     id: uniqueId(),
     title: "Login",
-    icon: IconLayoutDashboard,
+    icon: IconKey,
     href: "/",
-    present:"yes"
+    present: "yes",
+    badge:false,
 
   },
-  
+
+  {
+    navlabel: true,
+    subheader: "General",
+    present: "yes"
+  },
+  {
+    id: uniqueId(),
+    title: "Setting",
+    icon: IconSettings2,
+    href: "/",
+    present: "yes",
+    badge:false,
+
+  },
+  // {
+  //   id: uniqueId(),
+  //   title: "Security",
+  //   icon: IconShieldLock,
+  //   href: "/",
+  //   present: "yes",
+  //   badge:false,
+
+  // },
+
 
 ]
 

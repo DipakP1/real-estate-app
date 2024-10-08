@@ -14,7 +14,7 @@ import { Link, Typography } from '@mui/material';
 
 const RecentTransactions = () => {
   return (
-    <DashboardCard title="Recent Transactions">
+    <DashboardCard sx={{border:"1px solid #ededed",height:"100%"}} title="Recent Transactions">
       <>
         <Timeline
           className="theme-timeline"

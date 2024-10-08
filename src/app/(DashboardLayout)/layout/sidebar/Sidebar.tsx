@@ -23,14 +23,16 @@ const Sidebarr = ({
   const sidebarWidth = "270px";
   // Custom CSS for short scrollbar
   const scrollbarStyles = {
-    backgroundColor: "#66A5AE",
-    height:"90vh",
+    backgroundColor: "#022213",
+    // height:"90vh",
+    // width: '270px',
+
 
     '&::-webkit-scrollbar': {
-      width: '270px',
+      // width: '270px',
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#eff2f7',
+      backgroundColor: '#022213',
       borderRadius: '15px',
     },
   };
@@ -50,8 +52,8 @@ const Sidebarr = ({
           PaperProps={{
             sx: {
               boxSizing: "border-box",
-              margin: "20px",
-              borderRadius: "12px",
+              // margin: "20px",
+              // borderRadius: "12px",
               // width: "270px",
               ...scrollbarStyles,
             },
@@ -71,9 +73,10 @@ const Sidebarr = ({
               themeSecondaryColor="#49beff"
               showProfile={false}
             >
-              <Box sx={{ display:"flex",alignItems:"center",gap:"1em", margin: "20px 20px", paddingBottom: "10px", fontSize: "14px", color: "white", fontWeight: "bold", borderBottom: "2px solid #fff" }} >
+              <Box sx={{ display: "flex", alignItems: "center", gap: "1em", margin: "20px 20px", paddingBottom: "10px", fontSize: "14px", color: "white", fontWeight: "bold" }} >
                 <Image src={LogoImg} alt="LOGO" width={20} height={20} />
-                Real Estate Portal</Box>
+                <Typography variant="body2" fontSize={"18px"}>
+                  Real Estate Portal</Typography></Box>
               <Box
                 sx={{
                   height: "100%",

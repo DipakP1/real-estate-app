@@ -12,7 +12,7 @@ const SidebarItems = ({ toggleMobileSidebar }: any) => {
   const pathDirect = pathname;
 
   return (
-    <Box sx={{ px: 3 }}>
+    <Box sx={{ px: 0 }}>
       <List
         sx={{ pt: 0, fontFamily: "Nunito" }}
         className="sidebarNav"
