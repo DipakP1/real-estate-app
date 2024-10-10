@@ -12,7 +12,7 @@ const CustomPagination = ({
 }: any) => {
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%', mb:2 }}>
             {/* Rows Per Page at Top */}
             <Box sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
                 <Select

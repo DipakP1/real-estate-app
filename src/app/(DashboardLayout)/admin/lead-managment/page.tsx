@@ -8,15 +8,10 @@ import LeadManagment from "./LeadManagment";
 const page = () => {
   return (
     <PageContainer title="Order Table" description="master-crm">
-      <DashboardCard
-        title="User Creation"
-        subtitle=""
-      >
-        <>
-          <Box>
-            <LeadManagment />
-          </Box>
-        </>
+      <DashboardCard title="User Creation" subtitle="">
+        <Box>
+          <LeadManagment />
+        </Box>
       </DashboardCard>
     </PageContainer>
   );
