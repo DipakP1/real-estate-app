@@ -1,8 +1,8 @@
 import { createTheme } from "@mui/material/styles";
 import { Plus_Jakarta_Sans, Roboto } from "next/font/google";
+import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
-
-export const plus:any = Roboto({
+export const plus: any = Roboto({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   display: "swap",
@@ -57,7 +57,6 @@ const baselightTheme = createTheme({
     text: {
       primary: "#2A3547",
       secondary: "#ffffff",
-     
     },
     action: {
       disabledBackground: "rgba(73,82,88,0.12)",
@@ -125,6 +124,7 @@ const baselightTheme = createTheme({
       fontWeight: 400,
     },
   },
+
   components: {
     MuiCssBaseline: {
       styleOverrides: {
@@ -141,6 +141,49 @@ const baselightTheme = createTheme({
         },
       },
     },
+    // MuiTextField: {
+    //   styleOverrides: {
+    //     root: {
+    //       '--TextField-brandBorderColor': '#E0E3E7',
+    //       '--TextField-brandBorderHoverColor': '#B2BAC2',
+    //       '--TextField-brandBorderFocusedColor': '#6F7E8C',
+    //       '& label.Mui-focused': {
+    //         color: 'var(--TextField-brandBorderFocusedColor)',
+    //       },
+    //     },
+    //   },
+    // },
+    // MuiOutlinedInput: {
+    //   styleOverrides: {
+    //     notchedOutline: {
+    //       borderColor: 'var(--TextField-brandBorderColor)',
+    //     },
+    //     root: {
+    //       [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+    //         borderColor: 'var(--TextField-brandBorderHoverColor)',
+    //       },
+    //       [`&.Mui-focused .${outlinedInputClasses.notchedOutline}`]: {
+    //         borderColor: 'var(--TextField-brandBorderFocusedColor)',
+    //       },
+    //     },
+    //   },
+    // },
+
+    // MuiInput: {
+    //   styleOverrides: {
+    //     root: {
+    //       "&::before": {
+    //         borderBottom: "2px solid var(--TextField-brandBorderColor)",
+    //       },
+    //       "&:hover:not(.Mui-disabled, .Mui-error):before": {
+    //         borderBottom: "2px solid var(--TextField-brandBorderHoverColor)",
+    //       },
+    //       "&.Mui-focused:after": {
+    //         borderBottom: "2px solid var(--TextField-brandBorderFocusedColor)",
+    //       },
+    //     },
+    //   },
+    // },
   },
 });
 
