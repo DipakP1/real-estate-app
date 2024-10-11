@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./page.module.css";
-import ClientWrapper from "./(DashboardLayout)/components/clientWrapper/ClientWrapper";
+import ClientWrapper from "@/components/clientWrapper/ClientWrapper";
 import { Chicle } from "next/font/google";
 
 

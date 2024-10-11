@@ -8,7 +8,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { baselightTheme } from "@/utils/theme/DefaultColors";
 import { SnackbarProvider } from 'notistack';
-import Footer from "./components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 
 const MainWrapper = styled("div")(() => ({
   display: "flex",
@@ -89,7 +89,6 @@ export default function RootLayout({
                     flexGrow: 1,
                     ".css-17qm3xv-MuiContainer-root": {
                       maxWidth: "10%"
-
                     }
                   }}
                 > */}
@@ -102,9 +101,9 @@ export default function RootLayout({
           </MainWrapper>
 
           {/* Footer */}
-          <FooterWrapper>
+          {/* <FooterWrapper>
             <Footer />
-          </FooterWrapper>
+          </FooterWrapper> */}
         </ThemeProvider>
       )}
     </>

@@ -2,7 +2,7 @@
 import { Box, Button } from '@mui/material';
 import { useEffect } from 'react';
 import { useCounterStore, useStore } from '@/store/useStore';
-import DynamicTableComponent from '../../components/DynamicTable/Table.component';
+import DynamicTableComponent from '@/components/DynamicTable/Table.component';
 
 
 interface HeadCell<T> {

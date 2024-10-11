@@ -9,7 +9,7 @@ type NavGroup = {
 
 interface ItemType {
   item: NavGroup;
-  key: Number
+  key: number
 }
 
 const NavGroup = ({ item, key }: ItemType) => {

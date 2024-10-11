@@ -18,8 +18,22 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
-import { Chip, TableContainer } from "@mui/material";
+import {
+  Chip,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TableContainer,
+  TextField,
+} from "@mui/material";
 import { CustomPagination, CustomPaginationNumber } from "./TablePagination";
+import { IconEyeFilled } from "@tabler/icons-react";
+import Grid from "@mui/material/Grid2";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
 
 type Order = "asc" | "desc";
 
@@ -222,47 +236,115 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
 
   const getStatusChip = (status: string) => {
     switch (status) {
-      case "approved":
-        return <Chip label="Approved" color="success" />;
-      case "pending":
-        return <Chip label="Pending" color="warning" />;
-      case "hold":
-        return <Chip label="On Hold" color="error" />;
+      case "active":
+        return <Chip label="Active" color="success" />;
+      case "inactive":
+        return <Chip label="InActive" color="warning" />;
+      // case "hold":
+      //   return <Chip label="On Hold" color="error" />;
       default:
         return <Chip label="Unknown" />;
     }
   };
-  
+
   const rowsWithChips = rows.map((row: any) => ({
     ...row,
-    status: getStatusChip(row.status), 
+    status: getStatusChip(row.status),
   }));
-  
+
+  const icon = rowsWithChips.map((icon) => ({
+    ...icon,
+    view: (
+      <IconButton>
+        <IconEyeFilled />
+      </IconButton>
+    ),
+  }));
+
   const visibleRows = React.useMemo(
     () =>
-      [...rowsWithChips]
+      [...icon]
         .sort(getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage, rowsWithChips]
   );
-  
+
   console.log(rowsWithChips, "ROWS WITH CHIPS");
-  
+
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", padding: 0 }}>
       {/* <Toolbar>
                 <Typography variant="h6">{title}</Typography>
             </Toolbar> */}
 
       {/* Custom Pagination at the Top (for Rows Per Page) */}
       {enablePagination && (
-        <CustomPagination
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+        <Grid container>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <CustomPagination
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Grid>
+
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Box
+              component="form"
+              sx={{
+                p: "2px 4px",
+                display: "flex",
+                alignItems: "right",
+                justifyContent: "right",
+                width: 300,
+                backgroundColor: "#f5f4f4",
+                borderRadius: "5px",
+              }}
+            >
+              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Google Maps"
+                inputProps={{ "aria-label": "search google maps" }}
+              />
+            </Box>
+          </Grid>
+          <Grid textAlign={"right"} size={{ xs: 12, sm: 4 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "right",
+                gap: 1,
+              }}
+            >
+              <Typography sx={{ color: "#000" }}>Filter: </Typography>
+
+              <Select
+                sx={{ minWidth: 100 }}
+                labelId="demo-controlled-open-select-label"
+                id="demo-controlled-open-select"
+                // open={open}
+                // onClose={handleClose}
+                // onOpen={handleOpen}
+                // value={age}
+                size="small"
+                // onChange={handleChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Sort by A-Z</MenuItem>
+                <MenuItem value={20}>Sort by Z-A</MenuItem>
+                <MenuItem value={30}>Other</MenuItem>
+              </Select>
+            </Box>
+          </Grid>
+        </Grid>
       )}
 
       <TableContainer sx={{ maxHeight: 440 }}>

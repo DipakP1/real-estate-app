@@ -1,8 +1,8 @@
 
 
 import React from 'react'
-import PageContainer from '../../components/container/PageContainer'
-import DashboardCard from '../../components/shared/DashboardCard'
+import PageContainer from '@/components/container/PageContainer'
+import DashboardCard from '@/components/shared/DashboardCard'
 import { Box, Typography } from '@mui/material'
 import { IconBoxAlignBottomLeft } from '@tabler/icons-react'
 import Reports from './Reports'
