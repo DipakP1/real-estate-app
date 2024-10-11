@@ -8,6 +8,7 @@ import ReusableFormInput from "@/components/forms/ReusableHookForm";
 import { useForm, Controller } from "react-hook-form";
 import { postData } from "@/services/apiService";
 import { useSnackbar } from "notistack";
+import { uniqueId } from "lodash";
 
 // Validation schema
 const validationSchema: any = yup.object().shape({
@@ -57,11 +58,20 @@ const UserCreation = ({ step, setStep, setPrev }: any) => {
 
   const onSubmit = async (data: any) => {
     try {
-      const res = await postData("/v1/user/register", data);
+      const res = await postData("/v1/user/register", {
+        userId: uniqueId(),
+        employeeCode: "1234",
+        departmentId: 122,
+        designationId: 2,
+        userTypeId: 56,
+        userTypeName: "User",
+        password: "pass@123",
+        ...data,
+      });
       enqueueSnackbar(res.message, { variant: "success" });
       // reset();
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
