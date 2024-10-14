@@ -52,6 +52,15 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: "Lead Creation",
+    icon: IconUserCheck,
+    href: "/admin/lead-creation",
+    present: "yes",
+    badge:false,
+  },
+
+  {
+    id: uniqueId(),
     title: "Users",
     icon: IconUser,
     href: "/admin/users",

@@ -232,12 +232,12 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         return <Chip label="Unknown" />;
     }
   };
-  
+
   const rowsWithChips = rows.map((row: any) => ({
     ...row,
-    status: getStatusChip(row.status), 
+    status: getStatusChip(row.status),
   }));
-  
+
   const visibleRows = React.useMemo(
     () =>
       [...rowsWithChips]
@@ -245,9 +245,9 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage, rowsWithChips]
   );
-  
+
   console.log(rowsWithChips, "ROWS WITH CHIPS");
-  
+
   return (
     <Box sx={{ width: "100%" }}>
       {/* <Toolbar>
@@ -255,7 +255,7 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
             </Toolbar> */}
 
       {/* Custom Pagination at the Top (for Rows Per Page) */}
-      {enablePagination && (
+      {/*    {enablePagination && (
         <CustomPagination
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -263,7 +263,7 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      )}
+      )} */}
 
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table
@@ -302,6 +302,7 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
                   <TableCell
                     key={headCell.id as string}
                     align={headCell.numeric ? "right" : "left"}
+                    sx={{ boxShadow: 1 }}
                   >
                     {row[headCell.id as keyof T]}
                   </TableCell>
@@ -333,13 +334,33 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
               Showing {startEntry} to {endEntry} of {rows.length} entries
             </Typography>
           </Box>
-          <CustomPaginationNumber
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {/* Custom Pagination at the Top (for Rows Per Page) */}
+            {enablePagination && (
+              <CustomPagination
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            )}
+            <Box sx={{ pl: 3 }}>
+              <CustomPaginationNumber
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </Box>
+          </Box>
         </Box>
       )}
 
