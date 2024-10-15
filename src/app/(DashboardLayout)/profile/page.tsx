@@ -5,6 +5,7 @@ import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutl
 import './profile.css'
 import Image from "next/image";
 import dashlmg from "../../../../public/images/backgrounds/back.jpg"
+
 import { useState } from 'react';
 import { IconBrandX } from "@tabler/icons-react"
 import { IconBrandInstagram } from "@tabler/icons-react"
@@ -26,6 +27,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MobileScreenShareOutlinedIcon from '@mui/icons-material/MobileScreenShareOutlined';
+
 
 const Profile = () => {
     const [profileData] = useState({
@@ -135,6 +137,7 @@ const Profile = () => {
                                     <Typography className="inputright label"><MobileScreenShareOutlinedIcon className="labelicon" /> Mobile Number</Typography>
                                     <Typography className="inputright">{profileData.mobileNo}</Typography>
                                 </Box>
+
                             </Box>
                             <Box className="inputbox">
                                 <Box className="datawidth">

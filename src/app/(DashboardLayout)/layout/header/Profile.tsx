@@ -15,6 +15,8 @@ import { FiUnlock } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie"
 import { IconUser } from "@tabler/icons-react";
+import Link from "next/link";
+import './header.css'
 
 
 const Profile = () => {
@@ -73,7 +75,8 @@ const Profile = () => {
           <ListItemIcon>
             <FiUnlock width={20} />{" "}
           </ListItemIcon>
-          <ListItemText> Change Password</ListItemText>
+          
+            <Link href={"/profile"} className="profileuser"><ListItemText > Profile </ListItemText></Link>  
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
