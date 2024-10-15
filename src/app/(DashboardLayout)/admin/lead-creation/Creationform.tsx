@@ -694,12 +694,11 @@ const CreationForm = () => {
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
         <Button variant="outlined" color="error" sx={{ mr: 2 }}>
-          Cancel
+          reset
         </Button>
         <Button
           onClick={submitDetails}
           variant="contained"
-          //sx={{ float: "right" }}
         >
           Submit
         </Button>
