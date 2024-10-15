@@ -2,10 +2,11 @@
 import { Box, Card, Typography, Stack } from "@mui/material";
 import Link from "next/link";
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
-import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
 import AuthRegister from "./component/AuthRegister.";
 import Grid from "@mui/material/Grid2";
 import { useState } from "react";
+import { shadows } from '@mui/system';
+
 
 const Register2 = () => {
   const [formData, setFormData] = useState({
