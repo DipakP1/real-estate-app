@@ -56,3 +56,38 @@ export const configureList = [
     ],
   },
 ];
+
+const data = {
+  companyName: "asda",
+  siteLocation: "fsdfds",
+  userName: "wreer",
+  employeeCode: "213",
+  departmentId: 1,
+  departmentName: "sadas",
+  designationId: 2,
+  designationName: "sdfsd",
+  userTypeId: 22,
+  userTypeName: "dasd",
+  dateOfBirth: "2000-10-21",
+  phoneNumber: "7469987676",
+  emailId: "zzssx@gmail.com",
+  aadharId: "433444444444",
+  userPhoto: "http://localhost:8800/uploads/1728981573123-242665036.png",
+  userSignature: "http://localhost:8800/uploads/1728981573122-616745486.png",
+  permissions: {
+    moduleId: 1,
+    moduleName: "User Management",
+    submodule: [
+      {
+        submoduleId: 101,
+        submoduleName: "Create User",
+        permissions: {
+          read: 1,
+          create: 1,
+          edit: 0,
+          delete: 0,
+        },
+      },
+    ],
+  },
+};

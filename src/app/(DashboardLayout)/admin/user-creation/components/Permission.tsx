@@ -61,7 +61,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const PermissionsTable = ({ permissions }: { permissions: any }) => {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    
+  });
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {

@@ -8,26 +8,16 @@ export default function ControlledSwitches({
   state,
   Switchvalue,
 }: any) {
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState((prev: any) => ({
-  //     ...prev,
-  //     [name]: prev[name] === undefined || prev[name] === false ? true : false,
-  //   }));
-  // };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value, event.target.name, "EVENT");
     setState((prev: any) => ({
       ...prev,
       [name]: prev[name] === undefined || prev[name] === false ? true : false,
     }));
   };
 
+  console.log(name, "NAME")
   return (
-    // <Switch
-    //   checked={Switchvalue}
-    //   onChange={handleChange}
-    //   inputProps={{ "aria-label": "controlled" }}
-    // />
     <Checkbox
       checked={Switchvalue}
       onChange={handleChange}

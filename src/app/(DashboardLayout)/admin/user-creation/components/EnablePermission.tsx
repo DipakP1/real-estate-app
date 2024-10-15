@@ -1,10 +1,45 @@
 import ControlledSwitches from "@/components/MUI-Switch/Switch";
-import { Box, Grid, InputLabel, Button, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  InputLabel,
+  Button,
+  Typography,
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  styled,
+  TableCell,
+  tableCellClasses,
+} from "@mui/material";
 import React from "react";
+import { configureList } from "./configPermission";
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    fontWeight:"bold"
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 const EnablePermission = ({ formData, setFormData }: any) => {
-  const configureList = 
-  [
+  const configureList1 = [
     {
       moduleType: "Pre-Sales",
       subModule: [
@@ -27,7 +62,7 @@ const EnablePermission = ({ formData, setFormData }: any) => {
             { update: false },
             { delete: false },
           ],
-        }
+        },
       ],
     },
     {
@@ -45,7 +80,7 @@ const EnablePermission = ({ formData, setFormData }: any) => {
         },
       ],
     },
-  ]
+  ];
   const handleConfigSubmit = async (e: any) => {
     e.preventDefault();
     // const response: any = await
@@ -74,7 +109,49 @@ const EnablePermission = ({ formData, setFormData }: any) => {
               onSubmit={handleConfigSubmit}
               sx={{ flexGrow: 1, p: 3, margin: "10px 0" }}
             >
-              {configureList.map((el: any, i: any) => {
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      <StyledTableCell>Modules</StyledTableCell>
+                      <StyledTableCell align="right">Create</StyledTableCell>
+                      <StyledTableCell align="right">Read</StyledTableCell>
+                      <StyledTableCell align="right">Update</StyledTableCell>
+                      <StyledTableCell align="right">Delete</StyledTableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {configureList.map((row) =>
+                      row.moduleDetails.map((module) => (
+                        <>
+                          <Typography fontWeight={"bold"} variant="body1" ml={1}>{module.moduleType}</Typography>
+
+                          {module.subModule.map((e) => (
+                            <StyledTableRow key={e.title}>
+                              <StyledTableCell component="th" scope="row">
+                                {e.title}
+                              </StyledTableCell>
+                              {e.permission.map((per, index) => (
+                                <>
+                                  <StyledTableCell align="right">
+                                    <ControlledSwitches
+                                      name={e?.name}
+                                      setState={setFormData}
+                                      state={formData}
+                                      Switchvalue={formData[`${e.name}`] || false}
+                                    />
+                                  </StyledTableCell>
+                                </>
+                              ))}
+                            </StyledTableRow>
+                          ))}
+                        </>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              {/* {configureList1.map((el: any, i: any) => {
                 return (
                   <>
                     <Grid container>
@@ -146,7 +223,7 @@ const EnablePermission = ({ formData, setFormData }: any) => {
                     </Box>
                   </>
                 );
-              })}
+              })} */}
 
               <Box
                 mt={1}
