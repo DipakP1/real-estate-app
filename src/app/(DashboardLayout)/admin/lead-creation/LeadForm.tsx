@@ -1,8 +1,17 @@
 "use client";
-import { Box, TextField, InputLabel, Button, Typography } from "@mui/material";
+import {
+  Box,
+  TextField,
+  InputLabel,
+  Button,
+  Typography,
+  FormControl,
+  Select,
+  MenuItem,
+  Grid2,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import React, { useState } from "react";
-
 const CreationForm = () => {
   const [data, setData] = useState<any>([]);
   const [inputData, setInputData] = useState<any>({
@@ -15,7 +24,7 @@ const CreationForm = () => {
     applicantName: "",
     fatherName: "",
     address: "",
-    addressII: "",
+    // addressII: "",
     cityName: "",
     pinNo: "",
     mobileNo: "",
@@ -39,14 +48,13 @@ const CreationForm = () => {
   const inputHandler = (e: any) => {
     const { name, value } = e.target;
     setInputData({ ...inputData, [name]: value });
-
     setErrors({ ...errors, [name]: "" });
   };
 
   const submitDetails = () => {
     // Validation: Check if any field in inputData is empty
-    const newErrors:any = {};
-    Object.entries(inputData).forEach(([key, value]:any) => {
+    const newErrors: any = {};
+    Object.entries(inputData).forEach(([key, value]: any) => {
       if (value.trim() === "") {
         newErrors[key] = "This field is required";
       }
@@ -62,7 +70,6 @@ const CreationForm = () => {
       ...prevData,
       { ...inputData, id: Math.floor(Math.random() * 10000) },
     ]);
-
     setInputData({
       entryType: "",
       entryNo: "",
@@ -93,100 +100,21 @@ const CreationForm = () => {
       createdBy: "",
       modifiedBy: "",
     });
-
     console.log("Updated data array ->", data);
   };
+
   return (
     <Box sx={{ p: 2 }}>
-      <Grid container spacing={2}>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-type"}>
-            Entry Type
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Entry Type"
-            name="entryType"
-            onChange={inputHandler}
-            value={inputData.entryType}
-            error={!!errors.entryType}
-          />
-          {errors.entryType && (
-            <Typography variant="caption" color="error">
-              {errors.entryType}
-            </Typography>
-          )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-no"}>
-            Entry No
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder=" Entry No"
-            type="number"
-            name="entryNo"
-            onChange={inputHandler}
-            value={inputData.entryNo}
-            error={!!errors.entryNo}
-          />
-          {errors.entryNo && (
-            <Typography variant="caption" color="error">
-              {errors.entryNo}
-            </Typography>
-          )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-date"}>
-            Entry Date
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Entry Date"
-            type="date"
-            name="entryDate"
-            onChange={inputHandler}
-            value={inputData.entryDate}
-            error={!!errors.entryDate}
-          />
-          {errors.entryDate && (
-            <Typography variant="caption" color="error">
-              {errors.entryDate}
-            </Typography>
-          )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"visit-through"}>
-            Visit Through
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Visit Through"
-            name="visitThrough"
-            onChange={inputHandler}
-            value={inputData.visitThrough}
-            error={!!errors.visitThrough}
-          />
-          {errors.visitThrough && (
-            <Typography variant="caption" color="error">
-              {errors.visitThrough}
-            </Typography>
-          )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"agent-name"}>
-            Agent Name
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Agent Name"
-            name="agentName"
-            onChange={inputHandler}
-            value={inputData.agentName}
-            error={!!errors.agentName}
-          />
-          {errors.agentName && (
-            <Typography variant="caption" color="error">
-              {errors.agentName}
-            </Typography>
-          )}
+      <Typography variant="h6" sx={{ mb: 2 }}>
+        Personal Details:
+      </Typography>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
+      >
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"application-no"}>
             Application No
           </InputLabel>
@@ -205,6 +133,9 @@ const CreationForm = () => {
               {errors.applicationNo}
             </Typography>
           )}
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"applicant-name"}>
             Applicant Name
           </InputLabel>
@@ -223,6 +154,8 @@ const CreationForm = () => {
               {errors.applicantName}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"father-name"}>
             Father Name
           </InputLabel>
@@ -240,40 +173,47 @@ const CreationForm = () => {
               {errors.fatherName}
             </Typography>
           )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"address"}>
-            Address
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pan-no"}>
+            Pan No
           </InputLabel>
           <TextField
             size="small"
             fullWidth
-            placeholder="Address"
-            name="address"
+            placeholder="Pan No"
+            name="panNo"
             onChange={inputHandler}
-            value={inputData.address}
-            error={!!errors.address}
+            value={inputData.panNo}
+            error={!!errors.panNo}
           />
-          {errors.address && (
+          {errors.panNo && (
             <Typography variant="caption" color="error">
-              {errors.address}
+              {errors.panNo}
             </Typography>
           )}
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"address-ii"}>
-            Address II
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"aadhar-no"}>
+            Aadhar No
           </InputLabel>
           <TextField
             size="small"
+            type="number"
             fullWidth
-            placeholder="Address II"
-            name="addressII"
+            placeholder="Aadhar No"
+            name="aadharNo"
             onChange={inputHandler}
-            value={inputData.addressII}
-            error={!!errors.addressII}
+            value={inputData.aadharNo}
+            error={!!errors.aadharNo}
           />
-          {errors.addressII && (
+          {errors.aadharNo && (
             <Typography variant="caption" color="error">
-              {errors.addressII}
+              {errors.aadharNo}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"city-name"}>
             City Name
           </InputLabel>
@@ -291,6 +231,8 @@ const CreationForm = () => {
               {errors.cityName}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pin-no"}>
             Pin No
           </InputLabel>
@@ -309,6 +251,8 @@ const CreationForm = () => {
               {errors.pinNo}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"mobile-no"}>
             Mobile No
           </InputLabel>
@@ -326,6 +270,8 @@ const CreationForm = () => {
               {errors.mobileNo}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"phone-no"}>
             Phone No
           </InputLabel>
@@ -345,8 +291,103 @@ const CreationForm = () => {
             </Typography>
           )}
         </Grid>
+      </Grid>
+      <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
+        Record Details:
+      </Typography>
 
-        <Grid size={{ xs: 12, sm: 6 }}>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
+      >
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-type"}>
+            Entry Type
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="Entry Type"
+            name="entryType"
+            onChange={inputHandler}
+            value={inputData.entryType}
+            error={!!errors.entryType}
+          />
+          {errors.entryType && (
+            <Typography variant="caption" color="error">
+              {errors.entryType}
+            </Typography>
+          )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-no"}>
+            Entry No
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder=" Entry No"
+            type="number"
+            name="entryNo"
+            onChange={inputHandler}
+            value={inputData.entryNo}
+            error={!!errors.entryNo}
+          />
+          {errors.entryNo && (
+            <Typography variant="caption" color="error">
+              {errors.entryNo}
+            </Typography>
+          )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-date"}>
+            Entry Date
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="Entry Date"
+            type="date"
+            name="entryDate"
+            onChange={inputHandler}
+            value={inputData.entryDate}
+            error={!!errors.entryDate}
+          />
+          {errors.entryDate && (
+            <Typography variant="caption" color="error">
+              {errors.entryDate}
+            </Typography>
+          )}
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <FormControl fullWidth size="small" sx={{ mt: 3 }}>
+            <InputLabel sx={{ color: "#000" }} htmlFor={"agent-name"}>
+              Agent Name
+            </InputLabel>
+            <Select
+              label="Agent Name"
+              name="agentName"
+              value={inputData.agentName}
+              onChange={inputHandler}
+              error={!!errors.agentName}
+            >
+              <MenuItem value="">Select Agent</MenuItem>
+              <MenuItem value="Agent 1">Agent 1</MenuItem>
+              <MenuItem value="Agent 2">Agent 2</MenuItem>
+              <MenuItem value="Agent 3">Agent 3</MenuItem>
+            </Select>
+            {errors.agentName && (
+              <Typography variant="caption" color="error">
+                {errors.agentName}
+              </Typography>
+            )}
+          </FormControl>
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"customer-email"}>
             Customer Email
           </InputLabel>
@@ -365,44 +406,8 @@ const CreationForm = () => {
               {errors.customerEmail}
             </Typography>
           )}
-
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pan-no"}>
-            Pan No
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Pan No"
-            name="panNo"
-            onChange={inputHandler}
-            value={inputData.panNo}
-            error={!!errors.panNo}
-          />
-          {errors.panNo && (
-            <Typography variant="caption" color="error">
-              {errors.panNo}
-            </Typography>
-          )}
-
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"aadhar-no"}>
-            Aadhar No
-          </InputLabel>
-          <TextField
-            size="small"
-            type="number"
-            fullWidth
-            placeholder="Aadhar No"
-            name="aadharNo"
-            onChange={inputHandler}
-            value={inputData.aadharNo}
-            error={!!errors.aadharNo}
-          />
-          {errors.aadharNo && (
-            <Typography variant="caption" color="error">
-              {errors.aadharNo}
-            </Typography>
-          )}
-
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"project"}>
             Project
           </InputLabel>
@@ -421,7 +426,8 @@ const CreationForm = () => {
               {errors.project}
             </Typography>
           )}
-
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"unit-category"}>
             Unit Category
           </InputLabel>
@@ -440,46 +446,60 @@ const CreationForm = () => {
               {errors.unitCategory}
             </Typography>
           )}
-
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"floor"}>
-            Floor
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"visit-through"}>
+            Visit Through
           </InputLabel>
           <TextField
             size="small"
             fullWidth
-            placeholder="Floor"
-            name="floor"
+            placeholder="Visit Through"
+            name="visitThrough"
             onChange={inputHandler}
-            value={inputData.floor}
-            error={!!errors.floor}
+            value={inputData.visitThrough}
+            error={!!errors.visitThrough}
           />
-
-          {errors.floor && (
+          {errors.visitThrough && (
             <Typography variant="caption" color="error">
-              {errors.floor}
+              {errors.visitThrough}
             </Typography>
           )}
+        </Grid>
 
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"discussions"}>
-            Discussions
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"address"}>
+            Address
           </InputLabel>
           <TextField
             size="small"
-            type="text"
             fullWidth
-            placeholder="Discussions"
-            name="discussions"
+            multiline
+            rows={4}
+            placeholder="Address"
+            name="address"
             onChange={inputHandler}
-            value={inputData.discussions}
-            error={!!errors.discussions}
+            value={inputData.address}
+            error={!!errors.address}
           />
-
-          {errors.discussions && (
+          {errors.address && (
             <Typography variant="caption" color="error">
-              {errors.discussions}
+              {errors.address}
             </Typography>
           )}
+        </Grid>
+      </Grid>
 
+      <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
+        Reports Details:
+      </Typography>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
+      >
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"next-followup"}>
             Next Follow Up
           </InputLabel>
@@ -498,7 +518,29 @@ const CreationForm = () => {
               {errors.nextFollowUp}
             </Typography>
           )}
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"floor"}>
+            Floor
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="Floor"
+            name="floor"
+            onChange={inputHandler}
+            value={inputData.floor}
+            error={!!errors.floor}
+          />
 
+          {errors.floor && (
+            <Typography variant="caption" color="error">
+              {errors.floor}
+            </Typography>
+          )}
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel
             sx={{ color: "#000", mt: 1 }}
             htmlFor={"selective-remark"}
@@ -514,13 +556,39 @@ const CreationForm = () => {
             value={inputData.selectiveRemark}
             error={!!errors.selectiveRemark}
           />
-
           {errors.selectiveRemark && (
             <Typography variant="caption" color="error">
               {errors.selectiveRemark}
             </Typography>
           )}
+        </Grid>
 
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <FormControl fullWidth size="small" sx={{ mt: 4 }}>
+            <InputLabel sx={{ color: "#000" }} htmlFor={"status"}>
+              Status
+            </InputLabel>
+            <Select
+              label="Status"
+              name="status"
+              value={inputData.status}
+              onChange={inputHandler}
+              error={!!errors.status}
+            >
+              <MenuItem value="">Select Status</MenuItem>
+              <MenuItem value="Open">Progress</MenuItem>
+              <MenuItem value="Closed">Done</MenuItem>
+              <MenuItem value="Pending">Pending</MenuItem>
+            </Select>
+            {errors.status && (
+              <Typography variant="caption" color="error">
+                {errors.status}
+              </Typography>
+            )}
+          </FormControl>
+        </Grid>
+
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"sssigned-to"}>
             SS Signed To
           </InputLabel>
@@ -539,26 +607,9 @@ const CreationForm = () => {
               {errors.sssignedTo}
             </Typography>
           )}
+        </Grid>
 
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"status"}>
-            Status
-          </InputLabel>
-          <TextField
-            size="small"
-            fullWidth
-            placeholder="Status"
-            name="status"
-            onChange={inputHandler}
-            value={inputData.status}
-            error={!!errors.status}
-          />
-
-          {errors.status && (
-            <Typography variant="caption" color="error">
-              {errors.status}
-            </Typography>
-          )}
-
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"further-action"}>
             Further Action
           </InputLabel>
@@ -571,13 +622,13 @@ const CreationForm = () => {
             value={inputData.furtherAction}
             error={!!errors.furtherAction}
           />
-
           {errors.furtherAction && (
             <Typography variant="caption" color="error">
               {errors.furtherAction}
             </Typography>
           )}
-
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"created-by"}>
             Created By
           </InputLabel>
@@ -586,18 +637,18 @@ const CreationForm = () => {
             fullWidth
             placeholder="Created By"
             name="createdBy"
-            type="text"
+            type="date"
             onChange={inputHandler}
             value={inputData.createdBy}
             error={!!errors.createdBy}
           />
-
           {errors.createdBy && (
             <Typography variant="caption" color="error">
               {errors.createdBy}
             </Typography>
           )}
-
+        </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"modified-by"}>
             Modified By
           </InputLabel>
@@ -606,7 +657,7 @@ const CreationForm = () => {
             fullWidth
             placeholder="Modified By"
             name="modifiedBy"
-            type="text"
+            type="date"
             onChange={inputHandler}
             value={inputData.modifiedBy}
             error={!!errors.modifiedBy}
@@ -617,19 +668,43 @@ const CreationForm = () => {
             </Typography>
           )}
         </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"discussions"}>
+            Discussions
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            multiline
+            rows={4}
+            placeholder="Discussions"
+            name="discussions"
+            onChange={inputHandler}
+            value={inputData.discussions}
+            error={!!errors.discussions}
+          />
 
-        <Grid>
-          <Button
-            onClick={submitDetails}
-            variant="contained"
-            sx={{ float: "left" }}
-          >
-            Submit
-          </Button>
+          {errors.discussions && (
+            <Typography variant="caption" color="error">
+              {errors.discussions}
+            </Typography>
+          )}
         </Grid>
       </Grid>
+
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
+        <Button variant="outlined" color="error" sx={{ mr: 2 }}>
+          Cancel
+        </Button>
+        <Button
+          onClick={submitDetails}
+          variant="contained"
+          //sx={{ float: "right" }}
+        >
+          Submit
+        </Button>
+      </Box>
     </Box>
   );
 };
-
 export default CreationForm;

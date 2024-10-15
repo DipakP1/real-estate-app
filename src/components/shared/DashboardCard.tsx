@@ -27,7 +27,7 @@ const DashboardCard = ({
   sx, // Add this here to accept sx
 }: Props) => {
   return (
-    <Card sx={{ padding: 0, overflow:"revert !important", ...sx }} elevation={9}> 
+    <Card sx={{ padding: 0, overflow:"revert !important", ...sx, margin:"20px 30px" }} elevation={9}> 
       {cardheading ? (
         <CardContent>
           <Typography variant="h5">{headtitle}</Typography>

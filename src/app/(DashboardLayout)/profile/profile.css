@@ -1,38 +1,25 @@
-Css code
-
-
-
-
 .maincontainer {
     margin: 0;
     padding: 0;
-    width: 100%;
+   
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 70vh;
 
 
 }
 
-.profile {
-    /* height: 40vh; */
-    /* width: 90%; */
+/* .profile {
     background-color: #fff;
     border-radius: 10px;
-    /* Rounded corners */
-    /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); */
     display: flex;
- 
     align-items: center;
     justify-content: center;
-}
+} */
 
 .flexbox {
-
     display: flex;
-    /* margin-top: 20px; */
-
 }
 
 .image {
@@ -40,45 +27,33 @@ Css code
     width: 150px;
     border-radius: 100% !important;
     border: 5px solid white;
-    /* margin-bottom: 20px; */
-    /* padding: 10px; */
     margin-bottom: 8px;
 
 
 }
 
 .imagecontainer {
-
-    display: flex;
-   
+    display: flex; 
     align-items: center;
     justify-content: center;
 }
 
 .email {
-  
     border-radius: 100%;
 }
 
 .leftside {
     width: 30%;
-    height: 45vh;
-    /* text-align: center; */
-    /* margin-right: 50px; */
+    height: auto;
     margin-left: -80px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     padding-top: 50px;
     background-color: #ADDE34;
-
-
 }
 
 .rightside {
-    height: 45vh;
+    height: auto;
     width: 70%;
-    /* padding-top: 30px; */
-    /* padding-left: 30px; */
-    /* box-shadow:  2px rgba(0, 0, 0, 0.1); */
     border: 1px solid #ADDE34;
     position: relative;
 }
@@ -91,41 +66,27 @@ Css code
 .inputleft {
     margin: 10px;
     margin-left: 40px;
-    /* margin-right: 40px; */
-    /* color: white; */
     width: 100%;
-    /* width: 400px; */
 }
 
 .inputright {
     margin: 10px;
-
-    /* width: 400px; */
     width: 100%;
 
 }
 
 .css-1o3an4k-MuiInputBase-input-MuiInput-input {
-    /* font: inherit; */
     color: #757C88;
     font-weight: bolder;
 
 }
 
 .edit {
-  
-    /* margin-right: 6px;
-    margin-top: 8px;
-    font-size: 17px;
-    margin-bottom: 10px; */
-    /* color: white; */
     display: flex;
     cursor: pointer;
     color: white;
-
 }
 .edit1{
-    /* color: white; */
     margin-left: 30px;
     margin-right: 10px;
 }
@@ -139,10 +100,9 @@ Css code
 }
 
 .myprofile {
-    /* color: #525B6A; */
     color: white;
     font-weight: bolder;
-    font-size: 30px;
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
@@ -152,23 +112,16 @@ Css code
 }
 .name{
     display: flex;
-    /* text-align: center; */
-    /* justify-content: center; */
-    /* margin-top: -15px; */
     margin-top: 10px;
-
 }
 .firstname{
-    /* text-align: center; */
     margin-right: 5px;
     color: white;
 }
 .lastname{
-    /* text-align: center; */
     color: white;
 }
 .usericon{
-    /* text-align: center; */
     margin-right: 5px;
     color: white;
     height: 20px;
@@ -177,7 +130,6 @@ Css code
 .designation{
     display: flex;
     cursor: pointer;
-    /* text-align: center; */
     margin-top: 8px;
     margin-bottom: 8px;
     color: white;
@@ -196,7 +148,7 @@ Css code
     cursor: pointer;
 }
 .showicons{
-    margin-right: 10px;
+    margin-right: 40px;
    
     color: rgb(57,120,104);
 }
@@ -229,6 +181,7 @@ Css code
 }
 .middlebox{
     margin-top: 5%;
+    margin-bottom: 10%;
 }
 .footer{
     margin: 10px;
@@ -255,4 +208,99 @@ Css code
     height: 24px; 
     width: 24px; 
     margin-left: -31px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .leftside {
+        width: 30%;
+        height: 70vh;
+
+        margin-left: -80px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding-top: 50px;
+        background-color: #ADDE34;
+    
+    
+    }
+    
+    .rightside {
+        height: 70vh;
+        width: 70%;
+
+        border: 1px solid #ADDE34;
+        position: relative;
+    }
+    
+  }
+
+
+
+
+
+
+
+
+  /* Mobile view adjustments for screens below 768px */
+@media only screen and (max-width: 768px) {
+    .flexbox{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .maincontainer {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .leftside, .rightside {
+        width: 100%;
+        margin: 0;
+        height: auto;
+    }
+
+    .leftside {
+        padding: 20px;
+        margin-left: 0;
+        box-shadow: none;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .rightside {
+        /* border: none; */
+        padding: 0px;
+    }
+
+    .inputbox {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .inputleft, .inputright {
+        margin-left: 50px;
+        margin-right: 0;
+   
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    .icons, .name, .designation {
+        justify-content: start;
+    }
+
+    .image {
+        height: 100px;
+        width: 100px;
+    }
+    .datawidth{
+        margin-bottom: 0;
+    }
+
 }

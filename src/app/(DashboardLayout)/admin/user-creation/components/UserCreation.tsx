@@ -65,7 +65,6 @@ const UserCreation = ({ step, setStep, setPrev }: any) => {
         designationId: 2,
         userTypeId: 56,
         userTypeName: "User",
-        password: "pass@123",
         ...data,
       });
       enqueueSnackbar(res.message, { variant: "success" });

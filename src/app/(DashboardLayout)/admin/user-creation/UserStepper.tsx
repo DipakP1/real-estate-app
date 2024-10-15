@@ -6,15 +6,12 @@ import UserCreation from "./components/UserCreation";
 import UserPermission from "./components/Permission";
 
 const UserManagment = () => {
-  const [step, setStep] = useState<any>(0);
+  const [step, setStep] = useState<any>(1);
   const [prev, setPrev] = useState<any>(false);
   const [formData, setFormData] = useState<any>();
 
-  
-
-  const handleSubmit = ()=> {
-    
-  }
+  const handleSubmit = ()=> {    
+  }////
 
   return (
     <div className="grid grid-cols-1 gap-9 ">

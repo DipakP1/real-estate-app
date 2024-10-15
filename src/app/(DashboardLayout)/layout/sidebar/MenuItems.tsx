@@ -81,7 +81,7 @@ const Menuitems = [
     title: "Message",
     icon: IconMail,
     badge:true,
-    href: "/",
+    href: "/message",
     present: "yes"
   },
 

@@ -125,14 +125,14 @@ const DataCard1 = ({
 // Dashboard Layout
 const Dashboard = () => {
   return (
-    <Box>
+    <Box m={"0 25px"}>
       <Typography variant="h4" fontWeight={"500"}>
         Dashboard
       </Typography>
 
       <Grid container spacing={3} mt={2}>
         {/* First row: 3 Data cards + MonthWiseLeadChart on the right */}
-        <Grid size={{ xs: 12, md: 9 }} container spacing={3}>
+        <Grid size={{ xs: 12, md: 9 }} container spacing={2}>
           <Grid size={{ xs: 12, md: 4 }}>
             <DataCard1 title="Companies" value="12" backColor="#022213" />
           </Grid>

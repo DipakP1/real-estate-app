@@ -67,7 +67,7 @@ const LoginComponent = ({
 }: any) => {
   const [value1, setValue1] = React.useState(0);
   const { enqueueSnackbar } = useSnackbar();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleChange1 = (event: React.SyntheticEvent, newValue: number) => {
     setValue1(newValue);
@@ -85,18 +85,26 @@ const LoginComponent = ({
   const handleSubmitEmail = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await loginUser("/v1/user/login", formData);
+      const res = await loginUser("/v1/user/login", { type: 1, ...formData });
       localStorage.setItem("user", JSON.stringify(res.data));
 
       enqueueSnackbar(res.message, { variant: "success" });
-      router.push("/home")
+      router.push("/home");
     } catch (error) {
       console.error(error);
     }
   };
-  const handleSubmitMobile = (e: any) => {
+  const handleSubmitMobile = async(e: any) => {
     e.preventDefault();
-    console.log(formData, "FORM DATA");
+    try {
+      const res = await loginUser("/v1/user/login", { type: 2, ...formData });
+      localStorage.setItem("user", JSON.stringify(res.data));
+
+      enqueueSnackbar(res.message, { variant: "success" });
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <Grid container sx={{ height: "98vh" }}>

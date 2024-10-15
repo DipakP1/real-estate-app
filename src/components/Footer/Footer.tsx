@@ -7,7 +7,7 @@ const Footer = () => {
             {/* <Divider sx={{ marginY: 4 }} /> */}
             <Box textAlign="center">
                 <Typography variant="caption" sx={{ fontSize: '0.8rem', color: '#aaa' }}>
-                    © 2024, made by Infosolweb for a better web.
+                    © 2024, made by Innoblooms for a better web.
                 </Typography>
             </Box>
         </Box>
