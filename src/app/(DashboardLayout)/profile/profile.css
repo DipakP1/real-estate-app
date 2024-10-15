@@ -1,14 +1,22 @@
 .maincontainer {
     margin: 0;
     padding: 0;
-
+   
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: auto;
 
 
 }
+
+/* .profile {
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
 
 .flexbox {
     display: flex;
@@ -36,7 +44,7 @@
 
 .leftside {
     width: 30%;
-    height: 46vh;
+    height: auto;
     margin-left: -80px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     padding-top: 50px;
@@ -44,7 +52,7 @@
 }
 
 .rightside {
-    height: 46vh;
+    height: auto;
     width: 70%;
     border: 1px solid #ADDE34;
     position: relative;
@@ -173,6 +181,7 @@
 }
 .middlebox{
     margin-top: 5%;
+    margin-bottom: 10%;
 }
 .footer{
     margin: 10px;
@@ -231,4 +240,67 @@
 
 
 
-  
+  /* Mobile view adjustments for screens below 768px */
+@media only screen and (max-width: 768px) {
+    .flexbox{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .maincontainer {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .leftside, .rightside {
+        width: 100%;
+        margin: 0;
+        height: auto;
+    }
+
+    .leftside {
+        padding: 20px;
+        margin-left: 0;
+        box-shadow: none;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .rightside {
+        /* border: none; */
+        padding: 0px;
+    }
+
+    .inputbox {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .inputleft, .inputright {
+        margin-left: 50px;
+        margin-right: 0;
+   
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    .icons, .name, .designation {
+        justify-content: start;
+    }
+
+    .image {
+        height: 100px;
+        width: 100px;
+    }
+    .datawidth{
+        margin-bottom: 0;
+    }
+
+}

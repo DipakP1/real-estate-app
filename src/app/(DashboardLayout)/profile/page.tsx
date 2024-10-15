@@ -75,46 +75,48 @@ const Profile = () => {
                         <Box className="imagecontainer">
                             <Image src={dashlmg} alt={""} className="image" />
                         </Box>
-                        <Box className="name">
-                            <IconUser className="usericon" />
-                            <Typography className="firstname">{profileData.firstName}</Typography>
-                            <Typography className="lastname">{profileData.lastName}</Typography>
-                        </Box>
-                        <Box className="designation">
-                            <IconWritingSign className="signatureicon" /> <Typography className="firstname">Signature</Typography>
-                            <Button onClick={handleClickOpen} size="small" className="viewbutton">
-                                < VisibilityIcon />
-                            </Button>
-                            <BootstrapDialog
-                                onClose={handleClose}
-                                aria-labelledby="customized-dialog-title"
-                                open={open}
-                            >
-                                <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                                    Signature
-                                </DialogTitle>
-                                <IconButton
-                                    aria-label="close"
-                                    onClick={handleClose}
-                                    sx={(theme) => ({
-                                        position: 'absolute',
-                                        right: 8,
-                                        top: 8,
-                                        color: theme.palette.grey[500],
-                                    })}
+                        <Box>
+                            <Box className="name">
+                                <IconUser className="usericon" />
+                                <Typography className="firstname">{profileData.firstName}</Typography>
+                                <Typography className="lastname">{profileData.lastName}</Typography>
+                            </Box>
+                            <Box className="designation">
+                                <IconWritingSign className="signatureicon" /> <Typography className="firstname">Signature</Typography>
+                                <Button onClick={handleClickOpen} size="small" className="viewbutton">
+                                    < VisibilityIcon />
+                                </Button>
+                                <BootstrapDialog
+                                    onClose={handleClose}
+                                    aria-labelledby="customized-dialog-title"
+                                    open={open}
                                 >
-                                    <CloseIcon />
-                                </IconButton>
-                                <DialogContent dividers>
-                                    <Box className="imagecontainer">
-                                        <Image src={dashlmg} alt={""} className="image" />
-                                    </Box>
-                                </DialogContent>
-                                <DialogActions>
+                                    <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+                                        Signature
+                                    </DialogTitle>
+                                    <IconButton
+                                        aria-label="close"
+                                        onClick={handleClose}
+                                        sx={(theme) => ({
+                                            position: 'absolute',
+                                            right: 8,
+                                            top: 8,
+                                            color: theme.palette.grey[500],
+                                        })}
+                                    >
+                                        <CloseIcon />
+                                    </IconButton>
+                                    <DialogContent dividers>
+                                        <Box className="imagecontainer">
+                                            <Image src={dashlmg} alt={""} className="image" />
+                                        </Box>
+                                    </DialogContent>
+                                    <DialogActions>
 
-                                </DialogActions>
-                            </BootstrapDialog>
+                                    </DialogActions>
+                                </BootstrapDialog>
 
+                            </Box>
                         </Box>
 
 
