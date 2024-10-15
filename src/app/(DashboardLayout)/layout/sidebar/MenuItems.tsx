@@ -46,7 +46,7 @@ const Menuitems = [
     id: uniqueId(),
     title: "User Managment",
     icon: IconUserCheck,
-    href: "/admin/lead-managment",
+    href: "/admin/user-creation",
     present: "yes",
     badge:false,
   },
@@ -58,6 +58,14 @@ const Menuitems = [
     present: "yes",
     badge:false,
 
+  },
+  {
+    id: uniqueId(),
+    title: "Lead Creation",
+    icon: IconUserCheck,
+    href: "/admin/lead-creation",
+    present: "yes",
+    badge:false,
   },
   {
     id: uniqueId(),
@@ -73,7 +81,7 @@ const Menuitems = [
     title: "Message",
     icon: IconMail,
     badge:true,
-    href: "/",
+    href: "/message",
     present: "yes"
   },
 

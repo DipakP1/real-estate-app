@@ -2,7 +2,8 @@
 import { Box, Button, IconButton, Modal, TableCell, Chip } from "@mui/material";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import DynamicTableComponent from "../../components/DynamicTable/Table.component";
+import DynamicTableComponent from "@/components/DynamicTable/Table.component";
+import {IconEyeFilled} from "@tabler/icons-react"
 
 interface HeadCell<T> {
   id: any; // This ensures that id is one of the keys in your data type
@@ -16,68 +17,71 @@ interface Data {
   price: number;
 }
 
-const rows = [
+const rows :any= [
   {
     id: 1,
     name: "Item 1",
     "site-location": "Site Location",
-    status: "approved",
+    status: "active",
     "company-name": "Company A",
+    view: ""
   },
   {
     id: 2,
     name: "Item 2",
     "site-location": "Site Location",
-    status: "pending",
+    status: "active",
     "company-name": "Company B",
+    view: ""
+
   },
   {
     id: 3,
     name: "Item 3",
     "site-location": "Site Location",
-    status: "hold",
+    status: "inactive",
     "company-name": "Company C",
   },
   {
     id: 4,
     name: "Item 4",
     "site-location": "Site Location",
-    status: "hold",
+    status: "inactive",
     "company-name": "Company D",
   },
   {
     id: 5,
     name: "Item 5",
     "site-location": "Site Location",
-    status: "approved",
+    status: "active",
     "company-name": "Company E",
   },
   {
     id: 6,
     name: "Item 6",
     "site-location": "Site Location",
-    status: "pending",
+    status: "inactive",
     "company-name": "Company F",
   },
   {
     id: 7,
     name: "Item 7",
     "site-location": "Site Location",
-    status: "pending",
+    status: "inactive",
     "company-name": "Company G",
   },
   {
     id: 8,
     name: "Item 8",
     "site-location": "Site Location",
-    status: "hold",
+    status: "active",
     "company-name": "Company H",
   },
   {
     id: 9,
     name: "Item 9",
     "site-location": "Site Location",
-    status: "pending",
+    status: "active",
     "company-name": "Company I",
   },
 ];
@@ -125,7 +129,7 @@ const UserTable = () => {
 //   };
 
   return (
-    <Box>
+    <Box >
       <DynamicTableComponent
         rows={rows}
         headCells={headCells}

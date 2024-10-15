@@ -4,7 +4,8 @@ import { Box, Breadcrumbs, Button, Typography } from "@mui/material"
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import './profile.css'
 import Image from "next/image";
-import dashlmg from "../../../../public/images/backgrounds/dashImg.png"
+import dashlmg from "../../../../public/images/backgrounds/back.jpg"
+
 import { useState } from 'react';
 import { IconBrandX } from "@tabler/icons-react"
 import { IconBrandInstagram } from "@tabler/icons-react"
@@ -26,10 +27,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import NoEncryptionIcon from '@mui/icons-material/NoEncryption';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import MobileScreenShareOutlinedIcon from '@mui/icons-material/MobileScreenShareOutlined';
-
-
-
-
 
 
 const Profile = () => {
