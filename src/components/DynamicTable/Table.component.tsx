@@ -274,19 +274,6 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
 
   return (
     <Box sx={{ width: "100%", padding: 0 }}>
-      <Box sx={{ margin: "20px 0" }}>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link
-            underline="hover"
-            sx={{ display: "flex", alignItems: "center", gap: 1 }}
-            color="text.primary"
-            href="/"
-          >
-            <IconHome /> Home / Users 
-          </Link>
-        </Breadcrumbs>
-      </Box>
-
       {/* Custom Pagination at the Top (for Rows Per Page) */}
       {enablePagination && (
         <Grid container>

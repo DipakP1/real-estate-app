@@ -13,16 +13,15 @@ import {
 import { FiLogOut } from "react-icons/fi";
 import { FiUnlock } from "react-icons/fi";
 import { useRouter } from "next/navigation";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import { IconUser } from "@tabler/icons-react";
 import Link from "next/link";
-import './header.css'
-
+import "./header.css";
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const handleClick2 = (event: any) => {
     setAnchorEl2(event.currentTarget);
@@ -40,7 +39,7 @@ const Profile = () => {
         aria-controls="msgs-menu"
         aria-haspopup="true"
         sx={{
-          m:"0 15px",
+          m: "0 15px",
           ...(typeof anchorEl2 === "object" && {
             color: "primary.main",
           }),
@@ -71,21 +70,36 @@ const Profile = () => {
           },
         }}
       >
-        <MenuItem >
+        <MenuItem>
           <ListItemIcon>
             <FiUnlock width={20} />{" "}
           </ListItemIcon>
-          
-            <Link href={"/profile"} className="profileuser"><ListItemText > Profile </ListItemText></Link>  
+
+          <Link href={"/profile"} className="profileuser">
+            <ListItemText> Profile </ListItemText>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <FiUnlock width={20} />{" "}
+          </ListItemIcon>
+
+          <Link href={"/changePassword"} className="profileuser">
+            <ListItemText> Change Password </ListItemText>
+          </Link>
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
             <FiLogOut width={20} />{" "}
           </ListItemIcon>
-          <ListItemText onClick={() => {
-            Cookies.remove("token", { path: "/" })
-            router.push("/")
-          }}>Logout</ListItemText>
+          <ListItemText
+            onClick={() => {
+              Cookies.remove("token", { path: "/" });
+              router.push("/");
+            }}
+          >
+            Logout
+          </ListItemText>
         </MenuItem>
       </Menu>
     </Box>
