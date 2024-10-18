@@ -1,49 +1,13 @@
 "use client";
-import React, { useEffect } from "react";
-import { Box, Button, InputLabel, TextField } from "@mui/material";
+import React from "react";
+import { Box, InputLabel, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import ReusableFormInput from "@/components/forms/ReusableHookForm";
-import { useForm, Controller } from "react-hook-form";
-import { postData } from "@/services/apiService";
 import { useSnackbar } from "notistack";
-import { uniqueId } from "lodash";
 
-// "userId":23,
-// "password": "Sa@12345",
-// "companyName": "Company1",
-// "siteLocation": "site 1",
-// "userName": "salem",
-// "employeeCode": "1234",
-// "departmentId": 122,
-// "departmentName": "Dept 1",
-// "designationId": 2,
-// "designationName": "Designation1",
-// "userTypeId": 56,
-// "userTypeName": "Usertype 1",
-// "dateOfBirth": "20-12-2000",
-// "phoneNumber": "8989878789",
-// "emailId": "salemwws@gmail.com",
-// "aadharId": "765151516171",
-// "userPhoto": "photo 1",
-// "userSignature": "sign 1"
-
-const UserCreation = ({
-  formData,
-  setFormData,
-  step,
-  setStep,
-  setPrev,
-  control,
-  errors = {},
-  setError,
-}: any) => {
+const UserCreation = ({ formData, setFormData, errors }: any) => {
   const { enqueueSnackbar } = useSnackbar();
 
- 
-
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev: any) => ({
       ...prev,
@@ -51,219 +15,255 @@ const UserCreation = ({
     }));
   };
 
-  const handleChangeFile = (e: any) => {
-    const { name, value } = e.target;
-    console.log(value, "VALUE");
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files }: any = e.target;
+    const file = files[0]; // Get the selected file
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setFormData((prev: any) => ({
+          ...prev,
+          [name]: reader.result, // Store the Base64 string directly in the state
+        }));
+      };
+
+      reader.readAsDataURL(file); // This will trigger the onloadend event
+    }
   };
 
+  console.log(formData);
   return (
     <Box sx={{ p: 2 }}>
-      {/* <form onSubmit={handleSubmit(onSubmit)}> */}
       <Grid container spacing={2}>
-        {/* First Column */}
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"User Name"}</InputLabel>
+        {/* User Name */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            User Name{" "}
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="userName"
-            // label="User Name"
-            type="string"
-            error={errors?.userName}
-            placeholder={"User Name"}
+            placeholder="User Name"
             onChange={handleChange}
             value={formData.userName}
             fullWidth
             size="small"
-            // error={!!error}
-            // helperText={error ? error.message : ""}
+            error={!!errors?.userName}
+            helperText={errors?.userName}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Email Id"}</InputLabel>
+
+        {/* Email ID */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Email Id
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="emailId"
-            // label="Email"
             type="email"
-            error={errors?.emailId}
-            placeholder={"EmailId"}
+            placeholder="Email Id"
             onChange={handleChange}
             value={formData.emailId}
             fullWidth
             size="small"
+            error={!!errors?.emailId}
+            helperText={errors?.emailId}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Phone Number"}</InputLabel>
 
+        {/* Phone Number */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Phone Number
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="phoneNumber"
-            // label="Phone Number"
-            type="string"
-            error={errors?.phoneNumber}
-            placeholder={"Phone Number"}
+            placeholder="Phone Number"
             onChange={handleChange}
             value={formData.phoneNumber}
             fullWidth
             size="small"
+            error={!!errors?.phoneNumber}
+            helperText={errors?.phoneNumber}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Date of Birth"}</InputLabel>
+
+        {/* Date of Birth */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Date of Birth
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="dateOfBirth"
-            // label="Date of Birth"
             type="date"
-            error={errors?.dateOfBirth}
-            placeholder={"Date of Birth"}
+            placeholder="Date of Birth"
             onChange={handleChange}
             value={formData.dateOfBirth}
             fullWidth
             size="small"
+            error={!!errors?.dateOfBirth}
+            helperText={errors?.dateOfBirth}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Company Name"}</InputLabel>
 
+        {/* Company Name */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Company Name
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="companyName"
-            // label="Company Name"
-            type="string"
-            error={errors?.companyName}
-            placeholder={"Company Name"}
+            placeholder="Company Name"
             onChange={handleChange}
             value={formData.companyName}
             fullWidth
             size="small"
+            error={!!errors?.companyName}
+            helperText={errors?.companyName}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Site Location"}</InputLabel>
 
+        {/* Site Location */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Site Location
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="siteLocation"
-            // label="Site Location"
-            type="string"
-            error={errors?.siteLocation}
-            placeholder={"Site Location"}
+            placeholder="Site Location"
             onChange={handleChange}
             value={formData.siteLocation}
             fullWidth
             size="small"
+            error={!!errors?.siteLocation}
+            helperText={errors?.siteLocation}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Email Id"}</InputLabel>
 
+        {/* Department Name */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Department Name
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="departmentName"
-            // label="Department Name"
-            type="string"
-            error={errors?.departmentName}
-            placeholder={"Department Name"}
+            placeholder="Department Name"
             onChange={handleChange}
             value={formData.departmentName}
             fullWidth
             size="small"
+            error={!!errors?.departmentName}
+            helperText={errors?.departmentName}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Designation Name"}</InputLabel>
 
+        {/* Designation Name */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Designation Name
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="designationName"
-            // label="Designation Name"
-            type="string"
-            error={errors?.designationName}
-            placeholder={"Designation Name"}
+            placeholder="Designation Name"
             onChange={handleChange}
             value={formData.designationName}
             fullWidth
             size="small"
+            error={!!errors?.designationName}
+            helperText={errors?.designationName}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Aadhar Number"}</InputLabel>
 
+        {/* Aadhar Number */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Aadhar Number
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="aadharId"
-            // label="Aadhar Number"
             type="number"
-            error={errors?.aadharId}
-            placeholder={"Aadhar ID"}
+            placeholder="Aadhar Number"
             onChange={handleChange}
             value={formData.aadharId}
             fullWidth
             size="small"
+            error={!!errors?.aadharId}
+            helperText={errors?.aadharId}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Photo"}</InputLabel>
 
+        {/* User Photo */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            User Photo
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="userPhoto"
-            // label="Photo"
             type="file"
-            error={errors?.userPhoto}
-            placeholder={"User Photo"}
+            placeholder="User Photo"
             onChange={handleChangeFile}
-            value={formData.userPhoto}
             fullWidth
             size="small"
+            error={!!errors?.userPhoto}
+            helperText={errors?.userPhoto}
           />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
-          <InputLabel sx={{ color: "#000" }}>{"Signature"}</InputLabel>
 
+        {/* User Signature */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Signature
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
           <TextField
             name="userSignature"
-            // label="Signature"
             type="file"
-            error={errors?.userSignature}
-            placeholder={"Department Name"}
+            placeholder="Signature"
             onChange={handleChangeFile}
-            value={formData.userSignature}
             fullWidth
             size="small"
+            error={!!errors?.userSignature}
+            helperText={errors?.userSignature}
           />
         </Grid>
       </Grid>
 
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* {step > 0 ? (
-            <Button
-              name="prev"
-              variant="contained"
-              onClick={handleStep}
-              sx={{ m: 2, backgroundColor: "#022213" }}
-            >
-              prev
-            </Button>
-          ) : (
-            <Box></Box>
-          )}
-
-          {step !== 2 && (
-            <Button
-              name="next"
-              variant="contained"
-              onClick={handleSubmit}
-              sx={{ m: 2, backgroundColor: "#022213" }}
-            >
-              {step === 1 ? "Submit" : "Next"}
-            </Button>
-          )} */}
-        {/* <Button
-            type="submit"
-            variant="contained"
-            sx={{ m: 2, backgroundColor: "#022213" }}
-          >
-            Next
-          </Button> */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+        {/* Add buttons for navigation or submission here */}
       </Box>
-      {/* </form> */}
     </Box>
   );
 };

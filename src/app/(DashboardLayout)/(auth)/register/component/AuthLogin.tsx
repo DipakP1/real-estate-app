@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 import PageContainer from "@/components/container/PageContainer";
 import {
   Box,
@@ -30,6 +30,7 @@ import { loginUser } from "@/services/loginService";
 import { useSnackbar } from "notistack";
 import { Router } from "next/router";
 import { useRouter } from "next/navigation";
+import jwtDecode from "jwt-decode";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -64,12 +65,18 @@ const LoginComponent = ({
   setFormData,
   showPassword,
   setShowPassword,
+  setValue1,
+  value1,
 }: any) => {
-  const [value1, setValue1] = React.useState(0);
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
 
   const handleChange1 = (event: React.SyntheticEvent, newValue: number) => {
+    setFormData({
+      emailId: "",
+      mobileNo: "",
+      password: "",
+    });
     setValue1(newValue);
   };
 
@@ -86,29 +93,43 @@ const LoginComponent = ({
     e.preventDefault();
     try {
       const res = await loginUser("/v1/user/login", { type: 1, ...formData });
-      localStorage.setItem("user", JSON.stringify(res.data));
 
-      enqueueSnackbar(res.message, { variant: "success" });
-      router.push("/home");
+      const token = res.token.access.token;
+      const expire = res.token.access.expires;
+
+      const decodedToken = jwtDecode(token);
+
+      localStorage.setItem("user", JSON.stringify(decodedToken));
+
+      if (!res?.error) {
+        enqueueSnackbar(res.message, { variant: "success" });
+        router.push("/home");
+      } else {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
     } catch (error) {
       console.error(error);
     }
   };
-  const handleSubmitMobile = async(e: any) => {
+  const handleSubmitMobile = async (e: any) => {
     e.preventDefault();
     try {
       const res = await loginUser("/v1/user/login", { type: 2, ...formData });
+
       localStorage.setItem("user", JSON.stringify(res.data));
 
-      enqueueSnackbar(res.message, { variant: "success" });
-      router.push("/home");
+      if (!res?.error) {
+        enqueueSnackbar(res.message, { variant: "success" });
+        router.push("/home");
+      } else {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
     } catch (error) {
       console.error(error);
     }
   };
   return (
     <Grid container sx={{ height: "98vh" }}>
-      {/* Left Image and Text Section */}
       <Grid
         size={{ xs: 12, md: 6 }}
         sx={{ display: { xs: "none", md: "block", height: "100%" } }}
@@ -131,7 +152,6 @@ const LoginComponent = ({
         </Box>
       </Grid>
 
-      {/* Right Form Section */}
       <Grid size={{ xs: 12, md: 6 }}>
         <Box
           sx={{
