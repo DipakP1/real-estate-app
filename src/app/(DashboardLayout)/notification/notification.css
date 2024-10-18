@@ -1,0 +1,61 @@
+/* 
+.boxContainer{
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.mainBox{
+    height: 90vh;
+    width: 60%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    margin-top: 100px;
+    padding: 15px;
+
+}
+.imageContainer{
+    text-align: center;
+    margin-top: -80px;
+}
+.centerCode{
+    text-align: center;
+    line-height: 2em;
+}
+.greeting{
+    font-size: 20px;
+    line-height: 2em;
+}
+.boldGreet{
+    font-weight: bolder;
+}
+.finds{
+    font-size: 18px;
+    line-height: 2em;
+}
+.credentials{
+    font-size: 24px;
+    line-height: 2em;
+}
+.provide{
+    font-size: 16px;
+    line-height: 2em;
+}
+.security{
+    font-size: 16px;
+    line-height: 2em;
+}
+
+.css-193q0wg-MuiListItem-root {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+.listItem{
+    font-size: 14px;
+    font-weight: bolder;
+}
+.listItem1{
+    font-size: 14px;
+} */

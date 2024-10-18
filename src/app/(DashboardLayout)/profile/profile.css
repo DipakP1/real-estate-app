@@ -1,0 +1,304 @@
+.maincontainer {
+    margin: 0;
+    padding: 0;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+/* .profile {
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+.flexbox {
+    display: flex;
+}
+
+.image {
+    height: 150px;
+    width: 150px;
+    border-radius: 100% !important;
+    border: 5px solid white;
+    margin-bottom: 8px;
+
+
+}
+
+.imagecontainer {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.email {
+    border-radius: 100%;
+}
+
+.leftside {
+    width: 30%;
+    height: auto;
+    margin-left: -80px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding-top: 50px;
+    background-color: #ADDE34;
+}
+
+.rightside {
+    height: auto;
+    width: 70%;
+    border: 1px solid #ADDE34;
+    position: relative;
+}
+
+.inputbox {
+    display: flex;
+    width: 600px;
+}
+
+.inputleft {
+    margin: 10px;
+    margin-left: 40px;
+    width: 100%;
+}
+
+.inputright {
+    margin: 10px;
+    width: 100%;
+
+}
+
+.css-1o3an4k-MuiInputBase-input-MuiInput-input {
+    color: #757C88;
+    font-weight: bolder;
+
+}
+
+.edit {
+    display: flex;
+    cursor: pointer;
+    color: white;
+}
+.edit1{
+    margin-left: 30px;
+    margin-right: 10px;
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #022213;
+    margin: 0; 
+    padding-top: 15px;
+    padding-left: 10px;
+}
+
+.myprofile {
+    color: white;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.css-1bl55sx-MuiFormLabel-root-MuiInputLabel-root {
+    color: #757C88;
+    font-weight: bolder;
+}
+.name{
+    display: flex;
+    margin-top: 10px;
+}
+.firstname{
+    margin-right: 5px;
+    color: white;
+}
+.lastname{
+    color: white;
+}
+.usericon{
+    margin-right: 5px;
+    color: white;
+    height: 20px;
+    margin-left: 15px;
+}
+.designation{
+    display: flex;
+    cursor: pointer;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    color: white;
+
+}
+.signatureicon{
+    margin-right: 5px;
+    margin-left: 15px;
+    color: white;
+}
+.icons{
+    display: flex;
+
+ 
+    justify-content: end;
+    cursor: pointer;
+}
+.showicons{
+    margin-right: 40px;
+   
+    color: rgb(57,120,104);
+}
+.datawidth{
+    width: 100%;
+    align-items: center; 
+    margin-bottom: 16px; 
+}
+.label{
+    font-size: 14px;
+    color: #2e2e2e;
+    font-weight: bolder;
+    display: flex;
+}
+.editpage{
+    display: flex;
+    margin-right: 30px;
+}
+.changepass{
+    display: flex;
+    margin-right: 10px;
+}
+.editpagechield{
+    margin-right: 1px;
+    height: 18px;
+}
+.viewbutton{
+    margin-top: -4px;
+
+}
+.middlebox{
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+.footer{
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+.footer {
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    margin: 0; 
+    padding: 10px; 
+    background-color: #f1f1f1; 
+    text-align: center;
+}
+.labelicon {
+    margin-right: 4px; 
+    height: 24px; 
+    width: 24px; 
+    margin-left: -31px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .leftside {
+        width: 30%;
+        height: 70vh;
+
+        margin-left: -80px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        padding-top: 50px;
+        background-color: #ADDE34;
+    
+    
+    }
+    
+    .rightside {
+        height: 70vh;
+        width: 70%;
+
+        border: 1px solid #ADDE34;
+        position: relative;
+    }
+    
+  }
+
+
+
+
+
+
+
+
+  /* Mobile view adjustments for screens below 768px */
+@media only screen and (max-width: 768px) {
+    .flexbox{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .maincontainer {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .leftside, .rightside {
+        width: 100%;
+        margin: 0;
+        height: auto;
+    }
+
+    .leftside {
+        padding: 20px;
+        margin-left: 0;
+        box-shadow: none;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .rightside {
+        /* border: none; */
+        padding: 0px;
+    }
+
+    .inputbox {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .inputleft, .inputright {
+        margin-left: 50px;
+        margin-right: 0;
+   
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer {
+        position: relative;
+    }
+
+    .icons, .name, .designation {
+        justify-content: start;
+    }
+
+    .image {
+        height: 100px;
+        width: 100px;
+    }
+    .datawidth{
+        margin-bottom: 0;
+    }
+
+}
