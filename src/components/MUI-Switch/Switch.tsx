@@ -8,8 +8,8 @@ export default function ControlledSwitches({
   state,
   Switchvalue,
   permissionType,
-
-  allPermisson,
+  moduleId,
+  subModuleId
 }: any) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value, event.target.name, "EVENT");
@@ -25,19 +25,35 @@ export default function ControlledSwitches({
     //     [permissionType]: !state[name],
     //   },
     // });
-    setState((prev: any) => {
-      console.log(prev[name], "PREV NAME");
-      return {
-        ...prev,
-
-        ...prev[name],
-        permissons:
-          prev[name] === undefined || !prev[name][permissionType],
-      };
-    });
+    setState((prevFormData: any) =>
+      prevFormData.map((module: any) => {
+        if (module.moduleId === moduleId) {
+          return {
+            ...module,
+            moduleType: module.moduleType.map((moduleType: any) => ({
+              ...moduleType,
+              submodule: moduleType.submodule.map((subModule: any) => {
+                if (subModule.submoduleId === subModuleId) {
+                  return {
+                    ...subModule,
+                    permissions: {
+                      ...subModule.permissions,
+                      [permissionType]: !subModule.permissions[permissionType]
+                        ? 1
+                        : 0,
+                    },
+                  };
+                }
+                return subModule;
+              }),
+            })),
+          };
+        }
+        return module;
+      })
+    );
   };
 
-  console.log(name, "NAME");
   return (
     <Checkbox
       checked={Switchvalue}

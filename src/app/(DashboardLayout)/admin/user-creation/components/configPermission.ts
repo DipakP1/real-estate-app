@@ -1,32 +1,36 @@
 export const configureList = [
   {
     userType: "Broker",
-
+    moduleId: 1,
     moduleDetails: [
       {
         moduleType: "Pre-Sales",
         subModule: [
           {
+            submoduleId: 10,
+
             title: "Site Visit Management",
             name: "site-visit-mng",
-            permission: [
-              { create: false },
-              { read: false },
-              { update: false },
-              { delete: false },
-            ],
+            permission: {
+              read: 0,
+              create: 0,
+              edit: 0,
+              delete: 0,
+            },
           },
           {
+            submoduleId: 11,
             title: "Project Management",
             name: "project-mng",
-            permission: [
-              { create: false },
-              { read: false },
-              { update: false },
-              { delete: false },
-            ],
+            permission: {
+              read: 0,
+              create: 0,
+              edit: 0,
+              delete: 0,
+            },
           },
           {
+            submoduleId: 12,
             title: "Project Management1",
             name: "project-mng-1",
             permission: [
@@ -57,20 +61,21 @@ export const configureList = [
   },
   {
     userType: "Builder",
-
+    moduleId: 2,
     moduleDetails: [
       {
         moduleType: "User managment",
         subModule: [
           {
+            submoduleId: 101,
             title: "Site Visit Management",
             name: "site-visit-mng",
-            permission: [
-              { create: false },
-              { read: false },
-              { update: false },
-              { delete: false },
-            ],
+            permission: {
+              read: 0,
+              create: 0,
+              edit: 0,
+              delete: 0,
+            },
           },
         ],
       },
@@ -78,14 +83,16 @@ export const configureList = [
         moduleType: "User managment 1",
         subModule: [
           {
+            submoduleId: 102,
+
             title: "Site Visit Management",
             name: "site-visit-mng",
-            permission: [
-              { create: false },
-              { read: false },
-              { update: false },
-              { delete: false },
-            ],
+            permission: {
+              read: 0,
+              create: 0,
+              edit: 0,
+              delete: 0,
+            },
           },
         ],
       },

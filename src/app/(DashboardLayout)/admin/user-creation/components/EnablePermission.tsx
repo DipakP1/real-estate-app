@@ -1,11 +1,6 @@
-"use client";
 import ControlledSwitches from "@/components/MUI-Switch/Switch";
 import {
   Box,
-  Grid,
-  Button,
-  Typography,
-  Paper,
   Table,
   TableBody,
   TableContainer,
@@ -15,8 +10,9 @@ import {
   TableCell,
   tableCellClasses,
   Container,
+  Paper,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { configureList } from "./configPermission";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -37,8 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const EnablePermission = ({
-  formData,
-  setFormData,
+  // formData,
+  // setFormData,
   parendFormData,
   setParendFormData,
   permission,
@@ -60,35 +56,43 @@ const EnablePermission = ({
     "user-1": { create: false, read: false, update: false, delete: false },
   };
 
+  const [formData, setFormData] = useState([]);
+
+  // Transform configureList into the required payload format
+  const transformConfigureList = () => {
+    const transformedData: any = configureList.map((config: any) => ({
+      moduleId: config.moduleId,
+      moduleName: config.userType,
+      moduleType: config.moduleDetails.map((module: any) => ({
+        moduleType: module.moduleType,
+        submodule: module.subModule.map((subModule: any) => ({
+          submoduleId: subModule.submoduleId,
+          submoduleName: subModule.title,
+          permissions: {
+            read: subModule.permission.read ? 1 : 0,
+            create: subModule.permission.create ? 1 : 0,
+            edit: subModule.permission.update ? 1 : 0,
+            delete: subModule.permission.delete ? 1 : 0,
+          }, 
+        })),
+      })),
+    }));
+    setFormData(transformedData);
+  };
+  useEffect(() => {
+    transformConfigureList();
+  }, []);
+
   const handleConfigSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData, "FORM DATA");
   };
-
-  // const handleSwitchChange = (name: string, permissionType: string) => {
-  //   setFormData({
-  //     ...formData,
-  //     [name]: {
-  //       ...formData[name],
-  //       [permissionType]: !formData[name][permissionType],
-  //     },
-  //   });
-  // };
-
-  console.log(formData, "FORMDA");
 
   return (
     <Container>
       <Box display="grid" gridTemplateColumns="1fr" gap={2}>
         <Box display="flex" flexDirection="column" gap={2}>
           <Box borderRadius="10px" border="1px solid grey" bgcolor="white">
-            {/* <Box
-              sx={{
-                borderRadius: "10px 10px 0px 0px",
-                height: 8,
-                bgcolor: "#acdd33",
-              }}
-            ></Box> */}
             <Box
               component={"form"}
               onSubmit={handleConfigSubmit}
@@ -106,71 +110,44 @@ const EnablePermission = ({
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {permission?.moduleDetails?.map((module: any) => (
-                      <>
-                        {/* <Typography
-                            // component={Typography}
-                            fontWeight={"bold"}
-                            variant="body1"
-                            ml={1}
-                            mt={2}
-                          > */}
+                    {permission.moduleDetails.map((module: any) => (
+                      <React.Fragment key={module.moduleType}>
                         <p style={{ fontWeight: "bold" }}>
-                          {module?.moduleType}
+                          {module.moduleType}
                         </p>
-                        {/* </Typography> */}
-                        {module?.subModule?.map((subModule:any) => (
+                        {module.subModule.map((subModule: any) => (
                           <StyledTableRow key={subModule.name}>
                             <StyledTableCell component="th" scope="row">
                               {subModule.title}
                             </StyledTableCell>
-                            {["create", "read", "update", "delete"]?.map(
+                            {["create", "read", "update", "delete"].map(
                               (permissionName) => (
                                 <StyledTableCell
                                   align="center"
-                                  key={permission}
+                                  key={permissionName}
                                 >
                                   <ControlledSwitches
                                     name={subModule?.name}
-                                    subModuleName={subModule.title}
                                     setState={setFormData}
                                     state={formData}
                                     Switchvalue={
-                                      formData[subModule?.name]?.[permissionName] ||
+                                      subModule.permission[permissionName] ||
                                       false
                                     }
                                     permissionType={permissionName}
-                                    // onChange={() =>
-                                    //   handleSwitchChange(
-                                    //     subModule.name,
-                                    //     permission
-                                    //   )
-                                    // }
                                     allPermisson={permission}
+                                    moduleId={module.moduleId}
+                                    subModuleId={subModule.submoduleId}
                                   />
                                 </StyledTableCell>
                               )
                             )}
                           </StyledTableRow>
                         ))}
-                      </>
+                      </React.Fragment>
                     ))}
                   </TableBody>
                 </Table>
-              </Box>
-              <Box
-                mt={2}
-                sx={{ display: "flex", justifyContent: "right", gap: "1em" }}
-              >
-                <Button
-                  variant="outlined"
-                  onClick={() => setFormData(initialFormData)}
-                >
-                  Reset
-                </Button>
-                <Button type="submit" variant="contained">
-                  Save
-                </Button>
               </Box>
             </Box>
           </Box>
