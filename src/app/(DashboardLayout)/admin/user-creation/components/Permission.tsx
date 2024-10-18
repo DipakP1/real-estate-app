@@ -23,6 +23,7 @@ import MuiAccordionSummary, {
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EnablePermission from "./EnablePermission";
+import { configureList } from "./configPermission";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -59,9 +60,25 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const PermissionsTable = ({ permissions }: { permissions: any }) => {
+const PermissionsTable = ({ permissions, formData, setFormData }: any) => {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
-  const [formData, setFormData] = useState({});
+  const [formData1, setFormData1] = useState({
+    moduleId: "",
+    moduleName: "",
+    moduleType: "",
+    submodule: [
+      {
+        submoduleId: "",
+        submoduleName: "",
+        permissions: {
+          read: 0,
+          create: 0,
+          edit: 0,
+          delete: 0,
+        },
+      }
+    ],
+  });
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -195,7 +212,13 @@ const PermissionsTable = ({ permissions }: { permissions: any }) => {
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <EnablePermission formData={formData} setFormData={setFormData} />
+          <EnablePermission
+            formData={formData1}
+            setFormData={setFormData1}
+            parendFormData={formData}
+            setParentFormData={setFormData}
+            permission={configureList[0]}
+          />
         </AccordionDetails>
       </Accordion>
 
@@ -221,15 +244,18 @@ const PermissionsTable = ({ permissions }: { permissions: any }) => {
           </Box>
         </AccordionSummary>
         <AccordionDetails>
-          <EnablePermission formData={formData} setFormData={setFormData} />
+          <EnablePermission
+            formData={formData}
+            setFormData={setFormData}
+            permission={configureList[1]}
+          />
         </AccordionDetails>
       </Accordion>
     </>
   );
 };
 
-
-const UserPermission = () => {
+const UserPermission = ({ formData, setFormData }: any) => {
   const [tabIndex, setTabIndex] = useState(0);
 
   const [permissions, setPermissions] = useState([
@@ -282,15 +308,19 @@ const UserPermission = () => {
 
   return (
     <Box sx={{ p: 2, border: "1px solid #ececec", borderRadius: "5px" }}>
-      <PermissionsTable permissions={permissions} />
-      <Box sx={{ mt: 2 }}>
+      <PermissionsTable
+        permissions={permissions}
+        formData={formData}
+        setFormData={setFormData}
+      />
+      {/* <Box sx={{ mt: 2 }}>
         <Button
           variant="contained"
           sx={{ backgroundColor: "#000", color: "#fff" }}
         >
           Submit
         </Button>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

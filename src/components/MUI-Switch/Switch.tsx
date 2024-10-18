@@ -7,27 +7,38 @@ export default function ControlledSwitches({
   setState,
   state,
   Switchvalue,
-}: any) {
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setState((prev: any) => ({
-  //     ...prev,
-  //     [name]: prev[name] === undefined || prev[name] === false ? true : false,
-  //   }));
-  // };
+  permissionType,
 
+  allPermisson,
+}: any) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState((prev: any) => ({
-      ...prev,
-      [name]: prev[name] === undefined || prev[name] === false ? true : false,
-    }));
+    console.log(event.target.value, event.target.name, "EVENT");
+    // setState((prev: any) => ({
+    //   ...prev,
+    //   [name]: prev[name] === undefined || prev[name] === false ? true : false,
+    // }));
+
+    // setState({
+    //   ...state,
+    //   [name]: {
+    //     ...state[name],
+    //     [permissionType]: !state[name],
+    //   },
+    // });
+    setState((prev: any) => {
+      console.log(prev[name], "PREV NAME");
+      return {
+        ...prev,
+
+        ...prev[name],
+        permissons:
+          prev[name] === undefined || !prev[name][permissionType],
+      };
+    });
   };
 
+  console.log(name, "NAME");
   return (
-    // <Switch
-    //   checked={Switchvalue}
-    //   onChange={handleChange}
-    //   inputProps={{ "aria-label": "controlled" }}
-    // />
     <Checkbox
       checked={Switchvalue}
       onChange={handleChange}

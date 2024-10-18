@@ -36,7 +36,7 @@ import { IconEyeFilled } from "@tabler/icons-react";
 import Grid from "@mui/material/Grid2";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import {IconHome} from "@tabler/icons-react"
+import { IconHome } from "@tabler/icons-react";
 
 type Order = "asc" | "desc";
 
@@ -249,7 +249,6 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         return <Chip label="Unknown" />;
     }
   };
-  
 
   const rowsWithChips = rows.map((row: any) => ({
     ...row,
@@ -273,17 +272,8 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
     [order, orderBy, page, rowsPerPage, rowsWithChips]
   );
 
-
   return (
     <Box sx={{ width: "100%", padding: 0 }}>
-      <Toolbar>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link underline="hover" sx={{display:"flex", alignItems:"center", gap:1}} color="text.primary" href="/">
-           <IconHome/> Home / Users / List
-          </Link>
-        </Breadcrumbs>
-      </Toolbar>
-
       {/* Custom Pagination at the Top (for Rows Per Page) */}
       {enablePagination && (
         <Grid container>

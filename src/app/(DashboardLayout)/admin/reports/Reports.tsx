@@ -185,16 +185,6 @@ const UsersList = () => {
 
   return (
     <Box sx={{ padding: 3 }}>
-      {/* Breadcrumbs */}
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="text.primary" href="/">
-          Home
-        </Link>
-        <Link underline="hover" color="text.primary" href="/users">
-          Users
-        </Link>
-        <Typography color="text.primary">List</Typography>
-      </Breadcrumbs>
 
       {/* Title and Action Buttons */}
       <Stack

@@ -8,6 +8,8 @@ interface ReusableFormInputProps {
   control: any;
   type?: string;
   error?: any;
+  formData?: any;
+  setFormData?: any;
 }
 
 const ReusableFormInput: React.FC<ReusableFormInputProps> = ({
@@ -16,28 +18,26 @@ const ReusableFormInput: React.FC<ReusableFormInputProps> = ({
   control,
   type = "text",
   error,
+  formData,
+  setFormData,
 }) => {
+
+
   return (
     <>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <>
-            <InputLabel sx={{color:"#000"}}>{label}</InputLabel>
-            <TextField
-              {...field}
-              type={type}
-              // label={label}
-              placeholder={label}
-              fullWidth
-              size="small"
-              error={!!error}
-              helperText={error ? error.message : ""}
-            //   sx={{ mt: 2 }}
-            />
-          </>
-        )}
+      <InputLabel sx={{ color: "#000" }}>{label}</InputLabel>
+      <TextField
+        // type={type}
+        // name={name}
+        // // label={label}
+        // placeholder={label}
+        // onChange={handleChange}
+        // value={formData[name]}
+        // fullWidth
+        // size="small"
+        // error={!!error}
+        // helperText={error ? error.message : ""}
+        //   sx={{ mt: 2 }}
       />
     </>
   );

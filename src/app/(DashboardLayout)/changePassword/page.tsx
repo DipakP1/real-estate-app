@@ -1,139 +1,232 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, TextField, Typography, Grid, Snackbar, Box } from '@mui/material';
-import './changePassword.css';
+import React, { useState, useEffect } from 'react';
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  IconButton,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import ReplayOutlinedIcon from '@mui/icons-material/ReplayOutlined';
+import NoEncryptionOutlinedIcon from '@mui/icons-material/NoEncryptionOutlined';
+import EnhancedEncryptionOutlinedIcon from '@mui/icons-material/EnhancedEncryptionOutlined';
+import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
+import HttpsOutlinedIcon from '@mui/icons-material/HttpsOutlined';
+import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined';
+import './changePassword.css'
 
-const questions = [
-    { question: 'What is 3 + 5?', answer: '8' },
-    { question: 'What color is the sky?', answer: 'blue' },
-    { question: 'What is the capital of France?', answer: 'paris' },
-];
+const ChangePassword = () => {
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState('');
+  const [captchaInput, setCaptchaInput] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [captchaSvg, setCaptchaSvg] = useState('');
 
-const ChangePassword: React.FC = () => {
-    const [oldPassword, setOldPassword] = useState<string>('');
-    const [newPassword, setNewPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [captchaAnswer, setCaptchaAnswer] = useState<string>('');
-    const [captchaQuestion, setCaptchaQuestion] = useState<string>('');
-    const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
-    const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
 
+  const generateCaptcha = () => {
+    const randomNum = Math.floor(Math.random() * 10000);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40">
+                   <text x="0" y="30" font-size="30" fill="black">${randomNum}</text>
+                 </svg>`;
+    setCaptchaSvg('data:image/svg+xml;base64,' + btoa(svg));
+    setCaptchaValue(randomNum.toString());
+  };
 
-    const resetCaptcha = () => {
-        const randomIndex = Math.floor(Math.random() * questions.length);
-        setCaptchaQuestion(questions[randomIndex].question);
-    };
+  const handleClickShowCurrentPassword = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
 
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
+  };
 
-    React.useEffect(() => {
-        resetCaptcha();
-    }, []);
+  const handleClickShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+  const handleChangeCurrentPassword = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setCurrentPassword(event.target.value);
+  };
 
+  const handleChangeNewPassword = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setNewPassword(event.target.value);
+  };
 
-        if (newPassword !== confirmPassword) {
-            setSnackbarMessage('New Password and Confirm Password do not match');
-            setSnackbarOpen(true);
-            return;
-        }
+  const handleChangeConfirmPassword = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+    setConfirmPassword(event.target.value);
+  };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
 
-        const correctAnswer = questions.find(q => q.question === captchaQuestion)?.answer;
-        if (captchaAnswer.toLowerCase() !== correctAnswer) {
-            setSnackbarMessage('Incorrect CAPTCHA answer');
-            setSnackbarOpen(true);
-            return;
-        }
+  const handleSubmit = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
 
+   
+    if (!currentPassword || !newPassword || !confirmPassword || !captchaInput) {
+      setSnackbarMessage('All fields are required!');
+      setSnackbarOpen(true);
+      return;
+    }
 
-        console.log('Old Password:', oldPassword);
-        console.log('New Password:', newPassword);
+    if (newPassword !== confirmPassword) {
+      setSnackbarMessage('New password and confirm password do not match!');
+      setSnackbarOpen(true);
+      return;
+    }
 
+    if (captchaInput !== captchaValue) {
+      setSnackbarMessage('Captcha input is incorrect!');
+      setSnackbarOpen(true);
+      generateCaptcha(); 
+      return;
+    }
 
-        setOldPassword('');
-        setNewPassword('');
-        setConfirmPassword('');
-        setCaptchaAnswer('');
-        resetCaptcha();
-        setSnackbarMessage('Password changed successfully');
-        setSnackbarOpen(true);
-    };
+   
+    console.log('Password change request submitted', { currentPassword, newPassword, captchaValue });
+    setSnackbarMessage('Password changed successfully!');
+    setSnackbarOpen(true);
 
-    const handleSnackbarClose = () => {
-        setSnackbarOpen(false);
-    };
+   
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
+    setCaptchaInput('');
+    generateCaptcha(); 
+  };
 
-    return (
-        <Box className="main">
-            <Box maxWidth="sm" className='container' sx={{ boxShadow: 3 }}>
-                <Typography variant="h4" gutterBottom>Change Password</Typography>
-                <form onSubmit={handleSubmit} className="form">
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Old Password"
-                                type="password"
-                                variant="outlined"
-                                fullWidth
-                                value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
-                                required
-                                sx={{ backgroundColor: "black" }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="New Password"
-                                type="password"
-                                variant="outlined"
-                                fullWidth
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                label="Confirm New Password"
-                                type="password"
-                                variant="outlined"
-                                fullWidth
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="subtitle1">{captchaQuestion}</Typography>
-                            <TextField
-                                label="Your Answer"
-                                variant="outlined"
-                                fullWidth
-                                value={captchaAnswer}
-                                onChange={(e) => setCaptchaAnswer(e.target.value)}
-                                required
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button type="submit" variant="contained" color="primary" fullWidth>
-                                Change Password
-                            </Button>
-                        </Grid>
-                        
-                    </Grid>
-                </form>
-                <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={6000}
-                    onClose={handleSnackbarClose}
-                    message={snackbarMessage}
-                    className='snackbar'
-                />
-            </Box>
+  return (
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        maxWidth: 430,
+        mx: 'auto',
+        mt: 1,
+        p: 3,
+        borderRadius: 2,
+        boxShadow: 3,
+        m:{xs:3, md:"auto"}
+      }}
+      className='main'
+    >
+      <Typography variant="h4" align="center" gutterBottom>
+        <NoEncryptionOutlinedIcon className='changePasswordIcon' /> <Box>Change Password</Box>
+      </Typography>
+      
+      <Box className="newPassword"><LockOpenOutlinedIcon className="newPassword1" /> <Typography>Current Password</Typography> </Box>
+   
+      <TextField
+        fullWidth
+        size="small"
+        type={showCurrentPassword ? 'text' : 'password'}
+        margin="dense"
+        variant="outlined"
+        placeholder='Current Password'
+        value={currentPassword}
+        onChange={handleChangeCurrentPassword}
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={handleClickShowCurrentPassword}>
+              {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          ),
+        }}
+      />
+      <Box className="newPassword"><EnhancedEncryptionOutlinedIcon className="newPassword1" /> <Typography>New Password</Typography> </Box>
+     
+      <TextField
+        fullWidth
+        size="small"
+        type={showNewPassword ? 'text' : 'password'}
+        margin="dense"
+        variant="outlined"
+        placeholder='New Password'
+        value={newPassword}
+        onChange={handleChangeNewPassword}
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={handleClickShowNewPassword}>
+              {showNewPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          ),
+        }}
+      />
+            <Box className="newPassword"><HttpsOutlinedIcon className="newPassword1" /> <Typography>Confirm New Password</Typography> </Box>
+ 
+      <TextField
+        fullWidth
+        size="small"
+        type={showConfirmPassword ? 'text' : 'password'}
+        margin="dense"
+        variant="outlined"
+        placeholder='Confirm New Password'
+        value={confirmPassword}
+        onChange={handleChangeConfirmPassword}
+        InputProps={{
+          endAdornment: (
+            <IconButton onClick={handleClickShowConfirmPassword}>
+              {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+            </IconButton>
+          ),
+        }}
+      />
+      <Box sx={{ textAlign: 'center', display:"flex", marginTop:"12px"}}>
+        <Box className="captchaFlex">
+        <img src={captchaSvg} alt="Captcha" className="image" />
+        <Button
+          variant="text"
+          onClick={generateCaptcha}
+    
+        >
+         <ReplayOutlinedIcon className='reloader' />
+        </Button>
         </Box>
-    );
+        <TextField
+          fullWidth
+          size="small"
+          variant="outlined"
+          value={captchaInput}
+          onChange={(e) => setCaptchaInput(e.target.value)}
+          placeholder="Enter captcha"
+        />
+      </Box>
+
+      <Button
+        type="submit"
+        variant="contained"
+
+        fullWidth
+        sx={{ mt: 2 , backgroundColor:"#ACDD33", color:"black"}}
+      >
+        <LockResetOutlinedIcon className='changePass' /> Change Password
+      </Button>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="info">
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
 };
 
 export default ChangePassword;
