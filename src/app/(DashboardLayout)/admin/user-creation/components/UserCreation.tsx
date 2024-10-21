@@ -1,36 +1,73 @@
-"use client";
 import React from "react";
-import { Box, InputLabel, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputLabel,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useSnackbar } from "notistack";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { IconCloudUpload } from "@tabler/icons-react";
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
-const UserCreation = ({ formData, setFormData, errors }: any) => {
+const UserCreation = ({
+  formData,
+  setFormData,
+  errors,
+  validateForm,
+  setError,
+}: any) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    // if (!validateForm()) {
+    //   delete errors?.name
+    //   setError((prev:any) => ({
+    //     ...prev,
+    //   }));
     setFormData((prev: any) => ({
       ...prev,
       [name]: value,
     }));
+    // }
   };
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files }: any = e.target;
     const file = files[0]; // Get the selected file
 
-    if (file) {
-      const reader = new FileReader();
+    const formData: any = new FormData();
 
-      reader.onloadend = () => {
-        setFormData((prev: any) => ({
-          ...prev,
-          [name]: reader.result, // Store the Base64 string directly in the state
-        }));
-      };
+    formData.append(name, file);
 
-      reader.readAsDataURL(file); // This will trigger the onloadend event
-    }
+    console.log(formData, "FILE");
+
+    // if (file) {
+    //   const reader = new FileReader();
+
+    //   reader.onloadend = () => {
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: formData.get(name), // Store the Base64 string directly in the state
+    }));
+    //   };
+
+    //   reader.readAsDataURL(file); // This will trigger the onloadend event
+    // }
   };
 
   console.log(formData);
@@ -95,6 +132,26 @@ const UserCreation = ({ formData, setFormData, errors }: any) => {
             size="small"
             error={!!errors?.phoneNumber}
             helperText={errors?.phoneNumber}
+          />
+        </Grid>
+
+        {/* Employee Code */}
+        <Grid size={{ xs: 12, md: 6 }}>
+          <InputLabel sx={{ color: "#000" }}>
+            Employee Code
+            <Typography component={"span"} style={{ color: "red" }}>
+              *
+            </Typography>
+          </InputLabel>
+          <TextField
+            name="employeeCode"
+            placeholder="Employee Code"
+            onChange={handleChange}
+            value={formData.employeeCode}
+            fullWidth
+            size="small"
+            error={!!errors?.employeeCode}
+            helperText={errors?.employeeCode}
           />
         </Grid>
 
@@ -251,6 +308,7 @@ const UserCreation = ({ formData, setFormData, errors }: any) => {
           <TextField
             name="userSignature"
             type="file"
+            hidden
             placeholder="Signature"
             onChange={handleChangeFile}
             fullWidth
@@ -258,6 +316,34 @@ const UserCreation = ({ formData, setFormData, errors }: any) => {
             error={!!errors?.userSignature}
             helperText={errors?.userSignature}
           />
+          {/* <Box
+            sx={{
+              border: errors?.userSignature?"1px dotted black":"1px dotted black" ,
+              textAlign: "center",
+              padding: "20px 0",
+              borderRadius: "10px",
+            }}
+          >
+            <Box mb={1}>
+              <IconCloudUpload width={50} height={50} />
+            </Box>
+            <Button
+              component="label"
+              role={undefined}
+              variant="outlined"
+              sx={{ border: "none" }}
+              tabIndex={-1}
+              startIcon={<CloudUploadIcon />}
+            >
+              Upload files
+              <VisuallyHiddenInput type="file" onChange={handleChangeFile} />
+            </Button>
+          </Box>
+          <span
+            style={{ color: "#FA896B", fontSize: "12px", marginLeft: "5px" }}
+          >
+            {errors?.userSignature}
+          </span> */}
         </Grid>
       </Grid>
 

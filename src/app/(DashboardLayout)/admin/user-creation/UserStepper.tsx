@@ -63,27 +63,31 @@ const initialPermissions = [
     ],
   },
 ];
+const userInitialData = {
+  userId: "23",
+  companyName: "",
+  siteLocation: "",
+  userName: "",
+  employeeCode: "",
+  departmentId: 9,
+  departmentName: "",
+  designationId: 69,
+  designationName: "",
+  userTypeId: 1129,
+  userTypeName: "employee",
+  dateOfBirth: "",
+  phoneNumber: "",
+  emailId: "",
+  aadharId: "",
+  userPhoto: "",
+  userSignature: "",
+};
 const UserManagment = () => {
   const [step, setStep] = useState<number>(0); // Current step in the stepper
-  const [formData, setFormData] = useState<any>({
-    userId: "23",
-    companyName: "",
-    siteLocation: "",
-    userName: "",
-    employeeCode: "112",
-    departmentId: 9,
-    departmentName: "",
-    designationId: 69,
-    designationName: "",
-    userTypeId: 1129,
-    userTypeName: "employee",
-    dateOfBirth: "",
-    phoneNumber: "",
-    emailId: "",
-    aadharId: "",
-    userPhoto: "",
-    userSignature: "",
-  });
+  const [formData, setFormData] = useState<any>(userInitialData);
+
+  // const userData = JSON.parse(localStorage.getItem("user"))
+  // console.log(userData, "USER DATA")
 
   const [permissions, setPermissions] = useState(initialPermissions);
   const [error, setError] = useState<any>({}); // To track form validation errors
@@ -99,6 +103,8 @@ const UserManagment = () => {
     if (!formData.phoneNumber || !/^\d{10}$/.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Phone number must be 10 digits";
     }
+    if (!formData.employeeCode)
+      newErrors.employeeCode = "Employee code is required";
     if (!formData.dateOfBirth)
       newErrors.dateOfBirth = "Date of Birth is required";
     if (!formData.companyName)
@@ -120,6 +126,8 @@ const UserManagment = () => {
     return Object.keys(newErrors).length === 0; // Return true if there are no errors
   };
 
+
+  console.log(formData, "FORM DATATATATAT")
   // Function to submit user data along with permissions
   const submitUser = async () => {
     try {
@@ -130,7 +138,7 @@ const UserManagment = () => {
 
       const res = await postData("/v1/user/register", {
         userId: "11222",
-        employeeCode: "123",
+        // employeeCode: "123",
         departmentId: 9,
         designationId: 69,
         userTypeId: 96,
@@ -138,10 +146,17 @@ const UserManagment = () => {
         ...payload,
       });
 
-      enqueueSnackbar(res.message, { variant: "success" });
-    } catch (error) {
+      if (!res?.error) {
+        enqueueSnackbar(res.message, { variant: "success" });
+        setFormData(userInitialData);
+        setPermissions(initialPermissions);
+        setStep(0);
+      } else {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
+    } catch (error: any) {
       console.error(error);
-      enqueueSnackbar("An error occurred while submitting the form", {
+      enqueueSnackbar(error.response?.data?.message, {
         variant: "error",
       });
     }
@@ -149,15 +164,15 @@ const UserManagment = () => {
 
   // Handle step changes
 
-  console.log(error, "ERROR")
+  console.log(error, "ERROR");
   const handleStep = (event: any) => {
     const name = event.target.name;
-  
+
     setStep((prevStep: number) => {
       if (name === "prev" && prevStep > 0) {
         return prevStep - 1; // Go back to the previous step
       }
-  
+
       if (name === "next" && prevStep === 0) {
         if (validateForm()) {
           return prevStep + 1; // Proceed to the next step if form is valid
@@ -165,16 +180,15 @@ const UserManagment = () => {
           return prevStep; // Stay on the same step if form is invalid
         }
       }
-  
+
       if (name === "submit" && prevStep === 1) {
         submitUser(); // Call submitUser when the "Submit" button is clicked on the final step
         return prevStep;
       }
-  
+
       return prevStep;
     });
   };
-  
 
   return (
     <div className="grid grid-cols-1 gap-9">
@@ -190,6 +204,8 @@ const UserManagment = () => {
                 formData={formData}
                 setFormData={setFormData}
                 errors={error} // Pass error object to the form
+                validateForm={validateForm}
+                setError={setError}
               />
             )}
 

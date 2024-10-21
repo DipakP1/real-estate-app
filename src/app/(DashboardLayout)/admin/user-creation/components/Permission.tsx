@@ -350,7 +350,7 @@ import {
 } from "@tabler/icons-react";
 
 const PermissionTable = ({ permissions, setPermissions }: any) => {
-  const [tabValue, setTabValue] = useState(0); // State for Tabs (0 = Broker, 1 = Builder)
+  const [tabValue, setTabValue] = useState(0); 
 
   // Handle switching tabs
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -421,13 +421,11 @@ const PermissionTable = ({ permissions, setPermissions }: any) => {
     );
   };
 
-  // Filter permissions by moduleType
   const filteredPermissions = permissions.filter(
     (module: any) =>
       module.moduleType === (tabValue === 0 ? "broker" : "builder")
   );
 
-  console.log(permissions, "PERMISSION");
 
   return (
     <Box p={4} >

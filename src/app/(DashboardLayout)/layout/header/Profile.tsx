@@ -75,7 +75,7 @@ const Profile = () => {
             <FiUnlock width={20} />{" "}
           </ListItemIcon>
 
-          <Link href={"/profile"} className="profileuser">
+          <Link href={"/admin/profile-page"} className="profileuser">
             <ListItemText> Profile </ListItemText>
           </Link>
         </MenuItem>
