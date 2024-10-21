@@ -89,6 +89,7 @@ const UserManagment = () => {
   // const userData = JSON.parse(localStorage.getItem("user"))
   // console.log(userData, "USER DATA")
 
+
   const [permissions, setPermissions] = useState(initialPermissions);
   const [error, setError] = useState<any>({}); // To track form validation errors
 
@@ -126,8 +127,6 @@ const UserManagment = () => {
     return Object.keys(newErrors).length === 0; // Return true if there are no errors
   };
 
-
-  console.log(formData, "FORM DATATATATAT")
   // Function to submit user data along with permissions
   const submitUser = async () => {
     try {
@@ -167,12 +166,10 @@ const UserManagment = () => {
   console.log(error, "ERROR");
   const handleStep = (event: any) => {
     const name = event.target.name;
-
     setStep((prevStep: number) => {
       if (name === "prev" && prevStep > 0) {
         return prevStep - 1; // Go back to the previous step
       }
-
       if (name === "next" && prevStep === 0) {
         if (validateForm()) {
           return prevStep + 1; // Proceed to the next step if form is valid
@@ -185,10 +182,10 @@ const UserManagment = () => {
         submitUser(); // Call submitUser when the "Submit" button is clicked on the final step
         return prevStep;
       }
-
       return prevStep;
     });
   };
+
 
   return (
     <div className="grid grid-cols-1 gap-9">

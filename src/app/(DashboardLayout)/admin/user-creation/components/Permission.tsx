@@ -352,6 +352,7 @@ import {
 const PermissionTable = ({ permissions, setPermissions }: any) => {
   const [tabValue, setTabValue] = useState(0); 
 
+
   // Handle switching tabs
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -425,7 +426,6 @@ const PermissionTable = ({ permissions, setPermissions }: any) => {
     (module: any) =>
       module.moduleType === (tabValue === 0 ? "broker" : "builder")
   );
-
 
   return (
     <Box p={4} >

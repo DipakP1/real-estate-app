@@ -30,6 +30,7 @@ const UserCreation = ({
   validateForm,
   setError,
 }: any) => {
+
   const { enqueueSnackbar } = useSnackbar();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -152,6 +153,7 @@ const UserCreation = ({
             size="small"
             error={!!errors?.employeeCode}
             helperText={errors?.employeeCode}
+
           />
         </Grid>
 
@@ -308,7 +310,6 @@ const UserCreation = ({
           <TextField
             name="userSignature"
             type="file"
-            hidden
             placeholder="Signature"
             onChange={handleChangeFile}
             fullWidth
