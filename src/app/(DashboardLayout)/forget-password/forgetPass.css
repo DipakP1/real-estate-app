@@ -1,0 +1,36 @@
+.newPassword{
+    text-align: start !important;
+    margin-bottom: 4px;
+    display: flex;
+}
+.resetlink{
+    font-size: 14px;
+}
+.newPassword1{
+    font-size: 18px;
+    margin-right: 5px;
+    color: #737373;
+    margin-top: 1px;
+}
+.editFlex{
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.editIcon{
+    font-size: 18px;
+    margin-right: 3px;
+    color: #737373;
+    cursor: pointer;
+    height: 20px;
+    
+    
+}
+.editEmailFlex{
+    display: flex;
+}
+.tabflex{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}

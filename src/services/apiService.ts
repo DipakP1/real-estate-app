@@ -2,12 +2,20 @@ import axiosInstance from "@/api/axios/CRMAxios";
 
 export const getData = async (endpoint: any) => {
   try {
-  } catch (error) {}
+    const response = await axiosInstance.get(endpoint);
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const postData = async (endpoint: any, data: any) => {
   try {
     const response = await axiosInstance.post(endpoint, data);
+
+    console.log(data, "DATATA POST");
+
     return response.data;
   } catch (error) {
     throw error;

@@ -107,7 +107,7 @@ function EnhancedTableHead<T>({
     };
 
   return (
-    <TableHead>
+    <TableHead sx={{ width: "30px" }}>
       <TableRow>
         {enableSelect && (
           <TableCell
@@ -249,6 +249,13 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         return <Chip label="Unknown" />;
     }
   };
+  const headCell1 = headCells.map((head, i: any) => ({
+    ...head,
+    [i.lenght - 1]: { id: "status", numeric: false, label: "Status" },
+  }));
+
+  console.log(headCell1, "HEAD CELL")
+
 
   const rowsWithChips = rows.map((row: any) => ({
     ...row,

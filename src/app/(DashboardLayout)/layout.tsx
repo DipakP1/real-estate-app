@@ -55,7 +55,7 @@ export default function RootLayout({
 
   return (
     <>
-      {path === "/" || path === "/register" ? (
+      {path === "/" || path === "/register" || path === "/forget-password" ? (
         <Box
           sx={{
             width: "auto",
@@ -86,16 +86,20 @@ export default function RootLayout({
 
               {/* Main Content */}
               <PageWrapper className="page-wrapper">
-                {/* <Container
-                  sx={{
-                    flexGrow: 1,
-                    ".css-17qm3xv-MuiContainer-root": {
-                      maxWidth: "10%"
-                    }
-                  }}
-                > */}
-                <Box sx={{ minHeight: "calc(100vh - 190px)" }}>{children}</Box>
-                {/* </Container> */}
+                <Box
+                  // sx={{
+                  //   margin:"0 10px",
+                  //   flexGrow: 1,
+                  //   ".css-17qm3xv-MuiContainer-root": {
+                  //     maxWidth: "10%",
+                  //   },
+                  // }}
+                  // maxWidth="lg"
+                >
+                  <Box sx={{ minHeight: "calc(100vh - 190px)" }}>
+                    {children}
+                  </Box>
+                </Box>
               </PageWrapper>
             </ContentWrapper>
           </MainWrapper>

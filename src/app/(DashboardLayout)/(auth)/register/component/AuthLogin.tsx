@@ -319,19 +319,22 @@ const LoginComponent = ({
                   </Button>
                 </form>
               </CustomTabPanel>
+              <Link style={{ marginLeft: 40, color:"white" }} href={"/forget-password"}>
+                Forget Password?
+              </Link>
             </Box>
 
             {/* Or Register With */}
-            <Typography
+            {/* <Typography
               variant="body2"
               align="center"
               sx={{ color: "white", mb: 2 }}
             >
               Or Login with
-            </Typography>
+            </Typography> */}
 
             {/* Google and Apple Buttons */}
-            <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
+            {/* <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
               <Button
                 variant="outlined"
                 startIcon={<IconBrandGoogleFilled />}
@@ -342,7 +345,7 @@ const LoginComponent = ({
               >
                 Google
               </Button>
-            </Box>
+            </Box> */}
           </Box>
         </Box>
       </Grid>

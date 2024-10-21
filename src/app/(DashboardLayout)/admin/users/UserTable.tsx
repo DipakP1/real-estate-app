@@ -3,7 +3,7 @@ import { Box, Button, IconButton, Modal, TableCell, Chip } from "@mui/material";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DynamicTableComponent from "@/components/DynamicTable/Table.component";
-import {IconEyeFilled} from "@tabler/icons-react"
+import { IconEyeFilled } from "@tabler/icons-react";
 
 interface HeadCell<T> {
   id: any; // This ensures that id is one of the keys in your data type
@@ -17,14 +17,14 @@ interface Data {
   price: number;
 }
 
-const rows :any= [
+const rows: any = [
   {
     id: 1,
     name: "Item 1",
     "site-location": "Site Location",
     status: "active",
     "company-name": "Company A",
-    view: ""
+    view: "",
   },
   {
     id: 2,
@@ -32,8 +32,7 @@ const rows :any= [
     "site-location": "Site Location",
     status: "active",
     "company-name": "Company B",
-    view: ""
-
+    view: "",
   },
   {
     id: 3,
@@ -86,52 +85,74 @@ const rows :any= [
   },
 ];
 
-const headCells: HeadCell<Data>[] = [
-  { id: "id", numeric: true, label: "User ID" },
-  { id: "name", numeric: false, label: "User Name" },
-  { id: "site-location", numeric: true, label: "Site Location" },
-  { id: "status", numeric: true, label: "Status" },
-  { id: "company-name", numeric: true, label: "Company Name" },
-  { id: "view", numeric: true, label: "View" },
-];
+// const headCells: HeadCell<Data>[] = [
+//   { id: "id", numeric: true, label: "User ID" },
+//   { id: "name", numeric: false, label: "User Name" },
+//   { id: "site-location", numeric: true, label: "Site Location" },
+//   { id: "status", numeric: true, label: "Status" },
+//   { id: "company-name", numeric: true, label: "Company Name" },
+//   { id: "view", numeric: true, label: "View" },
+// ];
 
 // Map the status to color
 
-
-const UserTable = () => {
+const UserTable = ({ resData }: any) => {
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
+
+  delete(resData?.data[0]?.userPhoto);
+  delete(resData?.data[0]?.userSignature);
+  delete(resData?.data[0]?._id);
+  delete(resData?.data[0]?.password);
+  delete(resData?.data[0]?.departmentId);
+  delete(resData?.data[0]?.designationId);
+  delete(resData?.data[0]?.userTypeId);
+  delete(resData?.data[0]?.userTypeName);
+  delete(resData?.data[0]?.userId);
+  delete(resData?.data[0]?.updatedAt);
+  delete(resData?.data[0]?.createdAt);
+  delete(resData?.data[0]?.__v);
+  const keys = Object.keys(resData.data[0]);
 
   const handleView = (user: any) => {
     setSelectedUser(user);
     setOpen(true);
   };
 
+  const headCells = keys.map((key) => {
+    return {
+      id: key,
+      numeric: typeof key === "string" ? false : true,
+      label: key,
+    };
+  });
+
   const handleClose = () => {
     setOpen(false);
   };
 
-//   const renderRow = (row: any) => {
-//     return (
-//       <>
-//         <TableCell>{row.id}</TableCell>
-//         <TableCell>{row.name}</TableCell>
-//         <TableCell>{row["site-location"]}</TableCell>
-//         <TableCell>{getStatusChip(row.status)}</TableCell>
-//         <TableCell>{row["company-name"]}</TableCell>
-//         <TableCell>
-//           <IconButton onClick={() => handleView(row)}>
-//             <VisibilityIcon />
-//           </IconButton>
-//         </TableCell>
-//       </>
-//     );
-//   };
+  //   const renderRow = (row: any) => {
+  //     return (
+  //       <>
+  //         <TableCell>{row.id}</TableCell>
+  //         <TableCell>{row.name}</TableCell>
+  //         <TableCell>{row["site-location"]}</TableCell>
+  //         <TableCell>{getStatusChip(row.status)}</TableCell>
+  //         <TableCell>{row["company-name"]}</TableCell>
+  //         <TableCell>
+  //           <IconButton onClick={() => handleView(row)}>
+  //             <VisibilityIcon />
+  //           </IconButton>
+  //         </TableCell>
+  //       </>
+  //     );
+  //   };
+
 
   return (
-    <Box >
+    <Box>
       <DynamicTableComponent
-        rows={rows}
+        rows={resData?.data}
         headCells={headCells}
         title="User List"
         enableSelect={true}
