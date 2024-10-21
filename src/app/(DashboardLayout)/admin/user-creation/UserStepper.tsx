@@ -81,8 +81,8 @@ const UserManagment = () => {
     phoneNumber: "",
     emailId: "",
     aadharId: "",
-    userPhoto: "",
-    userSignature: "",
+    userPhoto: "lkjhgfhjkkj",
+    userSignature: "ghjjhjj",
   });
 
   const [permissions, setPermissions] = useState(initialPermissions);

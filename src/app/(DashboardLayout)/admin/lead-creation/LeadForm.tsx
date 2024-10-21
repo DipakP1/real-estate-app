@@ -13,7 +13,6 @@ import {
 import Grid from "@mui/material/Grid2";
 import React, { useState } from "react";
 const CreationForm = () => {
-  const [data, setData] = useState<any>([]);
   const [inputData, setInputData] = useState<any>({
     entryType: "",
     entryNo: "",
@@ -48,7 +47,7 @@ const CreationForm = () => {
   const inputHandler = (e: any) => {
     const { name, value } = e.target;
     setInputData({ ...inputData, [name]: value });
-    setErrors({ ...errors, [name]: "" });
+   // setErrors({ ...errors, [name]: "" });
   };
 
   const submitDetails = () => {
@@ -60,16 +59,13 @@ const CreationForm = () => {
       }
     });
     // If there are errors, set the error state and return
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
+  //  if (Object.keys(newErrors).length > 0) {
+     // setErrors(newErrors);
+      //return;
+   // }
 
     // If all fields are filled, add data to the state
-    setData((prevData: any) => [
-      ...prevData,
-      { ...inputData, id: Math.floor(Math.random() * 10000) },
-    ]);
+  
     setInputData({
       entryType: "",
       entryNo: "",
@@ -100,7 +96,6 @@ const CreationForm = () => {
       createdBy: "",
       modifiedBy: "",
     });
-    console.log("Updated data array ->", data);
   };
 
   return (

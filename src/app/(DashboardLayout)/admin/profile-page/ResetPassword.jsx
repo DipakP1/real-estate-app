@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
- const ResetPassword=({ passwordFormClose})=> {
+ const ResetPassword=()=> {
   const [currentPassword, setCurrentPassword] = React.useState({
     curpassword: "abdeffasd56789@",
   });
@@ -82,7 +82,7 @@ import {
             <Box sx={{ display: "flex", justifyContent: "end" }}>
               <Button
                 variant="outlined"
-                onClick={passwordFormClose}
+               // onClick={passwordFormClose}
                 color="error"
                 sx={{ mr: 2, textTransform: "capitalize" }}
               >

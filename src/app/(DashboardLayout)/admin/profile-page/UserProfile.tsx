@@ -1,6 +1,7 @@
 import { AppBar, Avatar, Box, IconButton, Toolbar } from "@mui/material";
 import React from "react";
-function UserProfile() {
+function UserProfile({userData}:any) {
+  console.log('---profileeee',userData)
   return (
     <div>
       <AppBar position="static">

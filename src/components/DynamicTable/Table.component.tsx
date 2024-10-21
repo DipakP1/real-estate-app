@@ -20,6 +20,7 @@ import Switch from "@mui/material/Switch";
 import { visuallyHidden } from "@mui/utils";
 import {
   Breadcrumbs,
+  Button,
   Chip,
   Divider,
   FormControl,
@@ -28,6 +29,7 @@ import {
   MenuItem,
   Paper,
   Select,
+  Stack,
   TableContainer,
   TextField,
 } from "@mui/material";
@@ -36,8 +38,9 @@ import { IconEyeFilled } from "@tabler/icons-react";
 import Grid from "@mui/material/Grid2";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import { IconHome } from "@tabler/icons-react";
-
+import EditIcon from "@mui/icons-material/Edit";
+import EditPopupForm from "./EditPopupForm";
+import UserDetails from "./UserDetails";
 type Order = "asc" | "desc";
 
 interface HeadCell<T> {
@@ -128,11 +131,12 @@ function EnhancedTableHead<T>({
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id as string}
-            align={headCell.numeric ? "right" : "left"}
+            align={headCell.numeric ? "center" : "left"}
             sortDirection={orderBy === headCell.id ? order : false}
             sx={{
               borderBottom: "1px solid #0003",
               borderTop: "1px solid #0003",
+              borderRight: "1px solid #0003",
             }}
           >
             {enableSorting ? (
@@ -182,6 +186,10 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [dense, setDense] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [editRow, setEditRow] = React.useState<any>("");
+  const [viewItem, setViewItem] = React.useState<any>([]);
+  const [displayViewItem, setDisplayViewItem] = React.useState<any>(false);
 
   const startEntry = page * rowsPerPage + 1;
   const endEntry = Math.min(rows.length, (page + 1) * rowsPerPage);
@@ -243,6 +251,10 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         return <Chip label="Active" color="success" />;
       case "inactive":
         return <Chip label="InActive" color="warning" />;
+      case "Open":
+        return <Chip label="Open" color="success" />;
+      case "Closed":
+        return <Chip label="Closed" color="warning" />;
       // case "hold":
       //   return <Chip label="On Hold" color="error" />;
       default:
@@ -250,23 +262,52 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
     }
   };
 
+  const editOpenPopup = (item: any) => {
+    setOpen(true);
+    setEditRow(item);
+  };
+  const viewDetails = (item: any) => {
+    // setViewPageOpen(true)
+    setViewItem(item);
+    console.log("viewlist--->", item);
+  };
+  console.log("----editRow", editRow);
+  const editClosePopup = () => {
+    setOpen(false);
+  };
+
   const rowsWithChips = rows.map((row: any) => ({
     ...row,
     status: getStatusChip(row.status),
   }));
 
-<<<<<<< HEAD:src/app/(DashboardLayout)/components/DynamicTable/Table.component.tsx
-=======
   const icon = rowsWithChips.map((icon) => ({
     ...icon,
-    view: (
-      <IconButton>
-        <IconEyeFilled />
-      </IconButton>
+    action: (
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={1}
+      >
+        <Button variant="outlined" sx={{ mr: 2 }}>
+          <EditIcon onClick={() => editOpenPopup(icon)} />
+        </Button>
+
+        <Button
+          onClick={() => {
+            viewDetails(icon);
+            setDisplayViewItem(!displayViewItem);
+          }}
+          variant="outlined"
+          //sx={{ color: "gray" }}
+        >
+          <IconEyeFilled />
+        </Button>
+      </Stack>
     ),
   }));
 
->>>>>>> 6b56b01b769c0cdd47c25cffb5df45fde549d891:src/components/DynamicTable/Table.component.tsx
   const visibleRows = React.useMemo(
     () =>
       [...icon]
@@ -274,150 +315,136 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
     [order, orderBy, page, rowsPerPage, rowsWithChips]
   );
-<<<<<<< HEAD:src/app/(DashboardLayout)/components/DynamicTable/Table.component.tsx
-
-  console.log(rowsWithChips, "ROWS WITH CHIPS");
-
-  return (
-    <Box sx={{ width: "100%" }}>
-      {/* <Toolbar>
-                <Typography variant="h6">{title}</Typography>
-            </Toolbar> */}
-=======
->>>>>>> 6b56b01b769c0cdd47c25cffb5df45fde549d891:src/components/DynamicTable/Table.component.tsx
 
   return (
     <Box sx={{ width: "100%", padding: 0 }}>
+      <EditPopupForm
+        editOpenPopup={editOpenPopup}
+        open={open}
+        editClosePopup={editClosePopup}
+        rows={rows}
+        editRow={editRow}
+      />
+
       {/* Custom Pagination at the Top (for Rows Per Page) */}
-<<<<<<< HEAD:src/app/(DashboardLayout)/components/DynamicTable/Table.component.tsx
-      {/*    {enablePagination && (
-        <CustomPagination
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      )} */}
-=======
+
       {enablePagination && (
         <Grid container>
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <CustomPagination
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Grid>
-
-          <Grid size={{ xs: 12, sm: 4 }}>
-            <Box
-              component="form"
-              sx={{
-                p: "2px 4px",
-                display: "flex",
-                alignItems: "right",
-                justifyContent: "right",
-                width: 300,
-                backgroundColor: "#f5f4f4",
-                borderRadius: "5px",
-              }}
-            >
-              <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-                <SearchIcon />
-              </IconButton>
-              <InputBase
-                sx={{ ml: 1, flex: 1 }}
-                placeholder="Search Google Maps"
-                inputProps={{ "aria-label": "search google maps" }}
-              />
-            </Box>
-          </Grid>
-          <Grid textAlign={"right"} size={{ xs: 12, sm: 4 }}>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "right",
-                gap: 1,
-              }}
-            >
-              <Typography sx={{ color: "#000" }}>Filter: </Typography>
-
-              <Select
-                sx={{ minWidth: 100 }}
-                labelId="demo-controlled-open-select-label"
-                id="demo-controlled-open-select"
-                // open={open}
-                // onClose={handleClose}
-                // onOpen={handleOpen}
-                // value={age}
-                size="small"
-                // onChange={handleChange}
+          <Grid size={{ md: displayViewItem ? 9 : 12 }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box
+                component="form"
+                sx={{
+                  // p: "2px 4px",
+                  display: "flex",
+                  alignItems: "right",
+                  justifyContent: "right",
+                  width: 300,
+                  backgroundColor: "#f5f4f4",
+                  borderRadius: "5px",
+                  marginBottom: "7px",
+                }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Sort by A-Z</MenuItem>
-                <MenuItem value={20}>Sort by Z-A</MenuItem>
-                <MenuItem value={30}>Other</MenuItem>
-              </Select>
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search Google Maps"
+                  inputProps={{ "aria-label": "search google maps" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                <Typography sx={{ color: "#000" }}>Filter : </Typography>
+                <Select
+                  sx={{ minWidth: 100 }}
+                  labelId="demo-controlled-open-select-label"
+                  id="demo-controlled-open-select"
+                  // open={open}
+                  // onClose={handleClose}
+                  // onOpen={handleOpen}
+                  // value={age}
+                  size="small"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>Sort by A-Z</MenuItem>
+                  <MenuItem value={20}>Sort by Z-A</MenuItem>
+                  <MenuItem value={30}>Other</MenuItem>
+                </Select>
+              </Box>
             </Box>
           </Grid>
         </Grid>
       )}
->>>>>>> 6b56b01b769c0cdd47c25cffb5df45fde549d891:src/components/DynamicTable/Table.component.tsx
-
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table
-          stickyHeader
-          aria-label="sticky table"
-          size={dense ? "small" : "medium"}
-        >
-          <EnhancedTableHead
-            headCells={headCells}
-            numSelected={selected.length}
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={rows.length}
-            enableSelect={enableSelect}
-            enableSorting={enableSorting}
-          />
-          <TableBody>
-            {visibleRows.map((row, index) => (
-              <TableRow
-                hover
-                key={index}
-                selected={selected.includes(index)}
-                onClick={(event) => handleClick(event, index)}
-              >
-                {enableSelect && (
-                  <TableCell padding="checkbox">
-                    <Checkbox
-                      sx={{ color: "#0003" }}
-                      checked={selected.includes(index)}
-                    />
-                  </TableCell>
-                )}
-                {headCells.map((headCell) => (
-                  <TableCell
-                    key={headCell.id as string}
-                    align={headCell.numeric ? "right" : "left"}
-                    sx={{ boxShadow: 1 }}
+      <Grid container spacing={1}>
+        <Grid size={{ md: displayViewItem ? 9 : 12 }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table
+              stickyHeader
+              aria-label="sticky table"
+              size={dense ? "small" : "medium"}
+            >
+              <EnhancedTableHead
+                headCells={headCells}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+                enableSelect={enableSelect}
+                enableSorting={enableSorting}
+              />
+              <TableBody>
+                {visibleRows.map((row, index) => (
+                  <TableRow
+                    hover
+                    key={index}
+                    selected={selected.includes(index)}
+                    onClick={(event) => handleClick(event, index)}
                   >
-                    {row[headCell.id as keyof T]}
-                  </TableCell>
+                    {enableSelect && (
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          sx={{ color: "#0003" }}
+                          checked={selected.includes(index)}
+                        />
+                      </TableCell>
+                    )}
+                    {headCells.map((headCell) => (
+                      <TableCell
+                        key={headCell.id as string}
+                        align={headCell.numeric ? "center" : "left"}
+                        sx={{ boxShadow: 1 }}
+                      >
+                        {row[headCell.id as keyof T]}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+        {displayViewItem && (
+          <Grid size={{ md: 3 }}>
+            <UserDetails viewItem={viewItem} />
+          </Grid>
+        )}
+      </Grid>
       {enableSorting && (
         <Box
           sx={{
@@ -468,12 +495,6 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
           </Box>
         </Box>
       )}
-
-      {/* Dense Padding Control */}
-      {/* <FormControlLabel
-                control={<Switch checked={dense} onChange={(e) => setDense(e.target.checked)} />}
-                label="Dense padding"
-            /> */}
     </Box>
   );
 }
