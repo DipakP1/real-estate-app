@@ -1,4 +1,5 @@
 "use client";
+import { postData } from "@/services/apiService";
 import {
   Box,
   TextField,
@@ -11,10 +12,12 @@ import {
   Grid2,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import React, { useState } from "react";
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+import React, { useEffect, useState } from "react";
 const CreationForm = () => {
-  const [data, setData] = useState<any>([]);
-  const [inputData, setInputData] = useState<any>({
+  // const [data, setData] = useState<any>([]);
+  const userKey = {
     entryType: "",
     entryNo: "",
     entryDate: "",
@@ -24,9 +27,9 @@ const CreationForm = () => {
     applicantName: "",
     fatherName: "",
     address: "",
-    // addressII: "",
+    addressII: "",
     cityName: "",
-    pinNo: "",
+    pinCode: "",
     mobileNo: "",
     phoneNo: "",
     customerEmail: "",
@@ -43,7 +46,8 @@ const CreationForm = () => {
     furtherAction: "",
     createdBy: "",
     modifiedBy: "",
-  });
+  };
+  const [inputData, setInputData] = useState<any>(userKey);
   const [errors, setErrors] = useState<any>({});
   const inputHandler = (e: any) => {
     const { name, value } = e.target;
@@ -51,7 +55,9 @@ const CreationForm = () => {
     setErrors({ ...errors, [name]: "" });
   };
 
-  const submitDetails = () => {
+  //console.log(errors,"ERROR")
+  const submitDetails = async () => {
+    console.log("above--->", inputData);
     // Validation: Check if any field in inputData is empty
     const newErrors: any = {};
     Object.entries(inputData).forEach(([key, value]: any) => {
@@ -64,45 +70,19 @@ const CreationForm = () => {
       setErrors(newErrors);
       return;
     }
+    //http://localhost:3300/v1/getLead/sendData
 
-    // If all fields are filled, add data to the state
-    setData((prevData: any) => [
-      ...prevData,
-      { ...inputData, id: Math.floor(Math.random() * 10000) },
-    ]);
-    setInputData({
-      entryType: "",
-      entryNo: "",
-      entryDate: "",
-      visitThrough: "",
-      agentName: "",
-      applicationNo: "",
-      applicantName: "",
-      fatherName: "",
-      address: "",
-      addressII: "",
-      cityName: "",
-      pinNo: "",
-      mobileNo: "",
-      phoneNo: "",
-      customerEmail: "",
-      panNo: "",
-      aadharNo: "",
-      project: "",
-      unitCategory: "",
-      floor: "",
-      discussions: "",
-      nextFollowUp: "",
-      selectiveRemark: "",
-      sssignedTo: "",
-      status: "",
-      furtherAction: "",
-      createdBy: "",
-      modifiedBy: "",
-    });
-    console.log("Updated data array ->", data);
+   // console.log("inside api", inputData);
+    try {
+      const response = await postData("/v1/getLead/sendData", inputData);
+      enqueueSnackbar(response.message, { variant: "success" });
+      setInputData(userKey);
+    } catch (error) {
+      enqueueSnackbar("An error occurred while submitting the form", {
+        variant: "error",
+      });
+    }
   };
-
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h6" sx={{ mb: 2 }}>
@@ -116,7 +96,7 @@ const CreationForm = () => {
       >
         <Grid size={{ xs: 2, sm: 4, md: 3 }}>
           <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"application-no"}>
-            Application No
+            Application No.
           </InputLabel>
           <TextField
             size="small"
@@ -233,22 +213,22 @@ const CreationForm = () => {
           )}
         </Grid>
         <Grid size={{ xs: 2, sm: 4, md: 3 }}>
-          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pin-no"}>
-            Pin No
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pin-code"}>
+            Pin Code
           </InputLabel>
           <TextField
             size="small"
             type="number"
             fullWidth
-            placeholder="Pin No"
-            name="pinNo"
+            placeholder="Pin Code"
+            name="pinCode"
             onChange={inputHandler}
-            value={inputData.pinNo}
-            error={!!errors.pinNo}
+            value={inputData.pinCode}
+            error={!!errors.pinCode}
           />
           {errors.pinNo && (
             <Typography variant="caption" color="error">
-              {errors.pinNo}
+              {errors.pinCode}
             </Typography>
           )}
         </Grid>
@@ -488,6 +468,27 @@ const CreationForm = () => {
             </Typography>
           )}
         </Grid>
+        <Grid size={{ xs: 2, sm: 4, md: 3 }}>
+          <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"addressii"}>
+            AddressII
+          </InputLabel>
+          <TextField
+            size="small"
+            fullWidth
+            multiline
+            rows={4}
+            placeholder="AddressII"
+            name="addressII"
+            onChange={inputHandler}
+            value={inputData.addressII}
+            error={!!errors.addressII}
+          />
+          {errors.addressII && (
+            <Typography variant="caption" color="error">
+              {errors.addressII}
+            </Typography>
+          )}
+        </Grid>
       </Grid>
 
       <Typography variant="h6" sx={{ mt: 2, mb: 2 }}>
@@ -578,7 +579,6 @@ const CreationForm = () => {
               <MenuItem value="">Select Status</MenuItem>
               <MenuItem value="Open">Progress</MenuItem>
               <MenuItem value="Closed">Done</MenuItem>
-              <MenuItem value="Pending">Pending</MenuItem>
             </Select>
             {errors.status && (
               <Typography variant="caption" color="error">
@@ -694,13 +694,9 @@ const CreationForm = () => {
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 4 }}>
         <Button variant="outlined" color="error" sx={{ mr: 2 }}>
-          Cancel
+          reset
         </Button>
-        <Button
-          onClick={submitDetails}
-          variant="contained"
-          //sx={{ float: "right" }}
-        >
+        <Button onClick={submitDetails} variant="contained">
           Submit
         </Button>
       </Box>

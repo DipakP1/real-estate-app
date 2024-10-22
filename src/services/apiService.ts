@@ -1,8 +1,8 @@
-import axiosInstance from "@/api/axios/CRMAxios";
+import { instance, instanceForFormdata } from "@/api/axios/CRMAxios";
 
 export const getData = async (endpoint: any) => {
   try {
-    const response = await axiosInstance.get(endpoint);
+    const response = await instance.get(endpoint);
 
     return response.data;
   } catch (error) {
@@ -10,9 +10,18 @@ export const getData = async (endpoint: any) => {
   }
 };
 
-export const postData = async (endpoint: any, data: any) => {
+export const postData = async (
+  endpoint: any,
+  data: any,
+  header = "application"
+) => {
   try {
-    const response = await axiosInstance.post(endpoint, data);
+    let response;
+    if (header === "formData") {
+      response = await instanceForFormdata.post(endpoint, data);
+    } else {
+      response = await instance.post(endpoint, data);
+    }
 
     console.log(data, "DATATA POST");
 
@@ -21,6 +30,7 @@ export const postData = async (endpoint: any, data: any) => {
     throw error;
   }
 };
+
 export const putData = async (endpoint: any, data: any) => {
   try {
   } catch (error) {}
