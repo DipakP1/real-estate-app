@@ -62,14 +62,10 @@ interface ReusableTableProps<T> {
   enableSelect?: boolean;
   enablePagination?: boolean;
   enableSorting?: boolean;
-  userListDialog: any;
-  setUserListDialog: any;
-  selectedUser: any;
-  setSelectedUser: any;
-  editUser: any;
-  setEditUser: any;
-  openEditdialog: any;
-  setOpenEditdialog: any;
+  setOpenLeadDialog:any;
+  openLeadDialog:any;
+  setSingleLead:any;
+  singleLead:any
 }
 
 function descendingComparator<T extends { [key: string]: string | number }>(
@@ -188,21 +184,17 @@ function EnhancedTableHead<T>({
   );
 }
 
-function DynamicTableComponent<T extends { [key: string]: string | number }>({
+function LeadDynamicTable<T extends { [key: string]: string | number }>({
   rows,
   headCells,
   title = "Table",
   enableSelect = false,
   enablePagination = true,
   enableSorting = true,
-  userListDialog,
-  setUserListDialog,
-  selectedUser,
-  setSelectedUser,
-  editUser,
-  setEditUser,
-  openEditdialog,
-  setOpenEditdialog,
+  setOpenLeadDialog,
+  openLeadDialog,
+  setSingleLead,
+  singleLead
 }: ReusableTableProps<T>) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof T>(headCells[0].id);
@@ -210,7 +202,6 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [dense, setDense] = React.useState(false);
-
 
   const startEntry = page * rowsPerPage + 1;
   const endEntry = Math.min(rows.length, (page + 1) * rowsPerPage);
@@ -268,12 +259,13 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
 
   const getStatusChip = (status: string) => {
     switch (status) {
-      case "active":
+      case "Open":
         return (
           <Chip
-            label="Active"
-            sx={{ backgroundColor: "#022213", color: "white" }}
-            icon={<IconPointFilled style={{ color: "#adde34" }} />}
+            label={status}
+            color="primary"
+            sx={{  color: "white" }}
+            icon={<IconPointFilled style={{ color: "#000" }} />}
           />
         );
       case "offline":
@@ -300,23 +292,23 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
   const rowsWithChips = rows.map((row: any) => ({
     ...row,
 
-    status: getStatusChip(row?.status === 1 ? "active" : "offline"),
+    status: getStatusChip(row?.status),
   }));
 
   const handleShowUser = (userID: any) => {
-    setUserListDialog((prev: boolean) => !prev);
+    setOpenLeadDialog((prev: boolean) => !prev);
 
     let filterUserData = rows.filter((el) => el._id === userID);
 
-    setSelectedUser(filterUserData);
+    setSingleLead(filterUserData);
   };
 
-  const handleEditUser = (userID: any) => {
-    setOpenEditdialog((prev: boolean) => !prev);
+//   const handleEditUser = (userID: any) => {
+//     setOpenEditdialog((prev: boolean) => !prev);
 
-    let filterUserData = rows.filter((el) => el._id === userID);
-    setEditUser(filterUserData);
-  };
+//     let filterUserData = rows.filter((el) => el._id === userID);
+//     setEditUser(filterUserData);
+//   };
 
   const icon = rowsWithChips.map((icon, index) => ({
     ...icon,
@@ -329,7 +321,10 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
           <IconEyeFilled onClick={() => handleShowUser(icon._id)} />
         </IconButton>
         <IconButton sx={{ border: "1px solid #ececec", borderRadius: "10px" }}>
-          <IconEdit onClick={() => handleEditUser(icon._id)} />
+          <IconEdit 
+        //   onClick={() =>                        handleEditUser(icon._id)} 
+                        
+                        />
         </IconButton>
       </>
     ),
@@ -552,11 +547,11 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
 
       {/* {displayViewItem && (
         <Grid size={{ md: 3 }}>
-          <UserDetails viewItem={viewItem} />
+          <UserDetail viewItem={viewItem} />
         </Grid>
       )} */}
 
-      <Dialog
+      {/* <Dialog
         open={openEditdialog}
         onClose={() => setOpenEditdialog(false)}
         aria-labelledby="scroll-dialog-title"
@@ -575,9 +570,9 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
             />
           </List>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </Box>
   );
 }
 
-export default DynamicTableComponent;
+export default LeadDynamicTable;
