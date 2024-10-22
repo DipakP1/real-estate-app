@@ -1,11 +1,36 @@
 "use client";
-import { Box, Button, IconButton, Modal, TableCell, Chip } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Avatar,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  Grid2,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DynamicTableComponent from "@/components/DynamicTable/Table.component";
-import { IconEyeFilled } from "@tabler/icons-react";
+import {
+  IconCalendarDue,
+  IconCurrentLocation,
+  IconEyeFilled,
+  IconMail,
+  IconMessageCircle,
+  IconPhone,
+  IconX,
+} from "@tabler/icons-react";
 import { getData } from "@/services/apiService";
 import axios from "axios";
+import LeadDynamicTable from "@/components/DynamicTable/LeadDynamicTable";
+import { deepOrange } from "@mui/material/colors";
+import styled from "styled-components";
 
 interface HeadCell<T> {
   id: any; // This ensures that id is one of the keys in your data type
@@ -88,28 +113,32 @@ interface Data {
 ];
  */
 const headCells: HeadCell<Data>[] = [
+  { id: "id", numeric: true, label: "Id" },
   { id: "agentName", numeric: true, label: "Agent Name" },
+  { id: "status", numeric: false, label: "Status" },
   { id: "applicantName", numeric: false, label: "Applicant name" },
   { id: "cityName", numeric: true, label: "City Name" },
-  { id: "status", numeric: true, label: "Status" },
   { id: "visitThrough", numeric: true, label: "Visit Through" },
   { id: "action", numeric: true, label: "Action" },
 ];
 
-// Map the status to color
+const Root = styled("div")(({ theme }) => ({
+  width: "100%",
+  marginTop: 1,
+  color: "#000",
+  "& > :not(style) ~ :not(style)": {
+    marginTop: 1,
+  },
+}));
 
 const LeadTable = () => {
-  const [open, setOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(null);
   const [rows, setRows] = useState<any>([]);
-  const handleView = (user: any) => {
-    setSelectedUser(user);
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-    //http://localhost:8800/v1/getLead/getUserData
+
+  const [openLeadDialog, setOpenLeadDialog] = useState(false);
+  const [singleLead, setSingleLead] = useState<any>([]);
+  const [viewItem, setViewItem] = useState<any>();
+  const [displayViewItem, setDisplayViewItem] = useState<any>(false);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -126,74 +155,217 @@ const LeadTable = () => {
     fetchUserData();
   }, []);
 
-
-
-  //   const renderRow = (row: any) => {
-  //     return (
-  //       <>
-  //         <TableCell>{row.id}</TableCell>
-  //         <TableCell>{row.name}</TableCell>
-  //         <TableCell>{row["site-location"]}</TableCell>
-  //         <TableCell>{getStatusChip(row.status)}</TableCell>
-  //         <TableCell>{row["company-name"]}</TableCell>
-  //         <TableCell>
-  //           <IconButton onClick={() => handleView(row)}>
-  //             <VisibilityIcon />
-  //           </IconButton>
-  //         </TableCell>
-  //       </>
-  //     );
-  //   };
+  console.log(rows, "ROWS");
 
   return (
     <Box>
-      <DynamicTableComponent
-        rows={rows}
-        headCells={headCells}
-        title="User List"
-        enableSelect={true}
-        enablePagination={true}
-        enableSorting={true}
-        // renderRow={renderRow}
-      />
+      <Grid2 container spacing={2}>
+        <Grid2 size={{ xs: 12, md: openLeadDialog ? 8 : 12 }}>
+          <LeadDynamicTable
+            rows={rows}
+            headCells={headCells}
+            title="User List"
+            enableSelect={true}
+            enablePagination={true}
+            enableSorting={true}
+            openLeadDialog={openLeadDialog}
+            setOpenLeadDialog={setOpenLeadDialog}
+            singleLead={singleLead}
+            setSingleLead={setSingleLead}
+          />
+        </Grid2>
+        {openLeadDialog ? (
+          <Grid2 size={{ xs: 12, md: 4 }}>
+            {singleLead.map((user: any) => (
+              <Card sx={{ height: "100%" }}>
+                <CardContent>
+                  <Typography
+                    position={"relative"}
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    display={"flex"}
+                    alignItems={"center"}
+                  >
+                    <span>Profile</span>
+                    <IconButton
+                      aria-label="close"
+                      onClick={() => setOpenLeadDialog(false)}
+                      sx={() => ({
+                        position: "absolute",
+                        right: 0,
+                        // bottom: "50%",
+                        color: "#000",
+                      })}
+                    >
+                      <IconX style={{ marginBottom: "10px" }} />
+                    </IconButton>
+                  </Typography>
 
-      {/* Modal for showing user data */}
-      <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          {selectedUser && (
-            <div>
-              <h2>User Details</h2>
-              <p>
-                <strong>ID:</strong> {selectedUser.id}
-              </p>
-              <p>
-                <strong>Name:</strong> {selectedUser.name}
-              </p>
-              <p>
-                <strong>Site Location:</strong> {selectedUser["site-location"]}
-              </p>
-              <p>
-                <strong>Status:</strong> {selectedUser.status}
-              </p>
-              <p>
-                <strong>Company Name:</strong> {selectedUser["company-name"]}
-              </p>
-            </div>
-          )}
-        </Box>
-      </Modal>
+                  <Divider />
+                </CardContent>
+                <CardActions>
+                  <Stack
+                    display={"flex"}
+                    justifyContent={"center"}
+                    width={"100%"}
+                    alignItems={"center"}
+                    spacing={1}
+                  >
+                    <Avatar
+                      sx={{
+                        bgcolor: deepOrange[500],
+                        borderRadius: "10px",
+                        width: 100,
+                        height: 100,
+                      }}
+                      variant="square"
+                    >
+                      {user?.applicantName?.substring(0, 1)}
+                    </Avatar>
+                  </Stack>
+                </CardActions>
+                <Stack
+                  width={"100%"}
+                  direction={"row"}
+                  spacing={12}
+                  mt={2}
+                  padding={"10px 20px"}
+                >
+                  <Box>
+                    <Typography
+                      fontWeight={"bold"}
+                      fontSize={"18px"}
+                      variant="body1"
+                    >
+                      {user?.applicantName}
+                    </Typography>
+
+                    <Typography fontSize={"14px"} variant="body1">
+                      {`${user?.cityName} - ${user?.unitCategory}`}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Button
+                      sx={{
+                        backgroundColor: "black",
+                        color: "white",
+                        fontWeight: "bold",
+                      }}
+                      variant="outlined"
+                      startIcon={<IconMessageCircle />}
+                      href="/message"
+                    >
+                      Message
+                    </Button>
+                  </Box>
+                </Stack>
+                {/* <Divider textAlign="left">Contact Details</Divider> */}
+                <Root>
+                  <Divider textAlign="left"></Divider>
+                  <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      sx={{ ml: 2, fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Personal Information
+                    </Typography>
+                    <ListItem
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <IconCalendarDue />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                           Aadhar Nummber
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">
+                            {user?.aadharNo}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconCurrentLocation />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                            Address
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography>{user?.address}</Typography>
+                        }
+                      />
+                    </ListItem>
+                  </List>
+                </Root>
+                <Root>
+                  <Divider textAlign="left"></Divider>
+                  <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      sx={{ ml: 2, fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Contact Details
+                    </Typography>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconMail />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                            Customer Email Address
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">{user?.customerEmail}</Typography>
+                        }
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconPhone />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>Mobile Number</Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">
+                            {user?.mobileNo}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  </List>
+                </Root>
+              </Card>
+            ))}
+          </Grid2>
+        ) : null}
+      </Grid2>
     </Box>
   );
 };

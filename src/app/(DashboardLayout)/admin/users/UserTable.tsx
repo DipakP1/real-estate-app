@@ -1,9 +1,42 @@
 "use client";
-import { Box, Button, IconButton, Modal, TableCell, Chip } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Modal,
+  TableCell,
+  Chip,
+  Grid2,
+  Paper,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Typography,
+  Divider,
+  Avatar,
+  Stack,
+  styled,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+} from "@mui/material";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DynamicTableComponent from "@/components/DynamicTable/Table.component";
-import {IconEyeFilled} from "@tabler/icons-react"
+import {
+  IconEyeFilled,
+  IconX,
+  IconMessageCircle,
+  IconMail,
+  IconPhone,
+  IconCurrentLocation,
+  IconCalendarDue,
+} from "@tabler/icons-react";
+import React from "react";
+import { deepOrange, green } from "@mui/material/colors";
+import Image from "next/image";
 
 interface HeadCell<T> {
   id: any; // This ensures that id is one of the keys in your data type
@@ -17,166 +50,249 @@ interface Data {
   price: number;
 }
 
-const rows :any= [
-  {
-    id: 1,
-    name: "Item 1",
-    "site-location": "Site Location",
-    status: "active",
-    "company-name": "Company A",
-    view: ""
+const Root = styled("div")(({ theme }) => ({
+  width: "100%",
+  marginTop: 1,
+  color: "#000",
+  "& > :not(style) ~ :not(style)": {
+    marginTop: theme.spacing(1),
   },
-  {
-    id: 2,
-    name: "Item 2",
-    "site-location": "Site Location",
-    status: "active",
-    "company-name": "Company B",
-    view: ""
-
-  },
-  {
-    id: 3,
-    name: "Item 3",
-    "site-location": "Site Location",
-    status: "inactive",
-    "company-name": "Company C",
-  },
-  {
-    id: 4,
-    name: "Item 4",
-    "site-location": "Site Location",
-    status: "inactive",
-    "company-name": "Company D",
-  },
-  {
-    id: 5,
-    name: "Item 5",
-    "site-location": "Site Location",
-    status: "active",
-    "company-name": "Company E",
-  },
-  {
-    id: 6,
-    name: "Item 6",
-    "site-location": "Site Location",
-    status: "inactive",
-    "company-name": "Company F",
-  },
-  {
-    id: 7,
-    name: "Item 7",
-    "site-location": "Site Location",
-    status: "inactive",
-    "company-name": "Company G",
-  },
-  {
-    id: 8,
-    name: "Item 8",
-    "site-location": "Site Location",
-    status: "active",
-    "company-name": "Company H",
-  },
-  {
-    id: 9,
-    name: "Item 9",
-    "site-location": "Site Location",
-    status: "active",
-    "company-name": "Company I",
-  },
-];
+}));
 
 const headCells: HeadCell<Data>[] = [
   { id: "id", numeric: true, label: "User ID" },
-  { id: "name", numeric: false, label: "User Name" },
-  { id: "site-location", numeric: true, label: "Site Location" },
-  { id: "status", numeric: true, label: "Status" },
-  { id: "company-name", numeric: true, label: "Company Name" },
-  { id: "view", numeric: true, label: "View" },
+  { id: "userName", numeric: false, label: "User Name" },
+  { id: "status", numeric: false, label: "Status" },
+
+  { id: "emailId", numeric: true, label: "Email Address" },
+  { id: "siteLocation", numeric: true, label: "Site Location" },
+  { id: "phoneNumber", numeric: true, label: "Mobile No" },
+  { id: "action", numeric: true, label: "Action" },
 ];
 
-// Map the status to color
 
+const UserTable = ({ resData }: any) => {
+  const [open, setOpen] = React.useState(false);
+  const [signleUser, setSingleUser] = React.useState<any>([]);
 
-const UserTable = () => {
-  const [open, setOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<any>(null);
-
-  const handleView = (user: any) => {
-    setSelectedUser(user);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-//   const renderRow = (row: any) => {
-//     return (
-//       <>
-//         <TableCell>{row.id}</TableCell>
-//         <TableCell>{row.name}</TableCell>
-//         <TableCell>{row["site-location"]}</TableCell>
-//         <TableCell>{getStatusChip(row.status)}</TableCell>
-//         <TableCell>{row["company-name"]}</TableCell>
-//         <TableCell>
-//           <IconButton onClick={() => handleView(row)}>
-//             <VisibilityIcon />
-//           </IconButton>
-//         </TableCell>
-//       </>
-//     );
-//   };
+  const [openEditDialog, setOpenEditDialog] = React.useState(false);
+  const [signleUserEdit, setSingleUserEdit] = React.useState<any>([]);
 
   return (
-    <Box >
-      <DynamicTableComponent
-        rows={rows}
-        headCells={headCells}
-        title="User List"
-        enableSelect={true}
-        enablePagination={true}
-        enableSorting={true}
-        // renderRow={renderRow}
-      />
+    <Box width={"auto"}>
+      <Grid2 container spacing={2}>
+        <Grid2 size={{ xs: 12, md: open ? 8 : 12 }}>
+          <DynamicTableComponent
+            rows={resData?.data}
+            headCells={headCells}
+            title="User List"
+            enableSelect={true}
+            enablePagination={true}
+            enableSorting={true}
+            userListDialog={open}
+            setUserListDialog={setOpen}
+            selectedUser={signleUser}
+            setSelectedUser={setSingleUser}
+            editUser={signleUserEdit}
+            setEditUser={setSingleUserEdit}
+            openEditdialog={openEditDialog}
+            setOpenEditdialog={setOpenEditDialog}
+          />
+        </Grid2>
+        {open ? (
+          <Grid2 size={{ xs: 12, md: 4 }}>
+            {signleUser.map((user: any) => (
+              <Card sx={{ height: "100%" }}>
+                <CardContent>
+                  <Typography
+                    position={"relative"}
+                    gutterBottom
+                    variant="h5"
+                    component="div"
+                    display={"flex"}
+                    alignItems={"center"}
+                  >
+                    <span>Profile</span>
+                    <IconButton
+                      aria-label="close"
+                      onClick={() => setOpen(false)}
+                      sx={() => ({
+                        position: "absolute",
+                        right: 0,
+                        // bottom: "50%",
+                        color: "#000",
+                      })}
+                    >
+                      <IconX style={{ marginBottom: "10px" }} />
+                    </IconButton>
+                  </Typography>
 
-      {/* Modal for showing user data */}
-      <Modal open={open} onClose={handleClose}>
-        <Box
-          sx={{
-            position: "absolute" as "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          {selectedUser && (
-            <div>
-              <h2>User Details</h2>
-              <p>
-                <strong>ID:</strong> {selectedUser.id}
-              </p>
-              <p>
-                <strong>Name:</strong> {selectedUser.name}
-              </p>
-              <p>
-                <strong>Site Location:</strong> {selectedUser["site-location"]}
-              </p>
-              <p>
-                <strong>Status:</strong> {selectedUser.status}
-              </p>
-              <p>
-                <strong>Company Name:</strong> {selectedUser["company-name"]}
-              </p>
-            </div>
-          )}
-        </Box>
-      </Modal>
+                  <Divider />
+                </CardContent>
+                <CardActions>
+                  <Stack
+                    display={"flex"}
+                    justifyContent={"center"}
+                    width={"100%"}
+                    alignItems={"center"}
+                    spacing={1}
+                  >
+                    <Avatar
+                      sx={{
+                        bgcolor: deepOrange[500],
+                        borderRadius: "10px",
+                        width: 100,
+                        height: 100,
+                      }}
+                      variant="square"
+                    >
+                      {user?.userName?.substring(0, 1)}
+                    </Avatar>
+                  </Stack>
+                </CardActions>
+                <Stack
+                  width={"100%"}
+                  direction={"row"}
+                  spacing={12}
+                  mt={2}
+                  padding={"10px 20px"}
+                >
+                  <Box>
+                    <Typography
+                      fontWeight={"bold"}
+                      fontSize={"18px"}
+                      variant="body1"
+                    >
+                      {user?.userName}
+                    </Typography>
+
+                    <Typography fontSize={"14px"} variant="body1">
+                      {`${user?.designationName} - ${user?.companyName}`}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Button
+                      sx={{
+                        backgroundColor: "black",
+                        color: "white",
+                        fontWeight: "bold",
+                      }}
+                      variant="outlined"
+                      startIcon={<IconMessageCircle />}
+                      href="/message"
+                    >
+                      Message
+                    </Button>
+                  </Box>
+                </Stack>
+                {/* <Divider textAlign="left">Contact Details</Divider> */}
+                <Root>
+                  <Divider textAlign="left"></Divider>
+                  <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      sx={{ ml: 2, fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Personal Information
+                    </Typography>
+                    <ListItem
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <IconCalendarDue />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                            Date of Birth
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">
+                            {user?.dateOfBirth}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconCurrentLocation />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                            Site Locations
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography >
+                            {user?.siteLocation}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  </List>
+                </Root>
+                <Root>
+                  <Divider textAlign="left"></Divider>
+                  <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <Typography
+                      sx={{ ml: 2, fontSize: "16px", fontWeight: "bold" }}
+                    >
+                      Contact Details
+                    </Typography>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconMail />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>
+                            Email Address
+                          </Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">{user?.emailId}</Typography>
+                        }
+                      />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <IconPhone />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Typography fontWeight={"bold"}>Phone</Typography>
+                        }
+                        secondary={
+                          <Typography color="blue">
+                            {user?.phoneNumber}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  </List>
+                </Root>
+              </Card>
+            ))}
+          </Grid2>
+        ) : null}
+      </Grid2>
     </Box>
   );
 };

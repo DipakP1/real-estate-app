@@ -14,6 +14,16 @@ const withSerwist = withSerwistInit({
 const nextConfig = {
   swcMinify: true,
   reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "assets.example.com",
+        port: "",
+        pathname: "/account123/**",
+      },
+    ],
+  },
 };
 
 // const withPWA = nextPWA({

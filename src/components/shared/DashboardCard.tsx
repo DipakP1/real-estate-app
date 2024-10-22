@@ -47,7 +47,11 @@ const DashboardCard = ({
         padding: 0,
         overflow: "revert !important",
         ...sx,
-        margin: "20px 30px",
+        // margin: "20px 40px",
+        // marginLeft: "30px"
+        // marginTop: "20px",
+        margin:"20px auto",
+        width: "92%",
       }}
       elevation={9}
     >

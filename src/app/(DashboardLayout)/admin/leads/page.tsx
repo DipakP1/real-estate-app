@@ -4,8 +4,8 @@ import PageContainer from "@/components/container/PageContainer";
 import DashboardCard from "@/components/shared/DashboardCard";
 import { Box, Typography } from "@mui/material";
 import { IconBoxAlignBottomLeft } from "@tabler/icons-react";
+import ViewLeads from "@/components/LeadCreation/ViewLeads";
 import LeadTable from "./LeadTable";
-//import ViewList from "@/components/DynamicTable/ViewList";
 //import UserTable from "./UserTable";
 
 interface HeadCell<T> {
@@ -58,7 +58,8 @@ const Page = async () => {
       >
         <>
           <Box>
-            <LeadTable />
+            <LeadTable/>
+            
           </Box>
         </>
       </DashboardCard>
