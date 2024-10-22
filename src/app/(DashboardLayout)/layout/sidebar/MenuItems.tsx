@@ -87,14 +87,7 @@ const Menuitems = [
     present: "yes",
     badge:false,
   },  */
-  {
-    id: uniqueId(),
-    title: "Leads",
-    icon: IconUserCheck,
-    href: "/admin/leads",
-    present: "yes",
-    badge:false,
-  },
+
   {
     id: uniqueId(),
     title: "Masters",

@@ -46,6 +46,7 @@ import Grid from "@mui/material/Grid2";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import EditUser from "@/app/(DashboardLayout)/admin/users/EditUser";
+import EditPopupForm from "./EditPopupForm";
 
 type Order = "asc" | "desc";
 
@@ -62,10 +63,10 @@ interface ReusableTableProps<T> {
   enableSelect?: boolean;
   enablePagination?: boolean;
   enableSorting?: boolean;
-  setOpenLeadDialog:any;
-  openLeadDialog:any;
-  setSingleLead:any;
-  singleLead:any
+  setOpenLeadDialog: any;
+  openLeadDialog: any;
+  setSingleLead: any;
+  singleLead: any;
 }
 
 function descendingComparator<T extends { [key: string]: string | number }>(
@@ -194,7 +195,7 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
   setOpenLeadDialog,
   openLeadDialog,
   setSingleLead,
-  singleLead
+  singleLead,
 }: ReusableTableProps<T>) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof T>(headCells[0].id);
@@ -202,6 +203,8 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [dense, setDense] = React.useState(false);
+  const [editLeads, setEditLeads] = React.useState(false);
+  const [editUser, setEditUser] = React.useState('');
 
   const startEntry = page * rowsPerPage + 1;
   const endEntry = Math.min(rows.length, (page + 1) * rowsPerPage);
@@ -264,7 +267,7 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
           <Chip
             label={status}
             color="primary"
-            sx={{  color: "white" }}
+            sx={{ color: "white" }}
             icon={<IconPointFilled style={{ color: "#000" }} />}
           />
         );
@@ -303,12 +306,18 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
     setSingleLead(filterUserData);
   };
 
-//   const handleEditUser = (userID: any) => {
-//     setOpenEditdialog((prev: boolean) => !prev);
+  const handleEditUser = (user: any) => {
+    // setOpenEditdialog((prev: boolean) => !prev);
+    setEditLeads(true);
+    setEditUser(user)
+   // let filterUserData = rows.filter((el) => el._id === userID);
+    //console.log("filterUserData---->", filterUserData);
+  };
+  console.log('--user',editUser)
 
-//     let filterUserData = rows.filter((el) => el._id === userID);
-//     setEditUser(filterUserData);
-//   };
+  const closeEditLeads = () => {
+    setEditLeads(false);
+  };
 
   const icon = rowsWithChips.map((icon, index) => ({
     ...icon,
@@ -321,10 +330,7 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
           <IconEyeFilled onClick={() => handleShowUser(icon._id)} />
         </IconButton>
         <IconButton sx={{ border: "1px solid #ececec", borderRadius: "10px" }}>
-          <IconEdit 
-        //   onClick={() =>                        handleEditUser(icon._id)} 
-                        
-                        />
+          <IconEdit onClick={() => handleEditUser(icon)} />
         </IconButton>
       </>
     ),
@@ -381,6 +387,12 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
 
   return (
     <Box sx={{ width: "100%", padding: 0 }}>
+      <EditPopupForm
+        editLeads={editLeads}
+        closeEditLeads={closeEditLeads}
+        rows={rows}
+        editUser={editUser}
+      />
       {/* Custom Pagination at the Top (for Rows Per Page) */}
       {enablePagination && (
         <Grid container>

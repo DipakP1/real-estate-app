@@ -313,9 +313,9 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
 
   const handleEditUser = (userID: any) => {
     setOpenEditdialog((prev: boolean) => !prev);
-
     let filterUserData = rows.filter((el) => el._id === userID);
     setEditUser(filterUserData);
+   
   };
 
   const icon = rowsWithChips.map((icon, index) => ({
