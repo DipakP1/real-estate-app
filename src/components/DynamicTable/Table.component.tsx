@@ -188,7 +188,7 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
   const [dense, setDense] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [editRow, setEditRow] = React.useState<any>("");
-  const [viewItem, setViewItem] = React.useState<any>([]);
+  const [viewItem, setViewItem] = React.useState<any>();
   const [displayViewItem, setDisplayViewItem] = React.useState<any>(false);
 
   const startEntry = page * rowsPerPage + 1;
@@ -300,7 +300,7 @@ function DynamicTableComponent<T extends { [key: string]: string | number }>({
             setDisplayViewItem(!displayViewItem);
           }}
           variant="outlined"
-          //sx={{ color: "gray" }}
+          sx={{ color: "gray" }}
         >
           <IconEyeFilled />
         </Button>
