@@ -33,12 +33,22 @@ export const postData = async (
 
 export const putData = async (endpoint: any, data: any) => {
   try {
-  } catch (error) {}
+    const response = await instance.put(endpoint, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
+
 export const pathData = async (endpoint: any, data: any) => {
   try {
-  } catch (error) {}
+    const response = await instance.patch(endpoint, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
+
 export const deleteData = async (endpoint: any) => {
   try {
   } catch (error) {}

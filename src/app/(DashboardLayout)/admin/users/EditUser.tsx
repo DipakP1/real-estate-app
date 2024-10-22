@@ -2,16 +2,44 @@ import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import React, { useState } from "react";
 import UserCreation from "../user-creation/components/UserCreation";
+import { useSnackbar } from "notistack";
+import { pathData } from "../../../../services/apiService";
 
 const EditUser = ({ editUser, setOpenEditdialog }: any) => {
   const [formData, setFormData] = useState({ ...editUser[0] });
 
-  const handleEditUser = (e: any) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleEditUser = async (e: any) => {
     e.preventDefault();
-    console.log(formData, "EDIT USER");
+
+    try {
+      const res = await pathData(
+        `/v1/user/update/${editUser[0]?.userId}`,
+        formData
+      );
+
+      if (!res.error) {
+        enqueueSnackbar(res.message, { variant: "success" });
+        setOpenEditdialog(false);
+      } else {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
-    <Box component={"form"} onClick={handleEditUser}>
+    <Box component={"form"} onSubmit={handleEditUser}>
       <Grid container spacing={2}>
         {/* User Name */}
         <Grid size={{ xs: 12, md: 6 }}>
@@ -24,7 +52,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="userName"
             placeholder="User Name"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.userName}
             fullWidth
             size="small"

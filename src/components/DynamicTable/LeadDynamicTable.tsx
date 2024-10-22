@@ -46,6 +46,7 @@ import Grid from "@mui/material/Grid2";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import EditUser from "@/app/(DashboardLayout)/admin/users/EditUser";
+import EditPopupForm from "../LeadCreation/EditLeads";
 
 type Order = "asc" | "desc";
 
@@ -62,10 +63,10 @@ interface ReusableTableProps<T> {
   enableSelect?: boolean;
   enablePagination?: boolean;
   enableSorting?: boolean;
-  setOpenLeadDialog:any;
-  openLeadDialog:any;
-  setSingleLead:any;
-  singleLead:any
+  setOpenLeadDialog: any;
+  openLeadDialog: any;
+  setSingleLead: any;
+  singleLead: any;
 }
 
 function descendingComparator<T extends { [key: string]: string | number }>(
@@ -194,7 +195,7 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
   setOpenLeadDialog,
   openLeadDialog,
   setSingleLead,
-  singleLead
+  singleLead,
 }: ReusableTableProps<T>) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof T>(headCells[0].id);
@@ -264,7 +265,7 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
           <Chip
             label={status}
             color="primary"
-            sx={{  color: "white" }}
+            sx={{ color: "white" }}
             icon={<IconPointFilled style={{ color: "#000" }} />}
           />
         );
@@ -303,12 +304,12 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
     setSingleLead(filterUserData);
   };
 
-//   const handleEditUser = (userID: any) => {
-//     setOpenEditdialog((prev: boolean) => !prev);
+  //   const handleEditUser = (userID: any) => {
+  //     setOpenEditdialog((prev: boolean) => !prev);
 
-//     let filterUserData = rows.filter((el) => el._id === userID);
-//     setEditUser(filterUserData);
-//   };
+  //     let filterUserData = rows.filter((el) => el._id === userID);
+  //     setEditUser(filterUserData);
+  //   };
 
   const icon = rowsWithChips.map((icon, index) => ({
     ...icon,
@@ -321,10 +322,9 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
           <IconEyeFilled onClick={() => handleShowUser(icon._id)} />
         </IconButton>
         <IconButton sx={{ border: "1px solid #ececec", borderRadius: "10px" }}>
-          <IconEdit 
-        //   onClick={() =>                        handleEditUser(icon._id)} 
-                        
-                        />
+          <IconEdit
+          //   onClick={() =>                        handleEditUser(icon._id)}
+          />
         </IconButton>
       </>
     ),
@@ -545,11 +545,11 @@ function LeadDynamicTable<T extends { [key: string]: string | number }>({
         </Box>
       )}
 
-      {/* {displayViewItem && (
+      {/* {true && ( */}
         <Grid size={{ md: 3 }}>
-          <UserDetail viewItem={viewItem} />
+          <EditPopupForm />
         </Grid>
-      )} */}
+      {/* )} */}
 
       {/* <Dialog
         open={openEditdialog}
