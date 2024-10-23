@@ -2,7 +2,7 @@ import { instance, instanceForFormdata } from "@/api/axios/CRMAxios";
 
 export const getData = async (endpoint: any) => {
   try {
-    const response = await instance.get(endpoint);
+    let response = await instance.get(endpoint);
 
     return response.data;
   } catch (error) {
@@ -40,9 +40,16 @@ export const putData = async (endpoint: any, data: any) => {
   }
 };
 
-export const pathData = async (endpoint: any, data: any) => {
+export const pathData = async (
+  endpoint: any,
+  data: any,
+  header = "application"
+) => {
   try {
-    const response = await instance.patch(endpoint, data);
+    let response =
+      header === "formData"
+        ? await instanceForFormdata.patch(endpoint, data)
+        : await instance.patch(endpoint, data);
     return response.data;
   } catch (error) {
     throw error;
