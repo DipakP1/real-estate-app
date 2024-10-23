@@ -3,11 +3,19 @@ import Cookies from "js-cookie";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
 
-const instance = axios.create({
+const instanceForFormdata = axios.create({
   baseURL: `${BASE_URL}`,
   timeout: 1000,
   headers: {
     "Content-Type": "multipart/form-data",
+  },
+});
+
+const instance = axios.create({
+  baseURL: `${BASE_URL}`,
+  timeout: 1000,
+  headers: {
+    "Content-Type": "application/json",
   },
 });
 
@@ -34,4 +42,28 @@ instance.interceptors.response.use(
   }
 );
 
-export default instance;
+
+instanceForFormdata.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get("token");
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+instanceForFormdata.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+export {instance, instanceForFormdata};

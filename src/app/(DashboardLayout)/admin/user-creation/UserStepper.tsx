@@ -89,7 +89,6 @@ const UserManagment = () => {
   // const userData = JSON.parse(localStorage.getItem("user"))
   // console.log(userData, "USER DATA")
 
-
   const [permissions, setPermissions] = useState(initialPermissions);
   const [error, setError] = useState<any>({}); // To track form validation errors
 
@@ -135,15 +134,19 @@ const UserManagment = () => {
         permissions: permissions,
       };
 
-      const res = await postData("/v1/user/register", {
-        userId: "11222",
-        // employeeCode: "123",
-        departmentId: 9,
-        designationId: 69,
-        userTypeId: 96,
-        userTypeName: "Employee",
-        ...payload,
-      });
+      const res = await postData(
+        "/v1/user/register",
+        {
+          userId: "11222",
+          // employeeCode: "123",
+          departmentId: 9,
+          designationId: 69,
+          userTypeId: 96,
+          userTypeName: "Employee",
+          ...payload,
+        },
+        "formData"
+      );
 
       if (!res?.error) {
         enqueueSnackbar(res.message, { variant: "success" });
@@ -185,7 +188,6 @@ const UserManagment = () => {
       return prevStep;
     });
   };
-
 
   return (
     <div className="grid grid-cols-1 gap-9">

@@ -1,79 +1,45 @@
-import React from "react";
-import {
-  Box,
-  Button,
-  InputLabel,
-  styled,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import React, { useState } from "react";
+import UserCreation from "../user-creation/components/UserCreation";
 import { useSnackbar } from "notistack";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { IconCloudUpload } from "@tabler/icons-react";
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import { pathData } from "../../../../services/apiService";
 
-const UserCreation = ({
-  formData,
-  setFormData,
-  errors,
-  validateForm,
-  setError,
-}: any) => {
+const EditUser = ({ editUser, setOpenEditdialog }: any) => {
+  const [formData, setFormData] = useState({ ...editUser[0] });
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleEditUser = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const res = await pathData(
+        `/v1/user/update/${editUser[0]?.userId}`,
+        formData
+      );
+
+      if (!res.error) {
+        enqueueSnackbar(res.message, { variant: "success" });
+        setOpenEditdialog(false);
+      } else {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
-    // if (!validateForm()) {
-    //   delete errors?.name
-    //   setError((prev:any) => ({
-    //     ...prev,
-    //   }));
     setFormData((prev: any) => ({
       ...prev,
       [name]: value,
     }));
-    // }
   };
 
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, files }: any = e.target;
-    const file = files[0]; // Get the selected file
-
-    const formData: any = new FormData();
-
-    formData.append(name, file);
-
-    console.log(formData, "FILE");
-
-    // if (file) {
-    //   const reader = new FileReader();
-
-    //   reader.onloadend = () => {
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: formData.get(name), // Store the Base64 string directly in the state
-    }));
-    //   };
-
-    //   reader.readAsDataURL(file); // This will trigger the onloadend event
-    // }
-  };
-
-  console.log(formData);
   return (
-    <Box sx={{ p: 2 }}>
+    <Box component={"form"} onSubmit={handleEditUser}>
       <Grid container spacing={2}>
         {/* User Name */}
         <Grid size={{ xs: 12, md: 6 }}>
@@ -90,8 +56,8 @@ const UserCreation = ({
             value={formData.userName}
             fullWidth
             size="small"
-            error={!!errors?.userName}
-            helperText={errors?.userName}
+            //   error={!!errors?.userName}
+            //   helperText={errors?.userName}
           />
         </Grid>
 
@@ -107,12 +73,12 @@ const UserCreation = ({
             name="emailId"
             type="email"
             placeholder="Email Id"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.emailId}
             fullWidth
             size="small"
-            error={!!errors?.emailId}
-            helperText={errors?.emailId}
+            //   error={!!errors?.emailId}
+            //   helperText={errors?.emailId}
           />
         </Grid>
 
@@ -127,12 +93,12 @@ const UserCreation = ({
           <TextField
             name="phoneNumber"
             placeholder="Phone Number"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.phoneNumber}
             fullWidth
             size="small"
-            error={!!errors?.phoneNumber}
-            helperText={errors?.phoneNumber}
+            //   error={!!errors?.phoneNumber}
+            //   helperText={errors?.phoneNumber}
           />
         </Grid>
 
@@ -147,13 +113,12 @@ const UserCreation = ({
           <TextField
             name="employeeCode"
             placeholder="Employee Code"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.employeeCode}
             fullWidth
             size="small"
-            error={!!errors?.employeeCode}
-            helperText={errors?.employeeCode}
-
+            //   error={!!errors?.employeeCode}
+            //   helperText={errors?.employeeCode}
           />
         </Grid>
 
@@ -169,12 +134,12 @@ const UserCreation = ({
             name="dateOfBirth"
             type="date"
             placeholder="Date of Birth"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.dateOfBirth}
             fullWidth
             size="small"
-            error={!!errors?.dateOfBirth}
-            helperText={errors?.dateOfBirth}
+            //   error={!!errors?.dateOfBirth}
+            //   helperText={errors?.dateOfBirth}
           />
         </Grid>
 
@@ -189,12 +154,12 @@ const UserCreation = ({
           <TextField
             name="companyName"
             placeholder="Company Name"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.companyName}
             fullWidth
             size="small"
-            error={!!errors?.companyName}
-            helperText={errors?.companyName}
+            //   error={!!errors?.companyName}
+            //   helperText={errors?.companyName}
           />
         </Grid>
 
@@ -209,12 +174,12 @@ const UserCreation = ({
           <TextField
             name="siteLocation"
             placeholder="Site Location"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.siteLocation}
             fullWidth
             size="small"
-            error={!!errors?.siteLocation}
-            helperText={errors?.siteLocation}
+            //   error={!!errors?.siteLocation}
+            //   helperText={errors?.siteLocation}
           />
         </Grid>
 
@@ -229,12 +194,12 @@ const UserCreation = ({
           <TextField
             name="departmentName"
             placeholder="Department Name"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.departmentName}
             fullWidth
             size="small"
-            error={!!errors?.departmentName}
-            helperText={errors?.departmentName}
+            //   error={!!errors?.departmentName}
+            //   helperText={errors?.departmentName}
           />
         </Grid>
 
@@ -249,12 +214,12 @@ const UserCreation = ({
           <TextField
             name="designationName"
             placeholder="Designation Name"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.designationName}
             fullWidth
             size="small"
-            error={!!errors?.designationName}
-            helperText={errors?.designationName}
+            //   error={!!errors?.designationName}
+            //   helperText={errors?.designationName}
           />
         </Grid>
 
@@ -270,12 +235,12 @@ const UserCreation = ({
             name="aadharId"
             type="number"
             placeholder="Aadhar Number"
-            onChange={handleChange}
+            //   onChange={handleChange}
             value={formData.aadharId}
             fullWidth
             size="small"
-            error={!!errors?.aadharId}
-            helperText={errors?.aadharId}
+            //   error={!!errors?.aadharId}
+            //   helperText={errors?.aadharId}
           />
         </Grid>
 
@@ -291,11 +256,11 @@ const UserCreation = ({
             name="userPhoto"
             type="file"
             placeholder="User Photo"
-            onChange={handleChangeFile}
+            //   onChange={handleChangeFile}
             fullWidth
             size="small"
-            error={!!errors?.userPhoto}
-            helperText={errors?.userPhoto}
+            //   error={!!errors?.userPhoto}
+            //   helperText={errors?.userPhoto}
           />
         </Grid>
 
@@ -311,44 +276,33 @@ const UserCreation = ({
             name="userSignature"
             type="file"
             placeholder="Signature"
-            onChange={handleChangeFile}
+            //   onChange={handleChangeFile}
             fullWidth
             size="small"
-            error={!!errors?.userSignature}
-            helperText={errors?.userSignature}
+            //   error={!!errors?.userSignature}
+            //   helperText={errors?.userSignature}
           />
-          {/* <Box
-            sx={{
-              border: errors?.userSignature?"1px dotted black":"1px dotted black" ,
-              textAlign: "center",
-              padding: "20px 0",
-              borderRadius: "10px",
-            }}
-          >
-            <Box mb={1}>
-              <IconCloudUpload width={50} height={50} />
-            </Box>
-            <Button
-              component="label"
-              role={undefined}
-              variant="outlined"
-              sx={{ border: "none" }}
-              tabIndex={-1}
-              startIcon={<CloudUploadIcon />}
-            >
-              Upload files
-              <VisuallyHiddenInput type="file" onChange={handleChangeFile} />
-            </Button>
-          </Box>
-          <span
-            style={{ color: "#FA896B", fontSize: "12px", marginLeft: "5px" }}
-          >
-            {errors?.userSignature}
-          </span> */}
         </Grid>
+
+        <Box mt={2}>
+          <Button
+            variant="outlined"
+            sx={{ border: "1px solid black", color: "black", mr: 2 }}
+            onClick={() => setOpenEditdialog(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ backgroundColor: "black", color: "white" }}
+          >
+            Edit User
+          </Button>
+        </Box>
       </Grid>
     </Box>
   );
 };
 
-export default UserCreation;
+export default EditUser;

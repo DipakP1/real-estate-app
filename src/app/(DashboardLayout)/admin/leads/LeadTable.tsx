@@ -3,40 +3,34 @@ import {
   Box,
   Button,
   IconButton,
-  Modal,
-  TableCell,
-  Chip,
-  Grid2,
-  Paper,
+  Avatar,
   Card,
   CardActions,
   CardContent,
-  CardMedia,
-  Typography,
   Divider,
-  Avatar,
-  Stack,
-  styled,
+  Grid2,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Stack,
+  Typography,
 } from "@mui/material";
-import { useState } from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DynamicTableComponent from "@/components/DynamicTable/Table.component";
+import { useEffect, useState } from "react";
 import {
-  IconEyeFilled,
-  IconX,
-  IconMessageCircle,
-  IconMail,
-  IconPhone,
-  IconCurrentLocation,
   IconCalendarDue,
+  IconCurrentLocation,
+  IconEyeFilled,
+  IconMail,
+  IconMessageCircle,
+  IconPhone,
+  IconX,
 } from "@tabler/icons-react";
-import React from "react";
-import { deepOrange, green } from "@mui/material/colors";
-import Image from "next/image";
+import { getData } from "@/services/apiService";
+import axios from "axios";
+import LeadDynamicTable from "@/components/DynamicTable/LeadDynamicTable";
+import { deepOrange } from "@mui/material/colors";
+import styled from "styled-components";
 
 interface HeadCell<T> {
   id: any; // This ensures that id is one of the keys in your data type
@@ -50,58 +44,139 @@ interface Data {
   price: number;
 }
 
+/* const rows: any = [
+  {
+    id: 1,
+    name: "Item 1",
+    "site-location": "Site Location",
+    status: "active",
+    "company-name": "Company A",
+    view: "",
+  },
+  {
+    id: 2,
+    name: "Item 2",
+    "site-location": "Site Location",
+    status: "active",
+    "company-name": "Company B",
+    view: "",
+  },
+  {
+    id: 3,
+    name: "Item 3",
+    "site-location": "Site Location",
+    status: "inactive",
+    "company-name": "Company C",
+  },
+  {
+    id: 4,
+    name: "Item 4",
+    "site-location": "Site Location",
+    status: "inactive",
+    "company-name": "Company D",
+  },
+  {
+    id: 5,
+    name: "Item 5",
+    "site-location": "Site Location",
+    status: "active",
+    "company-name": "Company E",
+  },
+  {
+    id: 6,
+    name: "Item 6",
+    "site-location": "Site Location",
+    status: "inactive",
+    "company-name": "Company F",
+  },
+  {
+    id: 7,
+    name: "Item 7",
+    "site-location": "Site Location",
+    status: "inactive",
+    "company-name": "Company G",
+  },
+  {
+    id: 8,
+    name: "Item 8",
+    "site-location": "Site Location",
+    status: "active",
+    "company-name": "Company H",
+  },
+  {
+    id: 9,
+    name: "Item 9",
+    "site-location": "Site Location",
+    status: "active",
+    "company-name": "Company I",
+  },
+];
+ */
+const headCells: HeadCell<Data>[] = [
+  { id: "id", numeric: true, label: "Id" },
+  { id: "agentName", numeric: true, label: "Agent Name" },
+  { id: "status", numeric: false, label: "Status" },
+  { id: "applicantName", numeric: false, label: "Applicant name" },
+  { id: "cityName", numeric: true, label: "City Name" },
+  { id: "visitThrough", numeric: true, label: "Visit Through" },
+  { id: "action", numeric: true, label: "Action" },
+];
+
 const Root = styled("div")(({ theme }) => ({
   width: "100%",
   marginTop: 1,
   color: "#000",
   "& > :not(style) ~ :not(style)": {
-    marginTop: theme.spacing(1),
+    marginTop: 1,
   },
 }));
 
-const headCells: HeadCell<Data>[] = [
-  { id: "id", numeric: true, label: "User ID" },
-  { id: "userName", numeric: false, label: "User Name" },
-  { id: "status", numeric: false, label: "Status" },
+const LeadTable = () => {
+  const [rows, setRows] = useState<any>([]);
 
-  { id: "emailId", numeric: true, label: "Email Address" },
-  { id: "siteLocation", numeric: true, label: "Site Location" },
-  { id: "phoneNumber", numeric: true, label: "Mobile No" },
-  { id: "action", numeric: true, label: "Action" },
-];
+  const [openLeadDialog, setOpenLeadDialog] = useState(false);
+  const [singleLead, setSingleLead] = useState<any>([]);
+  const [viewItem, setViewItem] = useState<any>();
+  const [displayViewItem, setDisplayViewItem] = useState<any>(false);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8800/v1/getLead/getUserData"
+        );
+        setRows(res.data.data);
+        console.log("response--->", res.data.data);
+      } catch (error) {
+        console.log("error-->", error);
+      }
+    };
 
-const UserTable = ({ resData }: any) => {
-  const [open, setOpen] = React.useState(false);
-  const [signleUser, setSingleUser] = React.useState<any>([]);
+    fetchUserData();
+  }, []);
 
-  const [openEditDialog, setOpenEditDialog] = React.useState(false);
-  const [signleUserEdit, setSingleUserEdit] = React.useState<any>([]);
+  console.log(rows, "ROWS");
 
   return (
-    <Box width={"auto"}>
+    <Box>
       <Grid2 container spacing={2}>
-        <Grid2 size={{ xs: 12, md: open ? 8 : 12 }}>
-          <DynamicTableComponent
-            rows={resData?.data}
+        <Grid2 size={{ xs: 12, md: openLeadDialog ? 8 : 12 }}>
+          <LeadDynamicTable
+            rows={rows}
             headCells={headCells}
             title="User List"
             enableSelect={true}
             enablePagination={true}
             enableSorting={true}
-            userListDialog={open}
-            setUserListDialog={setOpen}
-            selectedUser={signleUser}
-            setSelectedUser={setSingleUser}
-            editUser={signleUserEdit}
-            setEditUser={setSingleUserEdit}
-            openEditdialog={openEditDialog}
-            setOpenEditdialog={setOpenEditDialog}
+            openLeadDialog={openLeadDialog}
+            setOpenLeadDialog={setOpenLeadDialog}
+            singleLead={singleLead}
+            setSingleLead={setSingleLead}
           />
         </Grid2>
-        {open ? (
+        {openLeadDialog ? (
           <Grid2 size={{ xs: 12, md: 4 }}>
-            {signleUser.map((user: any) => (
+            {singleLead.map((user: any) => (
               <Card sx={{ height: "100%" }}>
                 <CardContent>
                   <Typography
@@ -115,7 +190,7 @@ const UserTable = ({ resData }: any) => {
                     <span>Profile</span>
                     <IconButton
                       aria-label="close"
-                      onClick={() => setOpen(false)}
+                      onClick={() => setOpenLeadDialog(false)}
                       sx={() => ({
                         position: "absolute",
                         right: 0,
@@ -146,7 +221,7 @@ const UserTable = ({ resData }: any) => {
                       }}
                       variant="square"
                     >
-                      {user?.userName?.substring(0, 1)}
+                      {user?.applicantName?.substring(0, 1)}
                     </Avatar>
                   </Stack>
                 </CardActions>
@@ -163,11 +238,11 @@ const UserTable = ({ resData }: any) => {
                       fontSize={"18px"}
                       variant="body1"
                     >
-                      {user?.userName}
+                      {user?.applicantName}
                     </Typography>
 
                     <Typography fontSize={"14px"} variant="body1">
-                      {`${user?.designationName} - ${user?.companyName}`}
+                      {`${user?.cityName} - ${user?.unitCategory}`}
                     </Typography>
                   </Box>
                   <Box>
@@ -213,12 +288,12 @@ const UserTable = ({ resData }: any) => {
                       <ListItemText
                         primary={
                           <Typography fontWeight={"bold"}>
-                            Date of Birth
+                           Aadhar Nummber
                           </Typography>
                         }
                         secondary={
                           <Typography color="blue">
-                            {user?.dateOfBirth}
+                            {user?.aadharNo}
                           </Typography>
                         }
                       />
@@ -230,13 +305,11 @@ const UserTable = ({ resData }: any) => {
                       <ListItemText
                         primary={
                           <Typography fontWeight={"bold"}>
-                            Site Locations
+                            Address
                           </Typography>
                         }
                         secondary={
-                          <Typography >
-                            {user?.siteLocation}
-                          </Typography>
+                          <Typography>{user?.address}</Typography>
                         }
                       />
                     </ListItem>
@@ -263,11 +336,11 @@ const UserTable = ({ resData }: any) => {
                       <ListItemText
                         primary={
                           <Typography fontWeight={"bold"}>
-                            Email Address
+                            Customer Email Address
                           </Typography>
                         }
                         secondary={
-                          <Typography color="blue">{user?.emailId}</Typography>
+                          <Typography color="blue">{user?.customerEmail}</Typography>
                         }
                       />
                     </ListItem>
@@ -277,11 +350,11 @@ const UserTable = ({ resData }: any) => {
                       </ListItemAvatar>
                       <ListItemText
                         primary={
-                          <Typography fontWeight={"bold"}>Phone</Typography>
+                          <Typography fontWeight={"bold"}>Mobile Number</Typography>
                         }
                         secondary={
                           <Typography color="blue">
-                            {user?.phoneNumber}
+                            {user?.mobileNo}
                           </Typography>
                         }
                       />
@@ -297,4 +370,4 @@ const UserTable = ({ resData }: any) => {
   );
 };
 
-export default UserTable;
+export default LeadTable;
