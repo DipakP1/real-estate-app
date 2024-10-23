@@ -14,16 +14,16 @@ const RootWrapper = styled(Box)(
   ({ theme }: any) => `
          height: 80vh;
          display: flex;
-         border-radius: 10px;
+        //  border-radius: 10px;
   `
 );
 
 const Sidebar = styled(Box)(
   ({ theme }: any) => `
           width: 300px;
-          background: #1B382A;
-          border-right: grey solid 1px;
-            border-radius: 10px 0 0 10px;
+          background: #ffffff;
+          border-right: #ececec solid 1px;
+        // border-radius: 10px 0 0 10px;
 
   `
 );
@@ -36,17 +36,17 @@ const ChatWindow = styled(Box)(
           flex-direction: column;
           flex: 1;
           background-color: #f3f3f3;
-        border-radius: 0 10px 10px 0;
+        // border-radius: 0 10px 10px 0;
 
   `
 );
 
 const ChatTopBar = styled(Box)(
   ({ theme }: any) => `
-          background: #344E42;
-          border-bottom: black solid 1px;
+          background: #ffffff;
+          border-bottom: #ececec solid 1px;
           padding: 10px;
-          color: #fff;
+          color: #000;
           align-items: center;
   `
 );
@@ -108,7 +108,7 @@ const MessageComponent = () => {
       <ChatWindow>
         <ChatTopBar
           sx={{
-            display: { xs: "flex", lg: "inline-block", borderRadius:"0 10px 0 0" },
+            display: { xs: "flex", lg: "inline-block" },
           }}
         >
           <IconButtonToggle

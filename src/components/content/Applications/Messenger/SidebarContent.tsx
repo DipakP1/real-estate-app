@@ -59,9 +59,11 @@ const ListItemWrapper = styled(ListItemButton)(
         &.MuiButtonBase-root {
          border-radius:15px;
          margin: 10px 0;
+            color: #fff;
+
         }
          &:hover {
-            background-color: #011109;
+            background-color: #f7f8f8;
          }
   `
 );
@@ -134,11 +136,7 @@ function SidebarContent() {
 
   return (
     <RootWrapper>
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        paddingTop={"20px"}
-      >
+      <Box display="flex" alignItems="flex-start" paddingTop={"20px"}>
         <Avatar alt={user.name} src={user.avatar} />
         <Box
           sx={{
@@ -152,10 +150,10 @@ function SidebarContent() {
             justifyContent="space-between"
           >
             <Box>
-              <Typography variant="h5" noWrap>
+              <Typography color="#000" variant="h5" noWrap>
                 {user.name}
               </Typography>
-              <Typography variant="subtitle1" noWrap>
+              <Typography color="#000" variant="subtitle1" noWrap>
                 {user.jobtitle}
               </Typography>
             </Box>
@@ -170,7 +168,7 @@ function SidebarContent() {
             </IconButton>
           </Box>
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={
               <Switch
                 checked={state.invisible}
@@ -180,7 +178,7 @@ function SidebarContent() {
               />
             }
             label="Invisible"
-          />
+          /> */}
         </Box>
       </Box>
 
@@ -189,10 +187,10 @@ function SidebarContent() {
           mt: 2,
           mb: 1,
           border: "1px solid grey",
-          color: "white",
+          color: "black",
           borderRadius: "5px",
           "& .MuiInputBase-input::placeholder": {
-            color: "white",
+            color: "black",
           },
         }}
         size="small"
@@ -200,7 +198,7 @@ function SidebarContent() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchTwoToneIcon sx={{ color: "#fff" }} />
+              <SearchTwoToneIcon sx={{ color: "#000" }} />
             </InputAdornment>
           ),
         }}
@@ -213,6 +211,7 @@ function SidebarContent() {
           mt: 2,
         }}
         variant="h3"
+        color="#000"
       >
         Chats
       </Typography>
@@ -223,11 +222,15 @@ function SidebarContent() {
           value={currentTab}
           variant="scrollable"
           scrollButtons="auto"
-          textColor="primary"
+          textColor="inherit"
           indicatorColor="primary"
         >
           {tabs.map((tab) => (
-            <Tab key={tab.value} label={tab.label} value={tab.value} />
+            <Tab
+              key={tab.value}
+              label={<Typography color="black">{tab.label}</Typography>}
+              value={tab.value}
+            />
           ))}
         </Tabs>
       </TabsContainerWrapper>
@@ -244,12 +247,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "textSecondary",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Zain Baptista"
@@ -268,12 +271,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Kierra Herwitz"
@@ -289,12 +292,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Craig Vaccaro"
@@ -310,12 +313,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Adison Press"
@@ -338,12 +341,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Zain Baptista"
@@ -362,12 +365,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Adison Press"
@@ -395,6 +398,7 @@ function SidebarContent() {
                 textAlign: "center",
               }}
               variant="subtitle2"
+              color="primary.light"
             >
               Hurray! There are no archived chats!
             </Typography>

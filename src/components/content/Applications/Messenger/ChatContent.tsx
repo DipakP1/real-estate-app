@@ -25,7 +25,7 @@ const CardWrapperPrimary = styled(Card)(
       padding: 15px 18px;
       max-width: 380px;
       display: inline-flex;
-      border-radius: 15px 15px 0px 15px;
+      // border-radius: 15px 15px 0px 15px;
 `
 );
 
@@ -35,12 +35,13 @@ const CardWrapperSecondary = styled(Card)(
       padding: 15px 20px;
       color: #000;
       max-width: 380px;
-      border-radius: 0 15px 15px 15px;
+      // border-radius: 0 15px 15px 15px;
       display: inline-flex;
 `
 );
 
-function ChatContent() {
+function 
+ChatContent() {
   const user = {
     name: 'Catherine Pike',
     avatar: '/static/images/avatars/1.jpg'

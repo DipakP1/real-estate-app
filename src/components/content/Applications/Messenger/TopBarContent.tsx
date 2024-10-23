@@ -44,7 +44,7 @@ const RootWrapper = styled(Box)(
 const ListItemIconWrapper = styled(ListItemIcon)(
   ({ theme }:any) => `
         min-width: 36px;
-        color: ${theme.colors.primary.light};
+        color: grey;
 `
 );
 
@@ -58,13 +58,9 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
           margin: 12px 0;
         }
 
-        .MuiSvgIcon-root {
-          transition: ${theme.transitions.create(['color'])};
-        }
 
         &.MuiButtonBase-root {
 
-          margin-bottom: ${theme.spacing(0.5)};
 
           &:last-child {
             margin-bottom: 0;
@@ -72,10 +68,10 @@ const AccordionSummaryWrapper = styled(AccordionSummary)(
 
           &.Mui-expanded,
           &:hover {
-            background: ${theme.colors.alpha.black[10]};
+            background: #f7f8f8;
 
             .MuiSvgIcon-root {
-              color: ${theme.colors.primary.main};
+              color: grey;
             }
           }
         }

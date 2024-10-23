@@ -33,10 +33,10 @@ function ApplicationsMessenger() {
         borderRadius: "10px",
       }}
     >
-      <Typography variant="h5" pb={2}>
-        Message
-      </Typography>
       <>
+        {/* <Typography variant="h5" pb={2}>
+          Message
+        </Typography> */}
         <MessageComponent />
       </>
     </Box>
