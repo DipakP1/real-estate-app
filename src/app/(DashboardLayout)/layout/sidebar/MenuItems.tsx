@@ -6,7 +6,8 @@ import {
   IconLayoutDashboard,
   IconReport,
   IconBrandMastercard,
-  IconKey,IconMail,IconUserCheck,IconUser
+  IconKey,IconMail,IconUserCheck,IconUser,
+  IconList
 } from "@tabler/icons-react";
 import { uniqueId } from "lodash";
 
@@ -64,14 +65,6 @@ const Menuitems = [
     title: "Lead Creation",
     icon: IconUserCheck,
     href: "/admin/lead-creation",
-    present: "yes",
-    badge:false,
-  },
-  {
-    id: uniqueId(),
-    title: "Leads",
-    icon: IconUserCheck,
-    href: "/admin/leads",
     present: "yes",
     badge:false,
   },
