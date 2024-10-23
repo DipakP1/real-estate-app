@@ -1,4 +1,4 @@
-import { useState, SyntheticEvent } from 'react';
+import { useState, SyntheticEvent } from "react";
 import {
   Box,
   IconButton,
@@ -15,24 +15,25 @@ import {
   ListItemText,
   ListItemIcon,
   styled,
-  useTheme
-} from '@mui/material';
-import { formatDistance, subMinutes } from 'date-fns';
-import CallTwoToneIcon from '@mui/icons-material/CallTwoTone';
-import VideoCameraFrontTwoToneIcon from '@mui/icons-material/VideoCameraFrontTwoTone';
-import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SearchTwoToneIcon from '@mui/icons-material/SearchTwoTone';
-import ColorLensTwoToneIcon from '@mui/icons-material/ColorLensTwoTone';
-import NotificationsOffTwoToneIcon from '@mui/icons-material/NotificationsOffTwoTone';
-import EmojiEmotionsTwoToneIcon from '@mui/icons-material/EmojiEmotionsTwoTone';
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
-import BlockTwoToneIcon from '@mui/icons-material/BlockTwoTone';
-import WarningTwoToneIcon from '@mui/icons-material/WarningTwoTone';
-import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+  useTheme,
+} from "@mui/material";
+import { formatDistance, subMinutes } from "date-fns";
+import CallTwoToneIcon from "@mui/icons-material/CallTwoTone";
+import VideoCameraFrontTwoToneIcon from "@mui/icons-material/VideoCameraFrontTwoTone";
+import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+import ColorLensTwoToneIcon from "@mui/icons-material/ColorLensTwoTone";
+import NotificationsOffTwoToneIcon from "@mui/icons-material/NotificationsOffTwoTone";
+import EmojiEmotionsTwoToneIcon from "@mui/icons-material/EmojiEmotionsTwoTone";
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+import BlockTwoToneIcon from "@mui/icons-material/BlockTwoTone";
+import WarningTwoToneIcon from "@mui/icons-material/WarningTwoTone";
+import DescriptionTwoToneIcon from "@mui/icons-material/DescriptionTwoTone";
+import { StyledBadge } from "./StyledBadge";
 
 const RootWrapper = styled(Box)(
-  ({ theme }:any) => `
+  ({ theme }: any) => `
         @media (min-width: ${theme.breakpoints.values.md}px) {
           display: flex;
           align-items: center;
@@ -42,14 +43,14 @@ const RootWrapper = styled(Box)(
 );
 
 const ListItemIconWrapper = styled(ListItemIcon)(
-  ({ theme }:any) => `
+  ({ theme }: any) => `
         min-width: 36px;
         color: grey;
 `
 );
 
 const AccordionSummaryWrapper = styled(AccordionSummary)(
-  ({ theme }:any) => `
+  ({ theme }: any) => `
         &.Mui-expanded {
           min-height: 48px;
         }
@@ -87,7 +88,7 @@ function TopBarContent() {
     setMobileOpen(!mobileOpen);
   };
 
-  const [expanded, setExpanded] = useState<string | false>('section1');
+  const [expanded, setExpanded] = useState<string | false>("section1");
 
   const handleChange =
     (section: string) => (_event: SyntheticEvent, isExpanded: boolean) => {
@@ -98,27 +99,32 @@ function TopBarContent() {
     <>
       <RootWrapper>
         <Box display="flex" alignItems="center">
-          <Avatar
-            variant="rounded"
-            sx={{
-              width: 48,
-              height: 48
-            }}
-            alt="Zain Baptista"
-            src="/static/images/avatars/1.jpg"
-          />
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <Avatar
+              sx={{
+                width: 48,
+                height: 48,
+              }}
+              alt="Zain Baptista"
+              src="/static/images/avatars/1.jpg"
+            />
+          </StyledBadge>
           <Box ml={1}>
             <Typography variant="h4">Zain Baptista</Typography>
             <Typography variant="subtitle1">
               {formatDistance(subMinutes(new Date(), 8), new Date(), {
-                addSuffix: true
+                addSuffix: true,
               })}
             </Typography>
           </Box>
         </Box>
         <Box
           sx={{
-            display: { xs: 'none', lg: 'flex' }
+            display: { xs: "none", lg: "flex" },
           }}
         >
           <Tooltip placement="bottom" title="Start a voice call">
@@ -140,31 +146,31 @@ function TopBarContent() {
       </RootWrapper>
       <Drawer
         sx={{
-          display: { xs: 'none', md: 'flex' }
+          display: { xs: "none", md: "flex" },
         }}
         variant="temporary"
-        anchor={theme.direction === 'rtl' ? 'left' : 'right'}
+        anchor={theme.direction === "rtl" ? "left" : "right"}
         open={mobileOpen}
         onClose={handleDrawerToggle}
         elevation={9}
       >
         <Box
           sx={{
-            minWidth: 360
+            minWidth: 360,
           }}
           p={2}
         >
           <Box
             sx={{
-              textAlign: 'center'
+              textAlign: "center",
             }}
           >
             <Avatar
               sx={{
-                mx: 'auto',
+                mx: "auto",
                 my: 2,
                 width: theme.spacing(12),
-                height: theme.spacing(12)
+                height: theme.spacing(12),
               }}
               variant="rounded"
               alt="Zain Baptista"
@@ -172,148 +178,148 @@ function TopBarContent() {
             />
             <Typography variant="h4">Zain Baptista</Typography>
             <Typography variant="subtitle2">
-              Active{' '}
+              Active{" "}
               {formatDistance(subMinutes(new Date(), 7), new Date(), {
-                addSuffix: true
+                addSuffix: true,
               })}
             </Typography>
           </Box>
           <Divider
             sx={{
-              my: 3
+              my: 3,
             }}
           />
 
           <Accordion
-            expanded={expanded === 'section1'}
-            onChange={handleChange('section1')}
+            expanded={expanded === "section1"}
+            onChange={handleChange("section1")}
           >
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Customize Chat</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
-                p: 0
+                p: 0,
               }}
             >
               <List component="nav">
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <SearchTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Search in Conversation"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <ColorLensTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Change Theme Styling"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <EmojiEmotionsTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Choose Default Emoji"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
               </List>
             </AccordionDetails>
           </Accordion>
           <Accordion
-            expanded={expanded === 'section2'}
-            onChange={handleChange('section2')}
+            expanded={expanded === "section2"}
+            onChange={handleChange("section2")}
           >
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Privacy & Support</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
-                p: 0
+                p: 0,
               }}
             >
               <List component="nav">
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <NotificationsOffTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Turn off notifications"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <CancelTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Ignore all messages"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <BlockTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Block user"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <WarningTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="Something's Wrong"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                     secondary="Report the conversation and provide feedback"
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: "subtitle1" }}
                   />
                 </ListItem>
               </List>
             </AccordionDetails>
           </Accordion>
           <Accordion
-            expanded={expanded === 'section3'}
-            onChange={handleChange('section3')}
+            expanded={expanded === "section3"}
+            onChange={handleChange("section3")}
           >
             <AccordionSummaryWrapper expandIcon={<ExpandMoreIcon />}>
               <Typography variant="h5">Shared Files</Typography>
             </AccordionSummaryWrapper>
             <AccordionDetails
               sx={{
-                p: 0
+                p: 0,
               }}
             >
               <List component="nav">
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <DescriptionTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="HolidayPictures.zip"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                     secondary="You opened in the past year"
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: "subtitle1" }}
                   />
                 </ListItem>
-                <ListItem >
+                <ListItem>
                   <ListItemIconWrapper>
                     <DescriptionTwoToneIcon />
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="2021Screenshot.jpg"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                     secondary="You edited this file yesterday"
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: "subtitle1" }}
                   />
                 </ListItem>
                 <ListItem>
@@ -322,9 +328,9 @@ function TopBarContent() {
                   </ListItemIconWrapper>
                   <ListItemText
                     primary="PresentationDeck.pdf"
-                    primaryTypographyProps={{ variant: 'h5' }}
+                    primaryTypographyProps={{ variant: "h5" }}
                     secondary="Never opened"
-                    secondaryTypographyProps={{ variant: 'subtitle1' }}
+                    secondaryTypographyProps={{ variant: "subtitle1" }}
                   />
                 </ListItem>
               </List>

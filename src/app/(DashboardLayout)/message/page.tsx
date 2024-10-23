@@ -27,10 +27,11 @@ function ApplicationsMessenger() {
   return (
     <Box
       sx={{
-        padding: "10px",
+        padding: "0px",
         margin: "0",
         width: "100%",
         borderRadius: "10px",
+        height: "100%",
       }}
     >
       <>
