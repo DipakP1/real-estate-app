@@ -26,17 +26,91 @@ function EditPopupForm({
   closeEditLeads,
   editUser,
 }: any) {
+  const userKey = {
+    entryType: "",
+    entryNo: "",
+    entryDate: "",
+    visitThrough: "",
+    agentName: "",
+    applicationNo: "",
+    applicantName: "",
+    fatherName: "",
+    address: "",
+    addressII: "",
+    cityName: "",
+    pinNo: "",
+    mobileNo: "",
+    phoneNo: "",
+    customerEmail: "",
+    panNo: "",
+    aadharNo: "",
+    project: "",
+    unitCategory: "",
+    floor: "",
+    discussions: "",
+    nextFollowUp: "",
+    selectiveRemark: "",
+    sssignedTo: "",
+    status: "",
+    furtherAction: "",
+    createdBy: "",
+    modifiedBy: "",
+  };
   console.log("---rows", rows, "--editUser", editUser);
-  /* const [editData, setEditData] = React.useState<any>({});
+  const [Data, setData] = React.useState<any>(userKey);
+  const [isChanged, setIsChanged] = React.useState(false);
+  const [errors, setErrors] = React.useState<any>({});
+  const [initialData, setInitialData] = React.useState<any>(userKey);
 
-  const handleChange = (e: any) => {
-    setEditData({ ...editData, [e.target.name]: e.target.value });
-  }; */
+  React.useEffect(() => {
+    if (editUser) {
+      setData(editUser);
+      setInitialData(editUser);
+      setIsChanged(false);
+    }
+  }, [editUser]);
+  const validateField = (name: any, value: any) => {
+    const regexes: any = {
+      applicationNo: /^\d{12}$/,
+      mobileNo: /^\d{10}$/,
+      panNo: /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/,
+      aadharNo: /^\d{12}$/,
+      pinCode: /^\d{6}$/,
+      customerEmail: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+    };
+    if (name === "applicationNo" && (value.length < 12 || value.length > 12)) {
+      return "Application no. must be exactly 12 digits";
+    }
+    if (name === "aadharNo" && (value.length < 12 || value.length > 12)) {
+      return "Aadhar no. must be exactly 12 digits";
+    }
+    if (name === "mobileNo" && (value.length < 10 || value.length > 10)) {
+      return "Mobile no. must be exactly 10 digits";
+    }
+    if (name === "pinNo" && (value.length < 6 || value.length > 6)) {
+      return "Invalid Pincode";
+    }
+    // eg of panno.BOSPC9911H,23ZAABN18J
+    if (regexes[name] && !regexes[name].test(value)) {
+      return `${name} not valid`;
+    }
+    return "";
+  };
+  const inputHandler = (e: any) => {
+    const fieldName = e.target.name;
+    const newValue = e.target.value;
+    setData({ ...Data, [fieldName]: newValue });
 
-  /*   const filterData = rows.filter(
-    (item: any, ind: any) => item._id == editUser._id
-  );
-  console.log("----filterdata", filterData); */
+    const error = validateField(fieldName, newValue);
+    setErrors({ ...errors, [fieldName]: error });
+
+    if (newValue === "" || newValue !== initialData[fieldName]) {
+      setIsChanged(true);
+    } else {
+      setIsChanged(false);
+    }
+  };
+
   return (
     <Box>
       <Dialog open={editLeads} sx={{ width: "100%" }}>
@@ -70,7 +144,7 @@ function EditPopupForm({
               columns={{ xs: 4, sm: 8, md: 12 }}
               sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
             >
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"application-no"}
@@ -83,11 +157,14 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Application No"
                   name="applicationNo"
-                  value={editUser?.applicationNo}
+                  value={Data.applicationNo}
+                  onChange={inputHandler}
+                  error={!!errors.applicationNo}
+                  helperText={errors.applicationNo}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"applicant-name"}
@@ -100,11 +177,12 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Applicant Name"
                   name="applicantName"
-                  value={editUser?.applicantName}
+                  value={Data.applicantName}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"father-name"}
@@ -116,10 +194,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Father Name"
                   name="fatherName"
-                  value={editUser?.fatherName}
+                  value={Data.fatherName}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pan-no"}>
                   Pan No
                 </InputLabel>
@@ -128,10 +207,13 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Pan No"
                   name="panNo"
-                  value={editUser?.panNo}
+                  value={Data.panNo}
+                  onChange={inputHandler}
+                  error={!!errors.panNo}
+                  helperText={errors.panNo}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"aadhar-no"}>
                   Aadhar No
                 </InputLabel>
@@ -141,10 +223,13 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Aadhar No"
                   name="aadharNo"
-                  value={editUser?.aadharNo}
+                  value={Data.aadharNo}
+                  onChange={inputHandler}
+                  error={!!errors.aadharNo}
+                  helperText={errors.aadharNo}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"city-name"}>
                   City Name
                 </InputLabel>
@@ -153,10 +238,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="City Name"
                   name="cityName"
-                  value={editUser?.cityName}
+                  value={Data.cityName}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"pin-code"}>
                   Pin Code
                 </InputLabel>
@@ -166,10 +252,13 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Pin Code"
                   name="pinNo"
-                  value={editUser?.pinNo}
+                  value={Data.pinNo}
+                  onChange={inputHandler}
+                  error={!!errors.pinNo}
+                  helperText={errors.pinNo}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"mobile-no"}>
                   Mobile No
                 </InputLabel>
@@ -178,10 +267,13 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Mobile No"
                   name="mobileNo"
-                  value={editUser?.mobileNo}
+                  value={Data.mobileNo}
+                  onChange={inputHandler}
+                  error={!!errors.mobileNo}
+                  helperText={errors.mobileNo}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"phone-no"}>
                   Phone No
                 </InputLabel>
@@ -191,7 +283,8 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Phone No"
                   name="phoneNo"
-                  value={editUser?.phoneNo}
+                  value={Data.phoneNo}
+                  onChange={inputHandler}
                 />
               </Grid2>
             </Grid2>
@@ -205,7 +298,7 @@ function EditPopupForm({
               columns={{ xs: 4, sm: 8, md: 12 }}
               sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
             >
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"entry-type"}
@@ -217,10 +310,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Entry Type"
                   name="entryType"
-                  value={editUser?.entryType}
+                  value={Data.entryType}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"entry-no"}>
                   Entry No
                 </InputLabel>
@@ -230,10 +324,11 @@ function EditPopupForm({
                   placeholder=" Entry No"
                   type="number"
                   name="entryNo"
-                  value={editUser?.entryNo}
+                  value={Data.entryNo}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"entry-date"}
@@ -246,16 +341,22 @@ function EditPopupForm({
                   placeholder="Entry Date"
                   type="date"
                   name="entryDate"
-                  value={editUser?.entryDate}
+                  value={Data.entryDate}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <FormControl fullWidth size="small" sx={{ mt: 3 }}>
                   <InputLabel sx={{ color: "#000" }} htmlFor={"agent-name"}>
                     Agent Name
                   </InputLabel>
-                  <Select label="Agent Name" name="agentName">
+                  <Select
+                    label="Agent Name"
+                    name="agentName"
+                    value={Data.agentName}
+                    onChange={inputHandler}
+                  >
                     <MenuItem value="">Select Agent</MenuItem>
                     <MenuItem value="Agent 1">Agent 1</MenuItem>
                     <MenuItem value="Agent 2">Agent 2</MenuItem>
@@ -264,7 +365,7 @@ function EditPopupForm({
                 </FormControl>
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"customer-email"}
@@ -277,10 +378,13 @@ function EditPopupForm({
                   placeholder="Customer Email"
                   type="email"
                   name="customerEmail"
-                  value={editUser?.customerEmail}
+                  value={Data.customerEmail}
+                  onChange={inputHandler}
+                  error={!!errors.customerEmail}
+                  helperText={errors.customerEmail}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"project"}>
                   Project
                 </InputLabel>
@@ -290,10 +394,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Project"
                   name="project"
-                  value={editUser?.project}
+                  value={Data.project}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"unit-category"}
@@ -305,10 +410,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Unit Category"
                   name="unitCategory"
-                  value={editUser?.unitCategory}
+                  value={Data.unitCategory}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"visit-through"}
@@ -320,11 +426,12 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Visit Through"
                   name="visitThrough"
-                  value={editUser?.visitThrough}
+                  value={Data.visitThrough}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"address"}>
                   Address
                 </InputLabel>
@@ -335,10 +442,11 @@ function EditPopupForm({
                   rows={4}
                   placeholder="Address"
                   name="address"
-                  value={editUser?.address}
+                  value={Data.address}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"addressii"}>
                   AddressII
                 </InputLabel>
@@ -349,7 +457,8 @@ function EditPopupForm({
                   rows={4}
                   placeholder="AddressII"
                   name="addressII"
-                  value={editUser?.addressII}
+                  value={Data.addressII}
+                  onChange={inputHandler}
                 />
               </Grid2>
             </Grid2>
@@ -363,7 +472,7 @@ function EditPopupForm({
               columns={{ xs: 4, sm: 8, md: 12 }}
               sx={{ border: "1px solid #ccc", p: 2, borderRadius: 2 }}
             >
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"next-followup"}
@@ -375,10 +484,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Next Follow Up"
                   name="nextFollowUp"
-                  value={editUser?.nextFollowUp}
+                  value={Data.nextFollowUp}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel sx={{ color: "#000", mt: 1 }} htmlFor={"floor"}>
                   Floor
                 </InputLabel>
@@ -387,11 +497,12 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Floor"
                   name="floor"
-                  value={editUser?.floor}
+                  value={Data.floor}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"selective-remark"}
@@ -403,16 +514,22 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Selective Remark"
                   name="selectiveRemark"
-                  value={editUser?.selectiveRemark}
+                  value={Data.selectiveRemark}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <FormControl fullWidth size="small" sx={{ mt: 4 }}>
                   <InputLabel sx={{ color: "#000" }} htmlFor={"status"}>
                     Status
                   </InputLabel>
-                  <Select label="Status" name="status">
+                  <Select
+                    label="Status"
+                    name="status"
+                    value={Data.status}
+                    onChange={inputHandler}
+                  >
                     <MenuItem value="">Select Status</MenuItem>
                     <MenuItem value="Open">Progress</MenuItem>
                     <MenuItem value="Closed">Done</MenuItem>
@@ -420,7 +537,7 @@ function EditPopupForm({
                 </FormControl>
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"sssigned-to"}
@@ -432,11 +549,12 @@ function EditPopupForm({
                   fullWidth
                   placeholder="SS Signed To"
                   name="sssignedTo"
-                  value={editUser?.sssignedTo}
+                  value={Data.sssignedTo}
+                  onChange={inputHandler}
                 />
               </Grid2>
 
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"further-action"}
@@ -448,10 +566,11 @@ function EditPopupForm({
                   fullWidth
                   placeholder="Further Action"
                   name="furtherAction"
-                  value={editUser?.furtherAction}
+                  value={Data.furtherAction}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"created-by"}
@@ -464,10 +583,11 @@ function EditPopupForm({
                   placeholder="Created By"
                   name="createdBy"
                   type="date"
-                  value={editUser?.createdBy}
+                  value={Data.createdBy}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"modified-by"}
@@ -480,10 +600,11 @@ function EditPopupForm({
                   placeholder="Modified By"
                   name="modifiedBy"
                   type="date"
-                  value={editUser?.modifiedBy}
+                  value={Data.modifiedBy}
+                  onChange={inputHandler}
                 />
               </Grid2>
-              <Grid2 size={{ xs: 2, sm: 4, md: 3 }}>
+              <Grid2 size={{ xs: 2, sm: 4, md: 4 }}>
                 <InputLabel
                   sx={{ color: "#000", mt: 1 }}
                   htmlFor={"discussions"}
@@ -497,19 +618,25 @@ function EditPopupForm({
                   rows={4}
                   placeholder="Discussions"
                   name="discussions"
-                  value={editUser?.discussions}
+                  value={Data.discussions}
+                  onChange={inputHandler}
                 />
               </Grid2>
             </Grid2>
           </Box>
         </DialogContent>
         <DialogActions sx={{ mb: 2 }}>
-         
-            <Button variant="outlined" color="error" sx={{ mr: 2 }}>
-              Cancel
-            </Button>
-            <Button variant="contained" sx={{mr:2}}>Update</Button>
-        
+          <Button
+            onClick={closeEditLeads}
+            variant="outlined"
+            color="error"
+            sx={{ mr: 2 }}
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" sx={{ mr: 2 }} disabled={!isChanged}>
+            Update
+          </Button>
         </DialogActions>
       </Dialog>
     </Box>
