@@ -78,6 +78,14 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: "Lead Listing",
+    icon: IconUserCheck,
+    href: "/admin/lead-listing",
+    present: "yes",
+    badge:false,
+  },
+  {
+    id: uniqueId(),
     title: "Masters",
     icon: IconBrandMastercard,
     href: "/admin/masters",
