@@ -16,7 +16,8 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
     try {
       const res = await pathData(
         `/v1/user/update/${editUser[0]?.userId}`,
-        formData
+        formData,
+        "formData"
       );
 
       if (!res.error) {
@@ -73,7 +74,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             name="emailId"
             type="email"
             placeholder="Email Id"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.emailId}
             fullWidth
             size="small"
@@ -93,7 +94,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="phoneNumber"
             placeholder="Phone Number"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.phoneNumber}
             fullWidth
             size="small"
@@ -113,7 +114,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="employeeCode"
             placeholder="Employee Code"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.employeeCode}
             fullWidth
             size="small"
@@ -134,7 +135,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             name="dateOfBirth"
             type="date"
             placeholder="Date of Birth"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.dateOfBirth}
             fullWidth
             size="small"
@@ -154,7 +155,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="companyName"
             placeholder="Company Name"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.companyName}
             fullWidth
             size="small"
@@ -174,7 +175,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="siteLocation"
             placeholder="Site Location"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.siteLocation}
             fullWidth
             size="small"
@@ -194,7 +195,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="departmentName"
             placeholder="Department Name"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.departmentName}
             fullWidth
             size="small"
@@ -214,7 +215,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
           <TextField
             name="designationName"
             placeholder="Designation Name"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.designationName}
             fullWidth
             size="small"
@@ -235,7 +236,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             name="aadharId"
             type="number"
             placeholder="Aadhar Number"
-            //   onChange={handleChange}
+            onChange={handleChange}
             value={formData.aadharId}
             fullWidth
             size="small"
@@ -256,7 +257,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             name="userPhoto"
             type="file"
             placeholder="User Photo"
-            //   onChange={handleChangeFile}
+            onChange={handleChange}
             fullWidth
             size="small"
             //   error={!!errors?.userPhoto}
@@ -276,7 +277,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             name="userSignature"
             type="file"
             placeholder="Signature"
-            //   onChange={handleChangeFile}
+            onChange={handleChange}
             fullWidth
             size="small"
             //   error={!!errors?.userSignature}
@@ -296,6 +297,7 @@ const EditUser = ({ editUser, setOpenEditdialog }: any) => {
             variant="contained"
             type="submit"
             sx={{ backgroundColor: "black", color: "white" }}
+            disabled={JSON.stringify(formData) === JSON.stringify(editUser[0])}
           >
             Edit User
           </Button>

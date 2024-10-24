@@ -9,22 +9,25 @@ import { Box, IconButton, Drawer, Divider } from "@mui/material";
 import React, { useState } from "react";
 import styled, { useTheme } from "styled-components";
 import MenuTwoToneIcon from "@mui/icons-material/MenuTwoTone";
+import EmojiPicker from "emoji-picker-react";
 
 const RootWrapper = styled(Box)(
   ({ theme }: any) => `
-         height: 80vh;
+         height: 90vh;
          display: flex;
-         border-radius: 10px;
+         justify-content: center;
+        //  border-radius: 10px;
   `
 );
 
 const Sidebar = styled(Box)(
   ({ theme }: any) => `
           width: 300px;
-          background: #1B382A;
-          border-right: grey solid 1px;
-            border-radius: 10px 0 0 10px;
+          // background: #4e8b3352;
+          background: #fff;
 
+          border-right: #ececec solid 2px;
+          border-bottom: #ececec solid 2px;
   `
 );
 
@@ -35,18 +38,21 @@ const ChatWindow = styled(Box)(
           display: flex;
           flex-direction: column;
           flex: 1;
-          background-color: #f3f3f3;
-        border-radius: 0 10px 10px 0;
-
+          background-color: #ffffff;
+//           background-image: url(/images/backgrounds/login-bg.svg);
+//           background-repeat: no-repeat;
+//           background-attachment: fixed;
+//           background-position: center;
+//           background-size: cover;
   `
 );
 
 const ChatTopBar = styled(Box)(
   ({ theme }: any) => `
-          background: #344E42;
-          border-bottom: black solid 1px;
+          background: #ffffff;
+          border-bottom: #ececec solid 1px;
           padding: 10px;
-          color: #fff;
+          color: #000;
           align-items: center;
   `
 );
@@ -108,7 +114,7 @@ const MessageComponent = () => {
       <ChatWindow>
         <ChatTopBar
           sx={{
-            display: { xs: "flex", lg: "inline-block", borderRadius:"0 10px 0 0" },
+            display: { xs: "flex", lg: "inline-block" },
           }}
         >
           <IconButtonToggle
@@ -129,6 +135,9 @@ const MessageComponent = () => {
             <ChatContent />
           </Scrollbar>
         </Box>
+        {/* <Box width={"50%"} border={"1px solid red"} >
+          <EmojiPicker />
+        </Box> */}
         <Divider />
         <BottomBarContent />
       </ChatWindow>

@@ -30,6 +30,7 @@ import Label from "../../Label";
 import CheckTwoToneIcon from "@mui/icons-material/CheckTwoTone";
 import AlarmTwoToneIcon from "@mui/icons-material/AlarmTwoTone";
 import Link from "next/link";
+import { StyledBadge } from "./StyledBadge";
 
 const AvatarSuccess = styled(Avatar)(
   ({ theme }: any) => `
@@ -59,40 +60,53 @@ const ListItemWrapper = styled(ListItemButton)(
         &.MuiButtonBase-root {
          border-radius:15px;
          margin: 10px 0;
+            color: #fff;
+
         }
          &:hover {
-            background-color: #011109;
+            background-color: #f7f8f8;
          }
   `
 );
 
 const TabsContainerWrapper = styled(Box)(
   ({ theme }: any) => `
+            background-color: #f3f4f5;
+            border-radius: 10px;
+
         .MuiTabs-indicator {
-            min-height: 4px;
-            height: 4px;
+            min-height: 2px;
+            height: 2px;
+            border-radius: 35px;
             box-shadow: none;
             border: 0;
+            background: none;
         }
 
         .MuiTab-root {
+
             &.MuiButtonBase-root {
                 padding: 0;
-               
-
                 .MuiTouchRipple-root {
                     display: none;
                 }
             }
 
-            &.Mui-selected:hover,
+            &.Mui-selected:hover{
+
+            },
             &.Mui-selected {
+              margin: 8px 0px;
+              margin-left: 1px;
+              border-radius: 10px; 
+              background-color: #fff;
+
             }
         }
   `
 );
 
-const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+const StyledBadge1 = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: 0,
     top: 0,
@@ -102,7 +116,10 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   },
 }));
 
+
+
 function SidebarContent() {
+  
   const user = {
     name: "Catherine Pike",
     avatar: "/static/images/avatars/1.jpg",
@@ -134,12 +151,15 @@ function SidebarContent() {
 
   return (
     <RootWrapper>
-      <Box
-        display="flex"
-        alignItems="flex-start"
-        paddingTop={"20px"}
-      >
-        <Avatar alt={user.name} src={user.avatar} />
+      <Box display="flex" alignItems="flex-start" paddingTop={"20px"}>
+        <StyledBadge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+        >
+          <Avatar alt={user.name} src={user.avatar} />
+        </StyledBadge>
+
         <Box
           sx={{
             ml: 1.5,
@@ -152,10 +172,10 @@ function SidebarContent() {
             justifyContent="space-between"
           >
             <Box>
-              <Typography variant="h5" noWrap>
+              <Typography color="#000" variant="h5" noWrap>
                 {user.name}
               </Typography>
-              <Typography variant="subtitle1" noWrap>
+              <Typography color="#000" variant="subtitle1" noWrap>
                 {user.jobtitle}
               </Typography>
             </Box>
@@ -170,7 +190,7 @@ function SidebarContent() {
             </IconButton>
           </Box>
 
-          <FormControlLabel
+          {/* <FormControlLabel
             control={
               <Switch
                 checked={state.invisible}
@@ -180,7 +200,7 @@ function SidebarContent() {
               />
             }
             label="Invisible"
-          />
+          /> */}
         </Box>
       </Box>
 
@@ -188,11 +208,10 @@ function SidebarContent() {
         sx={{
           mt: 2,
           mb: 1,
-          border: "1px solid grey",
-          color: "white",
+          color: "black",
           borderRadius: "5px",
           "& .MuiInputBase-input::placeholder": {
-            color: "white",
+            color: "black",
           },
         }}
         size="small"
@@ -200,7 +219,7 @@ function SidebarContent() {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchTwoToneIcon sx={{ color: "#fff" }} />
+              <SearchTwoToneIcon sx={{ color: "#000" }} />
             </InputAdornment>
           ),
         }}
@@ -213,6 +232,7 @@ function SidebarContent() {
           mt: 2,
         }}
         variant="h3"
+        color="#000"
       >
         Chats
       </Typography>
@@ -222,12 +242,16 @@ function SidebarContent() {
           onChange={handleTabsChange}
           value={currentTab}
           variant="scrollable"
-          scrollButtons="auto"
-          textColor="primary"
+          // scrollButtons="auto"
+          textColor="inherit"
           indicatorColor="primary"
         >
           {tabs.map((tab) => (
-            <Tab key={tab.value} label={tab.label} value={tab.value} />
+            <Tab
+              key={tab.value}
+              label={<Typography color="primary">{tab.label}</Typography>}
+              value={tab.value}
+            />
           ))}
         </Tabs>
       </TabsContainerWrapper>
@@ -237,26 +261,26 @@ function SidebarContent() {
           <List disablePadding component="div">
             <ListItemWrapper selected>
               <ListItemAvatar>
-                <Avatar src="/static/images/avatars/1.jpg" />
+                <Avatar  src="/static/images/avatars/1.jpg" />
               </ListItemAvatar>
               <ListItemText
                 sx={{
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "textSecondary",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Zain Baptista"
                 secondary="Hey there, how are you today? Is it ok if I call you?"
               />
               <Label>
-                <StyledBadge badgeContent={2}></StyledBadge>
+                <StyledBadge1 badgeContent={2}></StyledBadge1>
               </Label>
             </ListItemWrapper>
             <ListItemWrapper>
@@ -268,12 +292,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Kierra Herwitz"
@@ -289,12 +313,12 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Craig Vaccaro"
@@ -310,19 +334,19 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Adison Press"
                 secondary="I recently did some buying on Amazon and now I'm stuck"
               />
               <Label color="primary">
-                <StyledBadge badgeContent={8}></StyledBadge>
+                <StyledBadge1 badgeContent={8}></StyledBadge1>
               </Label>
             </ListItemWrapper>
           </List>
@@ -338,19 +362,19 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Zain Baptista"
                 secondary="Hey there, how are you today? Is it ok if I call you?"
               />
               <Label>
-                <StyledBadge badgeContent={2}></StyledBadge>
+                <StyledBadge1 badgeContent={2}></StyledBadge1>
               </Label>
             </ListItemWrapper>
             <ListItemWrapper>
@@ -362,19 +386,19 @@ function SidebarContent() {
                   mr: 1,
                 }}
                 primaryTypographyProps={{
-                  color: "#fff",
+                  color: "#000",
                   variant: "h5",
                   noWrap: true,
                 }}
                 secondaryTypographyProps={{
-                  color: "#fff",
+                  color: "grey",
                   noWrap: true,
                 }}
                 primary="Adison Press"
                 secondary="I recently did some buying on Amazon and now I'm stuck"
               />
               <Label color="primary">
-                <StyledBadge badgeContent={8}></StyledBadge>
+                <StyledBadge1 badgeContent={8}></StyledBadge1>
               </Label>
             </ListItemWrapper>
           </List>
@@ -395,6 +419,7 @@ function SidebarContent() {
                 textAlign: "center",
               }}
               variant="subtitle2"
+              color="primary.light"
             >
               Hurray! There are no archived chats!
             </Typography>

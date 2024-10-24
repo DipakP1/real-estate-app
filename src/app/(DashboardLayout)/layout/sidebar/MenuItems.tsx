@@ -70,6 +70,14 @@ const Menuitems = [
   },
   {
     id: uniqueId(),
+    title: "Leads",
+    icon: IconUserCheck,
+    href: "/admin/leads",
+    present: "yes",
+    badge:false,
+  },
+  {
+    id: uniqueId(),
     title: "Lead Listing",
     icon: IconUserCheck,
     href: "/admin/lead-listing",

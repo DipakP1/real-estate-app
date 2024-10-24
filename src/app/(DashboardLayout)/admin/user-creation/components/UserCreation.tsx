@@ -11,6 +11,8 @@ import Grid from "@mui/material/Grid2";
 import { useSnackbar } from "notistack";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { IconCloudUpload } from "@tabler/icons-react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -30,51 +32,38 @@ const UserCreation = ({
   validateForm,
   setError,
 }: any) => {
-
-  const { enqueueSnackbar } = useSnackbar();
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    // if (!validateForm()) {
-    //   delete errors?.name
-    //   setError((prev:any) => ({
-    //     ...prev,
-    //   }));
     setFormData((prev: any) => ({
       ...prev,
       [name]: value,
     }));
-    // }
   };
 
   const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files }: any = e.target;
-    const file = files[0]; // Get the selected file
+    const file = files[0];
 
     const formData: any = new FormData();
 
     formData.append(name, file);
-
-    console.log(formData, "FILE");
-
-    // if (file) {
-    //   const reader = new FileReader();
-
-    //   reader.onloadend = () => {
     setFormData((prev: any) => ({
       ...prev,
-      [name]: formData.get(name), // Store the Base64 string directly in the state
+      [name]: formData.get(name),
     }));
-    //   };
-
-    //   reader.readAsDataURL(file); // This will trigger the onloadend event
-    // }
   };
 
-  console.log(formData);
+  const handleChangeDate = (newValue: any) => {
+    setFormData((prev: any) => ({
+      ...prev,
+      dateOfBirth: newValue,
+    }));
+  };
+
+  console.log(formData, "formDaTA");
   return (
     <Box sx={{ p: 2 }}>
-      <Grid container spacing={2}>
+      <Grid m={"auto"} container maxWidth={"lg"} spacing={2}>
         {/* User Name */}
         <Grid size={{ xs: 12, md: 6 }}>
           <InputLabel sx={{ color: "#000" }}>
@@ -89,7 +78,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.userName}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.userName}
             helperText={errors?.userName}
           />
@@ -110,7 +99,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.emailId}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.emailId}
             helperText={errors?.emailId}
           />
@@ -130,7 +119,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.phoneNumber}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.phoneNumber}
             helperText={errors?.phoneNumber}
           />
@@ -150,10 +139,9 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.employeeCode}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.employeeCode}
             helperText={errors?.employeeCode}
-
           />
         </Grid>
 
@@ -165,7 +153,7 @@ const UserCreation = ({
               *
             </Typography>
           </InputLabel>
-          <TextField
+          {/* <TextField
             name="dateOfBirth"
             type="date"
             placeholder="Date of Birth"
@@ -175,6 +163,23 @@ const UserCreation = ({
             size="small"
             error={!!errors?.dateOfBirth}
             helperText={errors?.dateOfBirth}
+          /> */}
+          <DatePicker
+            onChange={handleChangeDate}
+            // value={formData?.dateOfBirth}
+            // defaultValue={formData?.dateOfBirth || {}}
+            format="DD-MM-YYYY"
+            name="dateOfBirth"
+            slots={{
+              textField: (textFieldProps:any) => (
+                <TextField
+                  {...textFieldProps}
+                  sx={{ width: "100%" }}
+                  error={!!errors?.dateOfBirth}
+                  helperText={errors?.dateOfBirth}
+                />
+              ),
+            }}
           />
         </Grid>
 
@@ -192,7 +197,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.companyName}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.companyName}
             helperText={errors?.companyName}
           />
@@ -212,7 +217,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.siteLocation}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.siteLocation}
             helperText={errors?.siteLocation}
           />
@@ -232,7 +237,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.departmentName}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.departmentName}
             helperText={errors?.departmentName}
           />
@@ -252,7 +257,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.designationName}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.designationName}
             helperText={errors?.designationName}
           />
@@ -273,7 +278,7 @@ const UserCreation = ({
             onChange={handleChange}
             value={formData.aadharId}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.aadharId}
             helperText={errors?.aadharId}
           />
@@ -293,7 +298,9 @@ const UserCreation = ({
             placeholder="User Photo"
             onChange={handleChangeFile}
             fullWidth
-            size="small"
+            // defaultValue={formData?.userPhoto}
+            // value={formData?.userPhoto}
+            // size="small"
             error={!!errors?.userPhoto}
             helperText={errors?.userPhoto}
           />
@@ -309,11 +316,13 @@ const UserCreation = ({
           </InputLabel>
           <TextField
             name="userSignature"
+            // defaultValue={formData?.userSignature}
             type="file"
             placeholder="Signature"
             onChange={handleChangeFile}
+            // value={formData?.userSignature}
             fullWidth
-            size="small"
+            // size="small"
             error={!!errors?.userSignature}
             helperText={errors?.userSignature}
           />

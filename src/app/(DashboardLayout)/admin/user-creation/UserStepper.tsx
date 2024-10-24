@@ -86,8 +86,6 @@ const UserManagment = () => {
   const [step, setStep] = useState<number>(0); // Current step in the stepper
   const [formData, setFormData] = useState<any>(userInitialData);
 
-  // const userData = JSON.parse(localStorage.getItem("user"))
-  // console.log(userData, "USER DATA")
 
   const [permissions, setPermissions] = useState(initialPermissions);
   const [error, setError] = useState<any>({}); // To track form validation errors
@@ -166,7 +164,6 @@ const UserManagment = () => {
 
   // Handle step changes
 
-  console.log(error, "ERROR");
   const handleStep = (event: any) => {
     const name = event.target.name;
     setStep((prevStep: number) => {
@@ -194,8 +191,8 @@ const UserManagment = () => {
       {/* Stepper Component */}
       <HorizontalLinearAlternativeLabelStepper step={step} />
 
-      <div className="flex flex-col gap-9">
-        <div className="rounded-[10px] border border-stroke bg-white p-4 shadow-1 dark:border-dark-3 dark:bg-gray-dark dark:shadow-card">
+      <div>
+        <div >
           <div>
             {/* Step 0 - User Creation */}
             {step === 0 && (

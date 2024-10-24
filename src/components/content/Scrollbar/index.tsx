@@ -21,11 +21,11 @@ const Scrollbar: FC<ScrollbarProps> = ({ className, children, ...rest }) => {
           <Box
             sx={{
               width: 5,
-              background: "#022213",
+              background: "#fff",
               borderRadius: "5px",
               transition: "ease-in-out",
               '&:hover': {
-                background: `#022290`
+                background: `#fff`
               }
             }}
           />

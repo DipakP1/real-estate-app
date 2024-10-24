@@ -27,16 +27,17 @@ function ApplicationsMessenger() {
   return (
     <Box
       sx={{
-        padding: "10px",
+        padding: "0px",
         margin: "0",
         width: "100%",
         borderRadius: "10px",
+        height: "100%",
       }}
     >
-      <Typography variant="h5" pb={2}>
-        Message
-      </Typography>
       <>
+        {/* <Typography variant="h5" pb={2}>
+          Message
+        </Typography> */}
         <MessageComponent />
       </>
     </Box>

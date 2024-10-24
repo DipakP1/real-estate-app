@@ -1,9 +1,15 @@
 // "use client"
 
-import { useMediaQuery, Box, Drawer, Typography, useTheme } from "@mui/material";
+import {
+  useMediaQuery,
+  Box,
+  Drawer,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import SidebarItems from "./SidebarItems";
-import { Sidebar, Logo } from 'react-mui-sidebar';
-import LogoImg from "../../../../../public/images/logos/Vector.png"
+import { Sidebar, Logo } from "react-mui-sidebar";
+import LogoImg from "../../../../../public/images/logos/Vector.png";
 import Image from "next/image";
 
 interface ItemType {
@@ -18,7 +24,7 @@ const Sidebarr = ({
   isSidebarOpen,
 }: ItemType) => {
   const theme = useTheme();
-  const lgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   const sidebarWidth = "270px";
   // Custom CSS for short scrollbar
@@ -27,13 +33,16 @@ const Sidebarr = ({
     // height:"90vh",
     // width: '270px',
 
-
-    '&::-webkit-scrollbar': {
-      // width: '270px',
+    "&::-webkit-scrollbar": {
+      width: '10px',
+      // scrollbarWidth: "none",
     },
-    '&::-webkit-scrollbar-thumb': {
-      backgroundColor: '#022213',
-      borderRadius: '15px',
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#47733bbf",
+      borderRadius: "2px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      backgroundColor: "#64a254bf",
     },
   };
 
@@ -60,11 +69,12 @@ const Sidebarr = ({
           }}
         >
           <Box
-            sx={{
-              // height: "100%",
-            }}
+            sx={
+              {
+                // height: "100%",
+              }
+            }
           >
-
             <Sidebar
               // width={'270px'}
               collapsewidth="80px"
@@ -73,10 +83,23 @@ const Sidebarr = ({
               themeSecondaryColor="#49beff"
               showProfile={false}
             >
-              <Box sx={{ display: "flex", alignItems: "center", gap: "1em", margin: "20px 20px", paddingBottom: "10px", fontSize: "14px", color: "white", fontWeight: "bold" }} >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1em",
+                  margin: "20px 20px",
+                  paddingBottom: "10px",
+                  fontSize: "14px",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
+              >
                 <Image src={LogoImg} alt="LOGO" width={20} height={20} />
                 <Typography variant="body2" fontSize={"18px"}>
-                  Real Estate Portal</Typography></Box>
+                  Real Estate Portal
+                </Typography>
+              </Box>
               <Box
                 sx={{
                   height: "100%",
@@ -86,7 +109,6 @@ const Sidebarr = ({
               </Box>
             </Sidebar>
           </Box>
-
         </Drawer>
       </Box>
     );
@@ -105,7 +127,6 @@ const Sidebarr = ({
         },
       }}
     >
-
       <Typography
         sx={{
           color: "#000",
@@ -115,7 +136,7 @@ const Sidebarr = ({
           letterSpacing: "-0.8px",
           fontFamily: "Nunito, sans-serif",
           ml: 4,
-          mt: 2
+          mt: 2,
         }}
       >
         Real Estate Portal
